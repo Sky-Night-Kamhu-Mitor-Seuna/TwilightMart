@@ -42,10 +42,6 @@ class permissions
         $roles=$this->checkMemberRoles($mid);
         foreach ( $roles as $role ){
             $permissions = $this->getRolePermissions($role);
-            // if (in_array($permission, $permissions)||in_array(1, $permissions)) {
-            //     $result = true;
-            //     break;
-            // }
             // 1 為最高權限
             if ( ($permission & $permissions) || (0x1 & $permissions)) {
                 $result = true;
@@ -76,23 +72,17 @@ class permissions
      ************************************************/
     private function getRolePermissions($gid)
     {
-        // $permissions = array();
         $permissions = 0x0;
         $sql = "SELECT `permissions` FROM {$this->role_permissions} WHERE role_id = '{$gid}';";
         $rows = $this->conn->each($sql);
-        $permissions = $rows['permissions'] | $permissions;
-
-        // foreach ($rows as $row) {
-        //     $permissions[] = $row['permissions'];
-        // }
+        $permissions |= $rows['permissions'];
 
         $sql = "SELECT `parent_id`,`id` FROM {$this->roles} WHERE `id` = '{$gid}'";
         $row = $this->conn->single($sql);
 
         if ($row['parent_id']!=$row['id']) {
             $parentPermissions = $this->getRolePermissions($row['parent_id']);
-            $permissions = $parentPermissions | $permissions;
-            // $permissions = array_merge($permissions, $parentPermissions);
+            $permissions |= $parentPermissions;
         }
         return $permissions;
     }
