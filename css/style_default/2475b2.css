@@ -1,0 +1,136 @@
+/*************************************************************
+ * 
+ * lastUpdate 02/27/2023
+ * CSS顏色設定 - 全域
+ * By MaizuRoad
+ * 
+*************************************************************/
+
+/********************************************************************************
+ * 深色藍底
+ * background-color: #2475b2;
+********************************************************************************/
+body,.topnavbar-item a.nav-link:hover,input[type="submit"], button,
+.announcementTab a:hover, a.announcementActive, .AccountTitle, 
+.recommendedProductsTitle{
+	background-color: #2475b2;
+}
+/********************************************************************************
+ * 淺色藍底
+ * background-color: #2475b2;
+********************************************************************************/
+input[type="submit"]:hover,button:hover,.checkout {
+	background-color: #0396FF;
+}
+/********************************************************************************
+ * 深色藍字
+ * color: #2475b2;
+********************************************************************************/
+.announcementTab a{
+	color: #2475b2;
+}
+/********************************************************************************
+ * 淺色白字
+ * color: #FFF;
+********************************************************************************/
+a, a.topnavbar-item, a.topnavbar-item:hover, a.nav-logout, a.nav-logout:hover, a.nav-login,
+a.nav-login:hover, .announcementTab a:hover, a.announcementActive, .AccountTitle *,
+input[type="submit"], button, .checkout, .recommendedProductsTitle h5, .memberProfileName,
+.memberProfileContent p,.memberProfile .nav-item a:hover,.topnavbar-item a.nav-link, 
+a.nav-cart, a.nav-cart:hover
+{
+    color: #FFF;
+}
+/********************************************************************************
+ * 淺色白底
+ * background-color: #fff;
+********************************************************************************/
+.announcement, .announcementContent,form#register-form {
+	background-color: #fff;
+}
+/********************************************************************************
+ * 深色湛藍字
+ * background-color: #34495E;
+********************************************************************************/
+footer ,footer a, .back-login a, .navbarlogo:hover, .memberProfileContent{
+	color: #34495E;
+}
+/********************************************************************************
+ * 深色灰字
+ * background-color: #616A6B;
+********************************************************************************/
+footer a:hover, .back-login a:hover{
+	color: #7d898a
+}
+/********************************************************************************
+ * 淺色灰字
+ * background-color: #616A6B;
+********************************************************************************/
+.memberProfileName p {
+	color: #CCC;
+}
+/********************************************************************************
+ * 藍色外框
+ * border: 5px solid #0396FF;
+********************************************************************************/
+.announcement{
+	border: 5px solid #0396FF;
+}
+
+/********************************************************************************
+ * 白色薄外框
+ * border: 1px solid #ccc;
+********************************************************************************/
+input[type="text"], input[type="password"], textarea, .confirm_img img {
+	border: 1px solid #ccc;
+}
+/********************************************************************************
+ * 透明下外框
+ * border: 1px solid #ccc;
+********************************************************************************/
+.memberProfile .nav-item.active{
+	border-bottom: 4px solid rgba(0, 0, 0, .4);
+}
+.memberProfile .nav-item{
+	border-top: 4px solid rgba(255, 255, 255, .0);
+	border-bottom: 4px solid rgba(255, 255, 255, .0);
+}
+.memberProfile .nav-item:hover{
+	border-bottom: 4px solid rgba(0, 0, 0, .2);
+}
+/********************************************************************************
+ * 特殊漸層
+ * background-color: #0396FF;
+ * background: linear-gradient(to right, #ABDCFF 0%, #0396FF 100%);
+********************************************************************************/
+footer, .topnavbar{
+    background: #0396FF;
+    background: linear-gradient(to right, #ABDCFF 0%, #0396FF 100%);
+}
+/********************************************************************************
+ * 特殊漂浮效果
+ * box-shadow: 0 5px 20px rgba(0, 0, 0, .3);
+********************************************************************************/
+form#register-form {
+	box-shadow: 0 5px 20px rgba(0, 0, 0, .3);
+}
+/********************************************************************************
+ * 特殊
+ * 
+********************************************************************************/
+body {
+    background-image: linear-gradient(to top,
+	rgba(255, 255, 255, 0.8), rgba(250, 250, 250, 0.8)),
+	url("/assets/images/bg.jpg");
+}
+.mainBoxMask{background: rgba(250, 250, 250, .9);}
+a.nav-logout{background: #650505;}
+a.nav-logout:hover{background: #8a2525;}
+a.nav-login{background: #0e6505;}
+a.nav-login:hover{background: #2f8a25;}
+a.nav-cart{background: #8a2be2;}
+a.nav-cart:hover{background: #ba55d3;}
+.form-error {color: #ff5722;}
+.form-info{color: #666;}
+hr{border-top: 1px solid #CCC;}
+.AccountTitle a:hover{color: #ABDCFF;}

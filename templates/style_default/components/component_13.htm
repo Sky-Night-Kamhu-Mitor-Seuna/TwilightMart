@@ -1,0 +1,30 @@
+<!--推薦商品-->
+<div class="recommendedProductsTitle">
+  <h5>其他推薦商品</h5>
+</div>
+<div class="row recommendedProducts">
+  {foreach $recProducts as $pro}
+  <!--商品編號: {$pro.id}-->
+  <div class="col-sm-12 col-md-6 col-lg-3">
+    <div class="card StoreCard">
+      <a href="?page=product&pid={$pro.id}">
+        <div>
+          <img
+            src="{$pro.image_url}"
+            class="card-img-top"
+            alt="[PRODUCT{$pro.name}({$pro.id})IMAGE]"
+          />
+        </div>
+      </a>
+      <div class="card-body" style="padding: 0;">
+        <h5 class="card-title">{$pro.name}</h5>
+        <p class="card-text">[{$pro.types}]</p>
+        <p class="card-text">＄{$pro.price}</p>
+        <!--<button onclick="alert('正在更新')">加入購物車</button>-->
+      </div>
+    </div>
+  </div>
+  {foreachelse}
+  <br />
+  {/foreach}
+</div>

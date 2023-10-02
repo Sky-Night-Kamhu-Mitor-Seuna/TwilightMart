@@ -1,0 +1,32 @@
+<br />
+<div class="container">
+  <div class="image">
+    <img src="{$product.image_url}" alt="product image" style="width: 512px;"/>
+  </div>
+  <div class="info">
+    <div>
+      <div class="product-name">{$product.name}</div>
+      <div class="price">
+        售價：<span style="color: #2475b2;">{$product.price}</span>
+      </div>
+      <div class="description">
+        {$product.description}
+      </div>
+    </div>
+    <div>
+      <button class="add-to-cart" onclick="{if isset($loggedin)}addToCart('{$product.id}','{$product.name}',{$product.price}){else}javascript:location.href='?page=login'{/if}">
+        加入購物車
+      </button>
+      <button class="buy-now" onclick="javascript:location.href='?page=check1_payment&cert={$product.id}'">
+        直接購買
+      </button>
+    </div>
+  </div>
+</div>
+
+<div style="margin: 0 auto; padding: 10px 10px; min-height: 300px;">
+  <p>
+    <!-- 商店說明：關於商店的說明... -->
+    商店說明：這是一個範例的商店唷
+  </p>
+</div>

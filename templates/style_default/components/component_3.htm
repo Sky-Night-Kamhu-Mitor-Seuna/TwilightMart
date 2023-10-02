@@ -1,0 +1,50 @@
+<div class="AccountTitle">
+  <h1>Create Account</h1>
+  <p>
+    This project is sponsored by<br />
+    <a href="https://www.snkms.com/" target="_blank">Sky-Night Kamhu Mitor Seuna</a>
+  </p>
+</div>
+<form id="register-form" name="register" action="" method="POST">
+  <div class="form-item">
+    <label for="nickname">Nickname</label>
+    <input type="text" name="nickname" id="nickname" placeholder="Nickname" minlength="3" maxlength="18"
+      value="{if isset($INPUTnickname)}{$INPUTnickname}{/if}" />
+  </div>
+  <div class="form-item">
+    <label for="account">Account</label><span class="form-info">Only a-z A-Z 0-9 and _ - @ # $ . </span>
+    <input type="text" name="account" id="account" placeholder="Account" minlength="3" maxlength="18"
+      pattern="[a-zA-Z0-9\._\-#@$]+" required value="{if isset($INPUTaccount)}{$INPUTaccount}{/if}" />
+    {if $check == "ACC_EXISTS"}
+    <span class="form-error">* Account already exists</span>
+    {elseif $check == "ACC_ERROR"}
+    <span class="form-error">* Wrong account</span>
+    {else}
+    <br />
+    {/if}
+  </div>
+  <div class="form-item">
+    <label for="passwd">Password</label><span class="form-info">Only accepts complex passwords</span>
+    <input type="password" name="passwd" id="passwd" placeholder="Password" minlength="6" maxlength="513" onchange="checkpw('passwd','passwdcheck','pwhint')" required />
+    {if $check == "PWD_ERROR1"}
+    <span class="form-error">* Wrong password</span>
+    {else}
+    <br />
+    {/if}
+  </div>
+  <div class="form-item">
+    <label for="passwordCheck">Enter the password again</label>
+    <input type="password" name="passwordCheck" id="passwdcheck" minlength="6" maxlength="513" onchange="checkpw('passwd','passwdcheck','pwhint')" placeholder="Enter the password again"
+      required />
+    {if $check == "PWD_ERROR2"}
+    <span class="form-error">* Passwords do not match</span>
+    {else}
+    <br />
+    {/if}
+  </div>
+  <span id="pwhint" style="display: block;margin: 16px 0px;">&nbsp;</span>
+  <input name="submit" type="submit" value="Register" />
+</form>
+<div class="back-login">
+  <a href="?page=login">Back to login~</a>
+</div>

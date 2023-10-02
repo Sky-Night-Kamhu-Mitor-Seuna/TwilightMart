@@ -1,0 +1,19 @@
+<br />
+<div class="announcement">
+    <ul class="announcementTabs">
+        {foreach $announcement as $content}
+        <li class="announcementTab"><a onclick="announcementSwitch(event, '{$content@key}')" href="#selectedTab" {if
+                $content@first}class="announcementActive" {/if}>{$content@key}</a></li>
+        {/foreach}
+    </ul>
+    <hr>
+    <ul>
+        {foreach $announcement as $content}
+        <li id="{$content@key}" class="announcementContent">
+            <p>
+                {$content}
+            </p>
+        </li>
+        {/foreach}
+    </ul>
+</div>

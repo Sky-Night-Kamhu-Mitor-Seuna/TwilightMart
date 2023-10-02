@@ -1,0 +1,26 @@
+<div id="cartMask" style="position: fixed;top:0px;height: 100%;width: 100%;z-index: 998;background-color:rgba(250, 250, 250, 0.8);display: none;">
+    <div id="cart" class="row" style="height: 100%;">
+        <div class="col-lg-7" onclick="closeCart()">
+
+        </div>
+        <div class="col-lg-5" style="background-color: #FFF;height: 100%;box-shadow: 0 5px 20px rgba(0, 0, 0, .3);margin: 40px 0;">
+            <table class="table">
+            <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">商品名稱</th>
+                <th scope="col">數量</th>
+                <th scope="col">價格</th>
+                <th scope="col">總價</th>
+                </tr>
+            </thead>
+            <tbody id="items">
+                
+            </tbody>
+            </table>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary" onclick="buy()">結帳</button>
+            </div>
+        </div>
+    </div>
+</div>

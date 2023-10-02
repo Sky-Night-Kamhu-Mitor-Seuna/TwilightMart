@@ -1,0 +1,28 @@
+<div class="AccountTitle">
+  <h1>Login<!-- Account--></h1>
+  <p>
+    This project is sponsored by<br />
+    <a href="https://www.snkms.com/" target="_blank">Sky-Night Kamhu Mitor Seuna</a>
+  </p>
+</div>
+<form id="register-form" name="register" action="" method="POST">
+  <div class="form-item">
+    <label for="account">Account</label>
+    <input type="text" name="account" id="account" placeholder="Account" minlength="3" maxlength="18"
+      pattern="[a-zA-Z0-9\._\-#@$]+" required value="{if isset($INPUTaccount)}{$INPUTaccount}{/if}" />
+    <br />
+  </div>
+  <div class="form-item">
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" placeholder="Password" maxlength="513" required />
+    {if $check == "LOGINFAIL"}
+    <span class="form-error">* Incorrect account or password</span>
+    {else}
+    <br />
+    {/if}
+  </div>
+  <input name="submit" type="submit" value="Login" />
+</form>
+<div class="back-login">
+  <a href="?page=signup">Don't have an account yet? Sign up now!!</a>
+</div>

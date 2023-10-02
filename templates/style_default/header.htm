@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+    {if isset($debugInfo)}
+<!--[!------DEBUG------!]----------------------------------------------------------------------------------->
+        {$debugInfo}
+    {/if}
+<!-----------------------------------------------------------------
+                  888                           
+                  888                           
+                  888                           
+.d8888b  88888b.  888  888 88888b.d88b.  .d8888b  
+88K      888 "88b 888 .88P 888 "888 "88b 88K      
+"Y8888b. 888  888 888888K  888  888  888 "Y8888b. 
+     X88 888  888 888 "88b 888  888  888      X88 
+ 88888P' 888  888 888  888 888  888  888  88888P' 
++-==|半手刻網頁，請體諒我的肝>  
+{if isset($version)}Version版本:    {$version}{/if}   
+
+{if isset($author)}
+Developer開發者:{$author}
+{/if}
+{if isset($design)}
+Design設計師:   {$design}
+{/if}
+{if isset($serverDomainName)}Server伺服器:   {$serverDomainName}{/if}  
+------------------------------------------------------------------> 
+<html {if isset($language)}lang="{$language}"{/if} oncontextmenu = "return false">
+<head oncontextmenu="window.event.returnValue=false;">
+<!--Meta---------------------------------------------------------------------------------------------------->
+    <!--{if isset($keywords)}<meta name="keywords" content="{section name=i loop=$keywords}{$keywords[i]} {/section}">{/if}-->  
+    {if isset($description)}<meta name="description" content="{$description}">{/if}  
+    {if isset($author)}<meta name="author" content="{$author}">{/if}  
+    <!--{if isset($author)}<meta name="copyright" content="{$author}">{/if}-->  
+    {if isset($generator)}<meta name="generator" content="{$generator}">{/if}  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">  
+    {if isset($distribution)}<meta name="distribution" content="{$distribution}">{/if}  
+    {if isset($themeColor)}<meta name="theme-color" content="{$themeColor}">{/if}  
+    {if isset($site_name)}<meta property="og:site_name" content="{$site_name}">{/if}  
+    {if isset($title)}<meta property="og:title" content="{$title}">{/if}  
+    {if isset($description)}<meta property="og:description" content="{$description}">{/if}  
+    {if isset($ogimage)}<meta property="og:image" content="{$ogimage}">{/if}  
+    {if isset($language)}<meta http-equiv="Content-Language" content="{$language}">{/if}  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">  
+    
+<!--Link---------------------------------------------------------------------------------------------------->
+    {if isset($icon)}<link rel="icon" type="image/x-icon" href="{$icon}">{/if}
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    {section name=i loop=$css}<link rel="stylesheet" type="text/css" href="{$css[i]}">  
+    {sectionelse}no css  {/section}
+<!---------------------------------------------------------------------------------------------------------->
+</head>
+<title>{if isset($title)}{$title}{else}unknow{/if}</title>
+<body 偷偷在這寫一些東西，應該不會有人看到 {if isset($newBodyImage)}style="{$newBodyImage}"{/if}>
+    {include file="navbar.htm"}
