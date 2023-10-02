@@ -1,13 +1,11 @@
 <?php
 /*************************************************************
  * 
- * lastUpdate 02/27/2023
+ * lastUpdate 10/02/2023
  * 設定值
- * By MaizuRoad
  * 
 *************************************************************/
 require_once 'sys.include.php';
-// require_once 'php/class.uploadImage.php';
 //foreach (glob(__DIR__ . '/class.*.php') as $filename) require_once $filename;
 session_start();
 ob_start();
@@ -16,31 +14,31 @@ ob_start();
 $version="alpha.1.0.0";
 /*************************************************************/
 $ini=parse_ini_file('./configs/config.ini',true);
-$CONFIG_DB = $ini['database'];
-$CONFIG_TABLES = $ini['tables'];
-$CONFIG_GENERAL = $ini['general'];
-$CONFIG_WEB_DBNAME = $CONFIG_DB['dbname'];
+define("CONFIG_DB", $ini['database']);                        // 資料庫相關資訊
+define("CONFIG_TABLES", $ini['tables']);                      // 資料表相關設置
+define("CONFIG_GENERAL", $ini['general']);                    // 一般設置
+define("CONFIG_WEB_DBNAME", CONFIG_DB['dbname']);             // 資料庫名稱
 /*************************************************************/
 // Smarty配置
 $smarty = new Smarty;
-$smarty->caching = $CONFIG_GENERAL['smarty_caching'];
-$smarty->cache_lifetime = $CONFIG_GENERAL['smarty_cache_lifetime'];
-$smarty->force_compile = $CONFIG_GENERAL['debug'];
-$smarty->debugging = $CONFIG_GENERAL['debug'];
+$smarty->caching = CONFIG_GENERAL['smarty_caching'];
+$smarty->cache_lifetime = CONFIG_GENERAL['smarty_cache_lifetime'];
+$smarty->force_compile = CONFIG_GENERAL['debug'];
+$smarty->debugging = CONFIG_GENERAL['debug'];
 /*************************************************************/
 // Database服務
-$db = new DBConnection($CONFIG_WEB_DBNAME,$CONFIG_DB['host'],$CONFIG_DB['port'],$CONFIG_DB['username'],$CONFIG_DB['password']);
-$db->deBugMode($CONFIG_GENERAL['debug']);
+$db = new DBConnection(CONFIG_WEB_DBNAME,CONFIG_DB['host'],CONFIG_DB['port'],CONFIG_DB['username'],CONFIG_DB['password']);
+$db->deBugMode(CONFIG_GENERAL['debug']);
 /*************************************************************/
 // 查詢一些伺服器基本配置
 $serverDomainName=$_SERVER['SERVER_NAME'];
 $serverMD5=hash('md5',$serverDomainName);
-$sql = "SELECT * FROM {$CONFIG_TABLES['website']} WHERE `domain` = ? LIMIT 1";
+$sql = "SELECT * FROM {CONFIG_TABLES['website']} WHERE `domain` = ? LIMIT 1";
 $WEBSITE = $db->prepare($sql,[$serverDomainName])[0];
 if(!$WEBSITE['domain']){ echo"ERROR DOMAIN!!";exit(); }
 /*************************************************************/
 // 藍新金流配置
-$sql = "SELECT * FROM {$CONFIG_TABLES['newebpay']}  WHERE `id` = ? LIMIT 1";
+$sql = "SELECT * FROM {CONFIG_TABLES['newebpay']}  WHERE `id` = ? LIMIT 1";
 $NEWEBPAY = $db->prepare($sql,[$WEBSITE['id']])[0];
 if(!$NEWEBPAY['id']){ echo"ERROR NO NEWEBPAY!!";exit(); }
 $STORE_PREFIX = $NEWEBPAY['store_prefix'];                    // 訂單編號前置字元 (三個字母)
@@ -87,14 +85,14 @@ if(!isset($_COOKIE['lang'])) setcookie("lang","zh_TW");
 $lang=$_COOKIE['lang'];
 /*************************************************************/
 // 導覽列定義
-$sql = "SELECT `displayname`,`link` FROM {$CONFIG_TABLES['navbar']};";
+$sql = "SELECT `displayname`,`link` FROM {CONFIG_TABLES['navbar']};";
 foreach ( $db->each($sql) as $key => $values )
 { $navbarList[$values['displayname']]=$values['link']; }
 /*************************************************************/
 // 頁面設置
 $pagename = isset($_GET['page']) ? $_GET['page']:"home";
 $setPage=new pageRouter($db);
-$setPage->setTables($CONFIG_TABLES['component_page'],$CONFIG_TABLES['pages']);
+$setPage->setTables(CONFIG_TABLES['component_page'],CONFIG_TABLES['pages']);
 $pageInfo=$setPage->getPageInfo($pagename)[0];
 if($pageInfo == null){
     $pagename="err";
@@ -104,7 +102,7 @@ $pageTitle=$pageInfo['title'];
 $pageDescription=$pageInfo['description'];
 $pageImageUrl=$pageInfo['image'];
 $memberPermissions=new permissions($db);
-$memberPermissions->setTables($CONFIG_TABLES['member_roles'],$CONFIG_TABLES['role_permissions'],$CONFIG_TABLES['roles']);
+$memberPermissions->setTables(CONFIG_TABLES['member_roles'],CONFIG_TABLES['role_permissions'],CONFIG_TABLES['roles']);
 //$keywords=array("關鍵字","另一個關鍵字");     //現在關鍵字對SEO沒幫助暫時停用
 /*************************************************************/
 // 網站使用物件
