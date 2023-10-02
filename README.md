@@ -4,7 +4,7 @@
 - [Apache](https://httpd.apache.org/)/2.4.53  
 - [PHP](https://www.php.net/)/8.0.20  
 - [composer](https://getcomposer.org/)/2.5.4  
-- [codeigniter](https://codeigniter.tw/)/4.1.5  
+- ~~[codeigniter](https://codeigniter.tw/)/4.1.5~~  
 
 **安裝Apache**  
 ```shell
