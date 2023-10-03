@@ -19,27 +19,24 @@ define("CONFIG_TABLES", $ini['tables']);                      // 資料表相關
 define("CONFIG_GENERAL", $ini['general']);                    // 一般設置
 define("CONFIG_WEB_DBNAME", CONFIG_DB['dbname']);             // 資料庫名稱
 /*************************************************************/
-// Smarty配置
-$smarty = new Smarty;
-$smarty->caching = CONFIG_GENERAL['smarty_caching'];
-$smarty->cache_lifetime = CONFIG_GENERAL['smarty_cache_lifetime'];
-$smarty->force_compile = CONFIG_GENERAL['debug'];
-$smarty->debugging = CONFIG_GENERAL['debug'];
-/*************************************************************/
 // Database服務
 $db = new DBConnection(CONFIG_WEB_DBNAME,CONFIG_DB['host'],CONFIG_DB['port'],CONFIG_DB['username'],CONFIG_DB['password']);
 $db->deBugMode(CONFIG_GENERAL['debug']);
 /*************************************************************/
 // 查詢一些伺服器基本配置
-$serverDomainName=$_SERVER['SERVER_NAME'];
-$serverMD5=hash('md5',$serverDomainName);
-$sql = "SELECT * FROM {CONFIG_TABLES['website']} WHERE `domain` = ? LIMIT 1";
-$WEBSITE = $db->prepare($sql,[$serverDomainName])[0];
-if(!$WEBSITE['domain']){ echo"ERROR DOMAIN!!";exit(); }
+define("SERVER_DOMAIN_NAME",$_SERVER['SERVER_NAME']);
+define("SERVER_MD5",hash('md5',SERVER_DOMAIN_NAME));
+
+try{
+    $sql = "SELECT * FROM ".CONFIG_TABLES['website']." WHERE `domain` = ? LIMIT 1";
+    define("WEBSITE",$db->prepare($sql,[SERVER_DOMAIN_NAME])[0]);
+}catch (Exception $e){
+    echo"ERROR DOMAIN!!";exit();
+}
 /*************************************************************/
 // 藍新金流配置
-$sql = "SELECT * FROM {CONFIG_TABLES['newebpay']}  WHERE `id` = ? LIMIT 1";
-$NEWEBPAY = $db->prepare($sql,[$WEBSITE['id']])[0];
+$sql = "SELECT * FROM ".CONFIG_TABLES['newebpay']."  WHERE `id` = ? LIMIT 1";
+$NEWEBPAY = $db->prepare($sql,[WEBSITE['id']])[0];
 if(!$NEWEBPAY['id']){ echo"ERROR NO NEWEBPAY!!";exit(); }
 $STORE_PREFIX = $NEWEBPAY['store_prefix'];                    // 訂單編號前置字元 (三個字母)
 $STORE_ID = $NEWEBPAY['store_id'];                            // 藍新提供的 MerchantID
@@ -50,14 +47,21 @@ $STORE_CLIENT_BACK_URL = $NEWEBPAY['store_client_back_url'];  // [返回商店] 
 $STORE_NOTIFY_URL = $NEWEBPAY['store_notify_url'];            // 使用者付款完成時，藍新金流發送交易狀態結果的接收網址
 /*************************************************************/
 // 重設資料庫
-$db->resetDBname($WEBSITE['dbname']);
+$db->resetDBname(WEBSITE['dbname']);
+/*************************************************************/
+// Smarty配置
+$smarty = new Smarty;
+$smarty->caching = CONFIG_GENERAL['smarty_caching'];
+$smarty->cache_lifetime = CONFIG_GENERAL['smarty_cache_lifetime'];
+$smarty->force_compile = CONFIG_GENERAL['debug'];
+$smarty->debugging = CONFIG_GENERAL['debug'];
 /*************************************************************/
 // 資源
 $template = 'main.htm';
-$templatesDir = "templates/".$WEBSITE['stylesheet'];
+$templatesDir = "templates/".WEBSITE['stylesheet'];
 $defaultCss=array(
-    "./css/".$WEBSITE['stylesheet']."/stylesheet.css",
-    "./css/".$WEBSITE['stylesheet']."/".$WEBSITE['theme'].".css"
+    "./css/".WEBSITE['stylesheet']."/stylesheet.css",
+    "./css/".WEBSITE['stylesheet']."/".WEBSITE['theme'].".css"
 );
 $defaultJs=array(
     "./javascripts/jquery-3.2.1.min.js",
@@ -77,15 +81,15 @@ $author="snkms.com";
 $design="snkms.com";
 /*************************************************************/
 // 語言及伺服器配置
-$siteName=$WEBSITE['displayname'];
-$distribution=$WEBSITE['distribution'];
-$themeColor="#".$WEBSITE['theme'];
-$iconUrl=$WEBSITE['icon'];
+$siteName=WEBSITE['displayname'];
+$distribution=WEBSITE['distribution'];
+$themeColor="#".WEBSITE['theme'];
+$iconUrl=WEBSITE['icon'];
 if(!isset($_COOKIE['lang'])) setcookie("lang","zh_TW");
 $lang=$_COOKIE['lang'];
 /*************************************************************/
 // 導覽列定義
-$sql = "SELECT `displayname`,`link` FROM {CONFIG_TABLES['navbar']};";
+$sql = "SELECT `displayname`,`link` FROM ".CONFIG_TABLES['navbar'].";";
 foreach ( $db->each($sql) as $key => $values )
 { $navbarList[$values['displayname']]=$values['link']; }
 /*************************************************************/
