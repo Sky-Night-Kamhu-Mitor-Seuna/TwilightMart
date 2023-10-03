@@ -221,11 +221,7 @@ CREATE TABLE IF NOT EXISTS `m_role_permissions` (
     REFERENCES `m_roles`(`id`)
     ON DELETE CASCADE 
     ON UPDATE CASCADE,
-  CONSTRAINT `fk_permission_id`
-    FOREIGN KEY (`permission_id`)
-    REFERENCES `Mai_Websites`.`m_permissions`(`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
+    PRIMARY KEY (`role_id`)
 ) COMMENT='角色權限關聯表';
 
 -- 商品分類
