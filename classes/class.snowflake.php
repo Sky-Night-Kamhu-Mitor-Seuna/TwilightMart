@@ -1,13 +1,15 @@
 <?php
 //PHP_INT_SIZE: 8
+//1526054400000 2018年5月12日 00:00:00.0
 /*************************************************************
  * 
  * ### 雪花算法產生器 ###
  * @param int $dataCenterId 數據中心ID (默認0)
  * @param int $workerId 工作站ID (默認0)
+ * 
 *************************************************************/
 class snowflake {
-    private static $startTimeStamp = 1526054400000;     // 起始時間戳，這邊是2018年5月12日 00:00:00.0
+    private static $startTimeStamp = 1385481600000;     // 起始時間戳，這邊是2013年11月27日 00:00:00.0
     private static $dataCenterIdBits=5;                 // 數據中心ID位數(Bit)
     private static $workerIdBits=5;                     // 工作機ID位數(Bit)
     private static $sequenceBits=12;                    // 限制同一毫秒下最高可展生之序列號數量之位元
@@ -53,13 +55,16 @@ class snowflake {
     
     /************************************************
      * ### 取得一個雪花算法ID ###  
-     *  1 - 38 Bits $timestamp - 2018年5月12日00:00:00.0   
+     * @param int $timestamp 設置時間戳(毫秒)
+     * 
+     *  1 - 38 Bits $timestamp - 2013年11月27日 00:00:00.0   
      * 39 - 43 Bits $dataCenterId之保留位元  
      * 44 - 48 Bits $workerId之保留位元  
      * 49 - 60 Bits $sequenceBits之保留位元  
     ************************************************/
-    public function getId() : int {
-        $timestamp = $this->timeGen();
+    public function getId($timestamp=null) : int {
+
+        $timestamp = ($timestamp <> null) ? $timestamp : $this->timeGen();
 
         // 系統鐘時間產生錯誤
         if ($timestamp < $this->lastTimestamp) throw new Exception("[WANG] Clock moved backwards.");
