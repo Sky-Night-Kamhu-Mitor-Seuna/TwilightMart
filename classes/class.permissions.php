@@ -82,6 +82,34 @@ class permissions
         return $result;
     }
     /************************************************
+     * ### 取得身分組權限陣列 ###
+     * @param int $rid — 身份組id
+     * @param bool $containsParent — 是否包含父身分組權限
+     ************************************************/
+    public function getRolePermissionsArray($rid, $containsParent=false) : array
+    {
+        $result=array();
+        $sql = "SELECT * FROM `{$this->permissions}`;";
+        $permissions = $this->conn->each($sql);
+        $rPermission = $this->getRolePermissions($rid, $containsParent);
+        foreach($permissions as $p){
+            if( $p['id'] && ( $rPermission % 2 ) ) $result[] = ["id"=> $p['id'], "name" => $p['name'], "displayname" => $p['displayname']];
+            $rPermission >>= 1;
+        }
+        return $result;
+    }
+    /************************************************
+     * ### 顯示所有權限 ###
+     * @param int $rid — 身份組id
+     * @param bool $containsParent — 是否包含父身分組權限
+     ************************************************/
+    public function getAllPermissionsArray() : array
+    {
+        $sql = "SELECT * FROM `{$this->permissions}`;";
+        $permissions = $this->conn->each($sql);
+        return $permissions;
+    }
+    /************************************************
      * ### 確認使用者是否能存取物件 ###
      * @param int $mid 使用者id
      * @param int $wid 網站id
