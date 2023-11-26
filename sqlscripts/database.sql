@@ -204,7 +204,7 @@ CREATE TABLE IF NOT EXISTS `m_roles` (
   `wid` BIGINT(19) UNSIGNED NOT NULL COMMENT '網站ID',
   `name` VARCHAR(100) NOT NULL COMMENT '身份組名稱',
   `displayname` VARCHAR(100) NOT NULL COMMENT '身份組顯示名稱',
-  `parent_id` INT(11) NULL COMMENT '父身份組',
+  `parent_id` BIGINT(19) UNSIGNED NULL COMMENT '父身份組',
   `status` INT(3) NOT NULL DEFAULT 1 COMMENT '啟用狀態1啟用 0關閉',
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '創建時間',
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新時間',
@@ -358,9 +358,9 @@ CREATE TABLE IF NOT EXISTS `p_order_items` (
 INSERT INTO `m_roles` (`id`, `wid`, `name`, `displayname`, `parent_id`) VALUES (589605057335390208, 589605057335390208, 'everyone', '所有人', 1);
 INSERT INTO `m_roles` (`id`, `wid`, `name`, `displayname`, `parent_id`) VALUES (589605057335390209, 589605057335390208, 'root', '超級管理員', 1);
 INSERT INTO `m_roles` (`id`, `wid`, `name`, `displayname`, `parent_id`) VALUES (589605057335390210, 589605057335390208, 'admin', '管理員', 1);
-INSERT INTO `m_role_permissions` (`rid`, `permissions`) VALUES (589605057335390208, 0x0001);
-INSERT INTO `m_role_permissions` (`rid`, `permissions`) VALUES (589605057335390209, 0x1FFC);
-INSERT INTO `m_role_permissions` (`rid`, `permissions`) VALUES (589605057335390210, 0x2000);
+INSERT INTO `m_role_permissions` (`rid`, `parent_id`, `permissions`) VALUES (589605057335390208, 589605057335390208, 0x0001);
+INSERT INTO `m_role_permissions` (`rid`, `parent_id`,`permissions`) VALUES (589605057335390209, 589605057335390208, 0x1FFC);
+INSERT INTO `m_role_permissions` (`rid`, `parent_id`,`permissions`) VALUES (589605057335390210, 589605057335390208, 0x2000);
 
 -- 插入最高權限用戶帳戶權限
 INSERT INTO `m_member_roles` (`wid`, `mid`, `rid`) VALUES (589605057335390208, 589605057335390208, 589605057335390209);
