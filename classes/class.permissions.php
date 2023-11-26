@@ -57,15 +57,15 @@ class permissions
         $sql = "SELECT `permissions` FROM {$this->role_permissions} WHERE `rid` = ?;";
         $rows = $this->conn->prepare($sql,[$rid]);
         // $rows = $this->conn->each($sql);
-        $permissions |= $rows['permissions'];
+        $permissions |= $rows[0]['permissions'];
 
         // 0 代表已刪除身分組
         $sql = "SELECT `parent_id`,`id` FROM {$this->roles} WHERE `id` = ? AND `status` <> 0;";
         $row = $this->conn->prepare($sql,[$rid]);
         // $row = $this->conn->single($sql);
 
-        if ($row['parent_id']!=$row['id'] && $containsParent) {
-            $parentPermissions = $this->getRolePermissions($row['parent_id']);
+        if ($row[0]['parent_id']!=$row[0]['id'] && $containsParent) {
+            $parentPermissions = $this->getRolePermissions($row[0]['parent_id']);
             $permissions |= $parentPermissions;
         }
         return $permissions;
@@ -73,12 +73,11 @@ class permissions
     /************************************************
      * ### 確認身分組是否存在 ###
      * @param int $rid 身份組id
-     * @param int $wid 網站id
      ************************************************/
-    private function checkRolesStatus($rid, $wid) : int
+    private function checkRolesStatus($rid) : int
     {
-        $sql = "SELECT `status` FROM `{$this->roles}` WHERE `id` = ? AND `wid` = ?;";
-        $row = $this->conn->prepare($sql,[$rid,$wid]);
+        $sql = "SELECT `status` FROM `{$this->roles}` WHERE `id` = ?;";
+        $row = $this->conn->prepare($sql,[$rid]);
         $result = empty($row) ? 0: $row[0]['status'];
         return $result;
     }
@@ -135,7 +134,7 @@ class permissions
      ************************************************/
     public function addRoles($rid, $wid, $rName="New Role", $rDisplayname="New Role", $rParent=0) : bool
     {
-        if($this->checkRolesStatus($rid,$wid)) return false;
+        if($this->checkRolesStatus($rid)) return false;
         // 如果沒設置父身分組，則預設繼承為自己
         $rParent = $rParent != 0 ? $rParent : $rid;
         $sql = "INSERT INTO `{$this->roles}` (`id`, `wid`, `name`, `displayname`, `parent_id`) VALUES (?, ?, ?, ?, ?);";
@@ -151,11 +150,11 @@ class permissions
      * ### 移除身份組 ###
      * @param int $gid 身份組id
      ************************************************/
-    public function deleteRoles($rid, $wid) : bool
+    public function deleteRoles($rid) : bool
     {
-        if ($this->checkRolesStatus($rid,$wid) != 1 ) return false;
-        $sql = "UPDATE `{$this->roles}` SET `status` = 0 WHERE `id` = ? AND `wid` = ?;";
-        $rows = $this->conn->prepare($sql,[$rid, $wid]);
+        if ($this->checkRolesStatus($rid) != 1 ) return false;
+        $sql = "UPDATE `{$this->roles}` SET `status` = 0 WHERE `id` = ?;";
+        $rows = $this->conn->prepare($sql,[$rid]);
 
         return empty($rows);
     }
@@ -166,13 +165,13 @@ class permissions
      * @param string $rName 新身份組名稱
      * @param string $rDisplayname 新身份組暱稱
      ************************************************/
-    public function editRolesName($rid, $wid, $rName, $rDisplayname) : bool
+    public function editRolesName($rid, $rName, $rDisplayname) : bool
     {
-        if(!$this->checkRolesStatus($rid, $wid)) return false;
-        $sql = "UPDATE {$this->roles} SET `name`, `displayname` VALUE (?, ?) WHERE `rid` = ? AND `wid` = ?;";
+        if(!$this->checkRolesStatus($rid)) return false;
+        $sql = "UPDATE {$this->roles} SET `name`, `displayname` VALUE (?, ?) WHERE `rid` = ?;";
         // :D
         $rDisplayname = $rName;
-        $row = $this->conn->prepare($sql, [$rName, $rDisplayname, $rid, $wid]);
+        $row = $this->conn->prepare($sql, [$rName, $rDisplayname, $rid]);
 
         return empty($rows);
     }
@@ -183,18 +182,18 @@ class permissions
      * @param string $rPermissions 權限編輯項目
      * @param string $action 動作 `ADD`:增加 `DEL`:刪除
      ************************************************/
-    public function editRolesPermission($rid, $wid, $rPermissions, $action="ADD") : bool
+    public function editRolesPermission($rid, $rPermissions, $action="ADD") : bool
     {
-        if(!$this->checkRolesStatus($rid, $wid)) return false;
+        if(!$this->checkRolesStatus($rid)) return false;
         switch($action){
             case "DEL":
             case "REM":
-                $sql = "UPDATE `{$this->role_permissions}` SET `permissions` = `permissions` | ? WHERE `rid` = ?;";
+                $rPermissions = ~$rPermissions;
+                $sql = "UPDATE `{$this->role_permissions}` SET `permissions` = `permissions` & ? WHERE `rid` = ?;";
                 break; 
             case "ADD":
             // default:
-                $rPermissions = ~$rPermissions;
-                $sql = "UPDATE `{$this->role_permissions}` SET `permissions` = `permissions` & ? WHERE `rid` = ?;";
+                $sql = "UPDATE `{$this->role_permissions}` SET `permissions` = `permissions` | ? WHERE `rid` = ?;";
                 break;
         }
         
@@ -207,12 +206,12 @@ class permissions
      * @param int $wid 網站id
      * @param string $rParent 編輯身分組父項目
      ************************************************/
-    public function editRolesParent($rid, $wid, $rParentId) : bool
+    public function editRolesParent($rid, $rParentId) : bool
     {
-        if(!$this->checkRolesStatus($rid, $wid)) return false;
-        $sql = "UPDATE `{$this->roles}` SET `parent_id` = ? WHERE id = ? AND wid = ?;";
+        if(!$this->checkRolesStatus($rid)) return false;
+        $sql = "UPDATE `{$this->roles}` SET `parent_id` = ? WHERE id = ?;";
         
-        $row = $this->conn->prepare($sql, [$rParentId, $rid, $wid]);
+        $row = $this->conn->prepare($sql, [$rParentId, $rid]);
         return empty($rows);
     }
 }
