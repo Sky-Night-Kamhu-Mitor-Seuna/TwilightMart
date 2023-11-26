@@ -1,60 +1,125 @@
 <?php
-/*************************************************************
+// include "./class.connectDatabase.php";
+/****************************************************************************************
  * 
- * 新增一個頁面元件
+ * 頁面元件
+ * @param obj $db 資料庫
  * 
-*************************************************************/
-class componentPage{
-  private $conn;
-  private $component_page_table='s_component_page';
-  //private $components_table='s_components';
-  //private $pages_table='s_pages';
-  public $uuid;
-  public $component_id;
-  public $page_id;
-  public $position;
-  public $params;
+ ****************************************************************************************/
+class componentPage
+{
+    private $conn;
+    private $pageComponent = 'w_page_component';
+    private $pages = 'w_pages';
+    private $components = 's_components';
 
-  public function __construct($db) {
-    try{ $this->conn = $db; }
-    catch(Exception $e){echo $e;}
-  }
-  /************************************************
-   * ### 新增元件與頁面的關聯 ###
-   * @param int $component_id 元件編號
-   * @param int $page_id 頁面編號
-   * @param json $params 參數
-   ************************************************/
-  function create($component_id,$page_id,$params) {
-    $this->uuid = $this->createUUID();
-    $this->component_id = $component_id;
-    $this->page_id = $page_id;
-    $this->position = 0;
-    $this->params = $params;
-    try{
-      $query =  "SELECT position {$this->component_page_table} WHERE page_id = ? ORDER BY position DESC LIMIT 1";
-      $this->position = ($this->conn->prepare($query,$this->page_id))+1;
-      // 寫入資料庫
-      $query = "INSERT INTO {$this->component_page_table} SET uuid=?, component_id=?, page_id=?, position=?, params=?";
-      $this->conn->prepare($query,Array($this->uuid,$this->component_id,$this->page_id,$this->position,$this->params));
+    public function __construct($db)
+    {
+        $this->conn = $db;
     }
-    catch(Exception $e){}
-  }
-  
-  // 更新元件與頁面的關聯
-  function update() {
-    echo "更新資料庫";
-  }
+    /************************************************
+     * ### 確認元件預設參數及權限 ###
+     * @param int $cid 元件編號
+     ************************************************/
+    private function getComponentParams($cid) : array
+    {
+        $sql = "SELECT `params`,`permissions` FROM `{$this->components}` WHERE `id` = ? ;";
+        $row = $this->conn->prepare($sql,[$cid]);
+        return $row[0];
+    }
+    /************************************************
+     * ### 取得新的元件位址 ###
+     * @param int $pid 頁面編號
+     ************************************************/
+    private function getPageComponentPosition($pid) : int
+    {
+        $sql = "SELECT `position` FROM `{$this->pageComponent}` WHERE `pid`= ? AND `status` <> 0 ORDER BY `position` DESC LIMIT 1";
+        $row = $this->conn->prepare($sql, [$pid]);
+        $result = empty($row) ? 0 : $row[0]['position'];
+        return $result;
+    }
+    /************************************************
+     * ### 取得頁面參數位址等資訊 ###
+     * @param int $id 產生的頁面元件編號
+     ************************************************/
+    private function getPageComponentsPosition($pid, $position) : int
+    {
+        $sql = "SELECT `id` FROM `{$this->pageComponent}` WHERE `pid` = ? AND `position` = ? AND `status` <> 0;";
+        $row = $this->conn->prepare($sql,[$pid, $position]);
+        $result = empty($row) ? 0 : $row[0][`id`] ;
+        return $result;
+    }
+    /************************************************
+     * ### 取得頁面參數位址等資訊 ###
+     * @param int $id 產生的頁面元件編號
+     ************************************************/
+    private function getPageComponentsInfo($id) : array
+    {
+        $sql = "SELECT `displayname`, `params` FROM `{$this->pageComponent}` WHERE `id` = ? AND `status` <> 0;";
+        $row = $this->conn->prepare($sql,[$id]);
+        $result = empty($row) ? array() : $row[0] ;
+        return $result;
+    }
+    /************************************************
+     * ### 新增元件與頁面的關聯 ###
+     * @param int $id 產生的頁面元件編號
+     * @param int $cid 元件編號
+     * @param int $pid 頁面編號
+     * @param string $displayname 元件命名
+     * @param json $params 參數
+     ************************************************/
+    public function addPageComponents($id, $pid, $cid, $displayname="New Component") : bool
+    {
+        $componentDefaultParam = $this->getComponentParams($cid);
+        // 不存在之元件
+        if(empty($componentDefaultParam)) return false;
+        $newPosition = $this->getPageComponentPosition($pid) + 1;
+        
+        $sql = "INSERT INTO `{$this->pageComponent}` (`id`, `pid`, `cid`, `displayname`, `position`, `params`, `permissions`) 
+        VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $row = $this->conn->prepare($sql, [$id, $pid, $cid, $displayname, $newPosition, $componentDefaultParam['params'], $componentDefaultParam['permissions']]);
+        return empty($row);
+    }
+    /************************************************
+     * ### 更新頁面參數名稱等資訊 ###
+     * @param int $id 產生的頁面元件編號
+     * @param string $displayname 元件命名
+     * @param json $params 參數
+     ************************************************/
+    public function editPageComponents($id, $params=null, $displayname=null)
+    {
+        $info = $this->getPageComponentsInfo($id);
+        if(empty($info)) return false;
 
-  // 刪除元件與頁面的關聯
-  function delete() {
-    echo "刪除資料庫";
-  }
-  function createUUID(){
-    return uniqid();
-  }
-  
+        $displayname = is_null($displayname) ? $info['displayname'] : $displayname;
+        $params = is_null($params) ? $info['params'] : $params;
+        
+        $sql = "UPDATE `{$this->pageComponent}` SET `displayname` = ?, `params` = ? WHERE `id` = ?";
+        $row = $this->conn->prepare($sql,[$displayname, $params, $id]);
+        return empty($row);
+    }
+    /************************************************
+     * ### 更新頁面位址 ###
+     * @param int $id 產生的頁面元件編號
+     * @param int $cid 元件編號
+     * @param int $pid 頁面編號
+     * @param int $wid 網頁編號
+     * @param string $displayname 元件命名
+     * @param json $params 參數
+     * @param int position 元件位址
+     ************************************************/
+    public function swapPageComponentsPosition($id, $params=null, $displayname=null, $position=null){
 
+    }
+    /************************************************
+     * ### 刪除元件與頁面的關聯 ###
+     * @param int $id 產生的頁面元件編號
+     ************************************************/
+    public function deletePageComponents($id)
+    {
+        if(empty($this->getPageComponentsInfo($id))) return false;
+        $sql = "UPDATE `{$this->pageComponent}` SET `status` = 0 WHERE `id` = ?";
+        $row = $this->conn->prepare($sql,[$id]);
+        return empty($row);
+    }
 }
-
-?>
