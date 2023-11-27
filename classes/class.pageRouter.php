@@ -1,51 +1,45 @@
 <?php
+// include "./class.connectDatabase.php";
 /*************************************************************
  * 
- * 頁面選擇器
+ * 頁面選擇器 : 用來確認頁面有哪些元件
+ * @param obj $db 資料庫
  * 
 *************************************************************/
 class pageRouter{
     private $conn;
 
-    private $component_page_table="s_component_page";
-    private $pages_table="s_pages";
-    private $pageid;
-    /************************************************
-     * ### pageRouter ###
-     * @param obj $db 資料庫
-     ************************************************/
-    public function __construct($db){
-        $this->conn = $db;
-    }
-    /************************************************
-     * ### 設置元件表 ###
-     * @param obj $obj 資料表
-     ************************************************/
-    public function setTables($component_page_table,$pages_table)
+    private $pageComponent="w_page_component";
+    private $pages="w_pages";
+    public function __construct($db)
     {
-        $this->component_page_table = $component_page_table;
-        $this->pages_table = $pages_table;
+        $this->conn = $db;
     }
     /************************************************
      * ### 取得頁面資訊 ###
      * @param string $pagename 頁面名稱
+     * @param string $wid 網站編號
      ************************************************/
-    public function getPageInfo($pagename) {
-        $output=$this->conn->prepare("SELECT `id`,`title`,`description` FROM {$this->pages_table} WHERE link=?;",[$pagename]);
-        if(!empty($output)) return $output;
-        return null;
+    public function getPageInfo($pagename, $wid) : array
+    {
+        $sql = "SELECT `id`, `displayname`, `description`, `icon` FROM {$this->pages} WHERE `name` = ? AND `wid` = ? AND `status` <> 0;";
+        $row = $this->conn->prepare($sql,[$pagename, $wid]);
+        return $row;
     }
     /************************************************
      * ### 取得頁面元件 ###
      * @param string $pagename 頁面名稱
+     * @param string $wid 網站編號
      ************************************************/
-    public function getComponentPage($pagename){
-        $this->pageid = $this->getPageInfo($pagename)[0]['id'];
-        if($this->pageid != null){
-            $output=$this->conn->each("SELECT `displayname`, `component_id`, `params` FROM {$this->component_page_table} WHERE `page_id` = $this->pageid ORDER BY position ASC");
-            return $output;
-        }
-        return null;
+    public function getPageComponent($pagename, $wid) : array
+    {
+        $pageInfomation =  $this->getPageInfo($pagename, $wid);
+        if(empty($pageInfomation)) return array();
+        $pid = $pageInfomation[0]['id'];
+        
+        $sql = "SELECT `displayname`, `cid`, `params` FROM {$this->pageComponent} WHERE `pid` = ? AND `status` <> 0 ORDER BY `position` ASC;";
+        $row = $this->conn->prepare($sql, [$pid]);
+        return $row;
     }
 }
 ?>
