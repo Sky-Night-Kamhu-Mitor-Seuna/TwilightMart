@@ -375,18 +375,18 @@ INSERT INTO `w_navbar` (`wid`, `name`, `displayname`, `link`) VALUES (5896050573
 INSERT INTO `w_navbar` (`wid`, `name`, `displayname`, `link`) VALUES (589605057335390208, "About", "關於我們", "?page=about");
 
 -- 插入頁面
-INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390211, 589605057335390208, "錯誤", "err", "錯誤頁面", 3);
-INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390212, 589605057335390208,"首頁","home","網站的首頁", 3);
-INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390213, 589605057335390208,"登入","login","登入頁面", 3);
-INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390214, 589605057335390208,"登出","logout","登出頁面", 3);
-INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390215, 589605057335390208,"註冊","signup","註冊頁面", 3);
-INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390216, 589605057335390208,"帳戶","member","用戶頁面", 3);
-INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390217, 589605057335390208,"付款","check1_payment","購買確認頁面", 3);
-INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390218, 589605057335390208,"付款","check2_payment","結帳頁面", 3);
-INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390219, 589605057335390208,"付款","final_payment","結帳完成頁面", 3);
-INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390220, 589605057335390208,"管理","admweb","管理員頁面", 3);
-INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390221, 589605057335390208,"商店","store","商店頁面", 3);
-INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390222, 589605057335390208,"商品","product","商品詳細頁面", 3);
+INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390211, 589605057335390208, "錯誤", "err", "錯誤頁面", 2);
+INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390212, 589605057335390208,"首頁","home","網站的首頁", 2);
+INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390213, 589605057335390208,"登入","login","登入頁面", 2);
+INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390214, 589605057335390208,"登出","logout","登出頁面", 2);
+INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390215, 589605057335390208,"註冊","signup","註冊頁面", 2);
+INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390216, 589605057335390208,"帳戶","member","用戶頁面", 2);
+INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390217, 589605057335390208,"付款","check1_payment","購買確認頁面", 2);
+INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390218, 589605057335390208,"付款","check2_payment","結帳頁面", 2);
+INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390219, 589605057335390208,"付款","final_payment","結帳完成頁面", 2);
+INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390220, 589605057335390208,"管理","admweb","管理員頁面", 2);
+INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390221, 589605057335390208,"商店","store","商店頁面", 2);
+INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390222, 589605057335390208,"商品","product","商品詳細頁面", 2);
 INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`) VALUES (589605057335390223, 589605057335390208,"關於","about","關於我們");
 
 
