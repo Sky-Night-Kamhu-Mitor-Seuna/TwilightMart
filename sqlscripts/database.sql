@@ -75,6 +75,7 @@ CREATE TABLE IF NOT EXISTS `s_components` (
   `name` VARCHAR(50) NOT NULL COMMENT '元件名稱',
   `description` TEXT COMMENT '元件描述',
   `params` JSON NOT NULL COMMENT '元件預設參數',
+  `permissions` VARBINARY(50) NOT NULL DEFAULT '0' COMMENT '瀏覽該元件需求權限0x0代表無須權限，0x2代表需要群組管理權限',
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '創建時間',
   PRIMARY KEY (id),
   INDEX `name` (`name`)
@@ -171,14 +172,14 @@ CREATE TABLE IF NOT EXISTS `w_pages` (
 ) COMMENT='頁面資料表';
 
 -- 網站頁面應用元件
-CREATE TABLE IF NOT EXISTS `w_component_page` (
+CREATE TABLE IF NOT EXISTS `w_page_component` (
   `id` BIGINT(19) UNSIGNED NOT NULL COMMENT 'ID',
   `pid` BIGINT(19) UNSIGNED NOT NULL COMMENT '頁面ID',
   `cid` INT NOT NULL COMMENT '元件ID',
   `displayname` VARCHAR(128) NOT NULL COMMENT '名稱',
   `position` INT(11) NOT NULL COMMENT '位置',
   `params` JSON NOT NULL COMMENT '元件參數',
-  `permissons` VARBINARY(50) NOT NULL DEFAULT 0 COMMENT '瀏覽該頁面需求權限0x0代表無須權限，0x2代表需要群組管理權限',
+  `permissions` VARBINARY(50) NOT NULL DEFAULT 0 COMMENT '瀏覽該頁面需求權限0x0代表無須權限，0x2代表需要群組管理權限',
   `status` INT(3) NOT NULL DEFAULT 1 COMMENT '啟用狀態1啟用 0關閉',
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '創建時間',
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新時間',
@@ -391,25 +392,25 @@ INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`) VALUES
 
 
 -- 新增頁面元件 
--- INSERT INTO `w_component_page` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES (589605057335390223, "錯誤",1,1,0,"{}");
--- INSERT INTO `w_component_page` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES (589605057335390224, "公告",2,2,0,"{}");
--- INSERT INTO `w_component_page` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ("644ca8d7df45e","登入畫面",4,4,0,"{}");
--- INSERT INTO `w_component_page` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ("644ca90d10e45","登入畫面下方廣告",6,4,1,"{}");
--- INSERT INTO `w_component_page` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ("644ca8f622e1f","註冊畫面",3,3,0,"{}");
--- INSERT INTO `w_component_page` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ("644e182ab2dfe","註冊畫面下方廣告",6,3,1,"{}");
--- INSERT INTO `w_component_page` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ("644ca9075ca91","商店頁面",8,8,0,"{}");
--- INSERT INTO `w_component_page` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ("644e183396307","商店畫面下方廣告",6,8,1,"{}");
--- -- INSERT INTO `w_component_page` (`uuid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ("644e181304d8d","錯誤",1,6,0,"{}");
--- INSERT INTO `w_component_page` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ("644e181f66018","商品詳細頁面",9,9,0,"{}");
--- INSERT INTO `w_component_page` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ("644e5771b5cb1","登出",5,5,0,"{}");
--- INSERT INTO `w_component_page` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ('644e967d568f3','交易確認頁面', 10, 10, 0, '{}');
--- INSERT INTO `w_component_page` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ('644ea1803fbc9','交易確認頁面2', 11, 11, 0, '{}');
--- INSERT INTO `w_component_page` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ('644ea1884a1ce','交易完成頁面', 12, 12, 0, '{}');
--- INSERT INTO `w_component_page` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ('644fdeeb5ab0f','會員系統頁面', 7, 6, 0, '{}');
--- -- INSERT INTO `w_component_page` (`uuid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ('644fdf015947f','調整商品頁面', 14, 6, 0, '{}');
--- INSERT INTO `w_component_page` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ("644fe0fd85604","商品詳細頁面下方推薦",13,9,1,"{}");
--- INSERT INTO `w_component_page` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ("644fe1bc403f8","交易確認頁面下方推薦",13,10,1,"{}");
--- INSERT INTO `w_component_page` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ("644fe1bc40399","關於",16,13,1,"{}");
+-- INSERT INTO `w_page_component` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES (589605057335390223, "錯誤",1,1,0,"{}");
+-- INSERT INTO `w_page_component` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES (589605057335390224, "公告",2,2,0,"{}");
+-- INSERT INTO `w_page_component` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ("644ca8d7df45e","登入畫面",4,4,0,"{}");
+-- INSERT INTO `w_page_component` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ("644ca90d10e45","登入畫面下方廣告",6,4,1,"{}");
+-- INSERT INTO `w_page_component` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ("644ca8f622e1f","註冊畫面",3,3,0,"{}");
+-- INSERT INTO `w_page_component` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ("644e182ab2dfe","註冊畫面下方廣告",6,3,1,"{}");
+-- INSERT INTO `w_page_component` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ("644ca9075ca91","商店頁面",8,8,0,"{}");
+-- INSERT INTO `w_page_component` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ("644e183396307","商店畫面下方廣告",6,8,1,"{}");
+-- -- INSERT INTO `w_page_component` (`uuid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ("644e181304d8d","錯誤",1,6,0,"{}");
+-- INSERT INTO `w_page_component` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ("644e181f66018","商品詳細頁面",9,9,0,"{}");
+-- INSERT INTO `w_page_component` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ("644e5771b5cb1","登出",5,5,0,"{}");
+-- INSERT INTO `w_page_component` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ('644e967d568f3','交易確認頁面', 10, 10, 0, '{}');
+-- INSERT INTO `w_page_component` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ('644ea1803fbc9','交易確認頁面2', 11, 11, 0, '{}');
+-- INSERT INTO `w_page_component` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ('644ea1884a1ce','交易完成頁面', 12, 12, 0, '{}');
+-- INSERT INTO `w_page_component` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ('644fdeeb5ab0f','會員系統頁面', 7, 6, 0, '{}');
+-- -- INSERT INTO `w_page_component` (`uuid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ('644fdf015947f','調整商品頁面', 14, 6, 0, '{}');
+-- INSERT INTO `w_page_component` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ("644fe0fd85604","商品詳細頁面下方推薦",13,9,1,"{}");
+-- INSERT INTO `w_page_component` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ("644fe1bc403f8","交易確認頁面下方推薦",13,10,1,"{}");
+-- INSERT INTO `w_page_component` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ("644fe1bc40399","關於",16,13,1,"{}");
 
 -- 插入商品 及 商品分類
 INSERT INTO `i_product_types` (`id`, `wid`, `name`, `description`) VALUES (589605308993630208, 589605057335390208, '未分類', '沒有分類');
