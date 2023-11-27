@@ -39,16 +39,17 @@ class componentPage
         return $result;
     }
     /************************************************
-     * ### 取得頁面參數位址等資訊 ###
+     * ### 取得特定位置元件之ID ###
      * @param int $id 產生的頁面元件編號
+     * @param int $position 元件位置
      ************************************************/
-    private function getPageComponentsPosition($pid, $position) : int
-    {
-        $sql = "SELECT `id` FROM `{$this->pageComponent}` WHERE `pid` = ? AND `position` = ? AND `status` <> 0;";
-        $row = $this->conn->prepare($sql,[$pid, $position]);
-        $result = empty($row) ? 0 : $row[0][`id`] ;
-        return $result;
-    }
+    // private function getPageComponentId($pid, $position) : int
+    // {
+    //     $sql = "SELECT `id` FROM `{$this->pageComponent}` WHERE `pid` = ? AND `position` = ? AND `status` <> 0;";
+    //     $row = $this->conn->prepare($sql,[$pid, $position]);
+    //     $result = empty($row) ? 0 : $row[0][`id`] ;
+    //     return $result;
+    // }
     /************************************************
      * ### 取得頁面參數位址等資訊 ###
      * @param int $id 產生的頁面元件編號
@@ -99,19 +100,6 @@ class componentPage
         return empty($row);
     }
     /************************************************
-     * ### 更新頁面位址 ###
-     * @param int $id 產生的頁面元件編號
-     * @param int $cid 元件編號
-     * @param int $pid 頁面編號
-     * @param int $wid 網頁編號
-     * @param string $displayname 元件命名
-     * @param json $params 參數
-     * @param int position 元件位址
-     ************************************************/
-    public function swapPageComponentsPosition($id, $params=null, $displayname=null, $position=null){
-
-    }
-    /************************************************
      * ### 刪除元件與頁面的關聯 ###
      * @param int $id 產生的頁面元件編號
      ************************************************/
@@ -122,4 +110,10 @@ class componentPage
         $row = $this->conn->prepare($sql,[$id]);
         return empty($row);
     }
+    /************************************************
+     ************************************************/
+    // public function swapPageComponentsPosition($id, $params=null, $displayname=null, $position=null){
+
+    // }
+    
 }
