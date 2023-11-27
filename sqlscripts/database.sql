@@ -355,6 +355,20 @@ CREATE TABLE IF NOT EXISTS `p_order_items` (
     ON UPDATE CASCADE
 ) COMMENT='訂單商品明細表';
 
+-- 系統操作紀錄表
+CREATE TABLE `s_system_log` (
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '操作邊號',
+	`type` INT(11) NOT NULL DEFAULT '0' COMMENT '類型',
+	`operator` BIGINT(19) UNSIGNED NOT NULL DEFAULT '0' COMMENT '操作者',
+	`action` VARCHAR(50) NOT NULL COMMENT '動作',
+	`hash` VARCHAR(64) NOT NULL COMMENT '用於確認操作是否許可',
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '創建時間',
+	PRIMARY KEY (`id`),
+	INDEX `FK_s_system_log_m_members` (`operator`),
+	CONSTRAINT `FK_s_system_log_m_members` FOREIGN KEY (`operator`) REFERENCES `m_members` (`id`)
+) COMMENT='系統操作紀錄';
+
+
 -- 插入基本身份組
 INSERT INTO `m_roles` (`id`, `wid`, `name`, `displayname`, `parent_id`) VALUES (589605057335390208, 589605057335390208, 'everyone', '所有人', 589605057335390208);
 INSERT INTO `m_roles` (`id`, `wid`, `name`, `displayname`, `parent_id`) VALUES (589605057335390209, 589605057335390208, 'root', '超級管理員', 589605057335390208);
