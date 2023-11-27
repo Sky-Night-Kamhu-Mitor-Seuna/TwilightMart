@@ -231,7 +231,6 @@ class permissions
     /************************************************
      * ### 修改身份組父身分組 ###
      * @param int $rid 身份組id
-     * @param int $wid 網站id
      * @param string $rParent 編輯身分組父項目
      ************************************************/
     public function editRolesParent($rid, $rParentId) : bool

@@ -18,9 +18,10 @@ class pageRouter{
     /************************************************
      * ### 取得頁面資訊 ###
      * @param string $pagename 頁面名稱
-     * @param string $wid 網站編號
+     * @param string $wid 網站編號  
+     * 這個func非常重要，他也是輸出網站pid的來源
      ************************************************/
-    public function getPageInfo($pagename, $wid) : array
+    public function getPageInfomation($pagename, $wid) : array
     {
         $sql = "SELECT `id`, `displayname`, `description`, `icon` FROM {$this->pages} WHERE `name` = ? AND `wid` = ? AND `status` <> 0;";
         $row = $this->conn->prepare($sql,[$pagename, $wid]);
@@ -28,15 +29,10 @@ class pageRouter{
     }
     /************************************************
      * ### 取得頁面元件 ###
-     * @param string $pagename 頁面名稱
-     * @param string $wid 網站編號
+     * @param string $pid 頁面編號
      ************************************************/
-    public function getPageComponent($pagename, $wid) : array
+    public function getPageComponent($pid) : array
     {
-        $pageInfomation =  $this->getPageInfo($pagename, $wid);
-        if(empty($pageInfomation)) return array();
-        $pid = $pageInfomation[0]['id'];
-        
         $sql = "SELECT `displayname`, `cid`, `params` FROM {$this->pageComponent} WHERE `pid` = ? AND `status` <> 0 ORDER BY `position` ASC;";
         $row = $this->conn->prepare($sql, [$pid]);
         return $row;

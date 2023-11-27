@@ -10,7 +10,7 @@ class componentPage
 {
     private $conn;
     private $pageComponent = 'w_page_component';
-    private $pages = 'w_pages';
+    // private $pages = 'w_pages';
     private $components = 's_components';
 
     public function __construct($db)
