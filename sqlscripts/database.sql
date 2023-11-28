@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS `m_members` (
   `account` VARCHAR(20) NOT NULL COMMENT '唯一識別項帳號',
   `nickname` VARCHAR(18) NOT NULL COMMENT '暱稱',
   `password` VARCHAR(255) NOT NULL COMMENT '密碼',
+  `last_ip_address` VARCHAR(45) NOT NULL DEFAULT '0.0.0.0' COMMENT '使用者最後登入IP位址',
   `status` INT(3) NOT NULL DEFAULT 1 COMMENT '帳號狀態1啟用 0停用',
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '創建時間',
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新時間',
@@ -357,16 +358,79 @@ CREATE TABLE IF NOT EXISTS `p_order_items` (
 
 -- 系統操作紀錄表
 CREATE TABLE `s_system_log` (
-	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '操作邊號',
-	`type` INT(11) NOT NULL DEFAULT '0' COMMENT '類型',
-	`operator` BIGINT(19) UNSIGNED NOT NULL DEFAULT '0' COMMENT '操作者',
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '操作編號',
+	`wid` BIGINT(19) UNSIGNED NOT NULL,
+	`status` INT(11) NOT NULL DEFAULT '0' COMMENT '類型 0:無效操作 1:存取成功 2:存取被拒',
+	`operator` BIGINT(19) UNSIGNED NOT NULL COMMENT '操作者',
 	`action` VARCHAR(50) NOT NULL COMMENT '動作',
 	`hash` VARCHAR(64) NOT NULL COMMENT '用於確認操作是否許可',
-  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '創建時間',
+	`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '創建時間',
 	PRIMARY KEY (`id`),
 	INDEX `FK_s_system_log_m_members` (`operator`),
-	CONSTRAINT `FK_s_system_log_m_members` FOREIGN KEY (`operator`) REFERENCES `m_members` (`id`)
+	INDEX `FK_s_system_log_s_website` (`wid`),
+	CONSTRAINT `FK_s_system_log_m_members` FOREIGN KEY (`operator`) REFERENCES `m_members` (`id`),
+	CONSTRAINT `FK_s_system_log_s_website` FOREIGN KEY (`wid`) REFERENCES `s_website` (`id`)
 ) COMMENT='系統操作紀錄';
+
+-- 頁面瀏覽紀錄表
+CREATE TABLE `s_page_views_log` (
+	`id` BIGINT(19) UNSIGNED NOT NULL COMMENT '編號',
+	`mid` BIGINT(19) UNSIGNED NOT NULL COMMENT '使用者編號',
+	`pid` BIGINT(19) UNSIGNED NOT NULL COMMENT '頁面編號',
+	`ip_address` VARCHAR(45) NOT NULL DEFAULT '0.0.0.0' COMMENT 'IP位址',
+	`member_agent` VARCHAR(255) NOT NULL DEFAULT 'unknown' COMMENT '會員使用裝置',
+	`referrer_url` VARCHAR(2048) NULL DEFAULT NULL COMMENT '來源網址',
+  `duration` INT(11) NOT NULL COMMENT "紀錄時間(秒)",
+	`view_end` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "結束瀏覽時間",
+	`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '創建/瀏覽時間',
+	PRIMARY KEY (`id`),
+	INDEX `FK_s_page_views_log_m_members` (`mid`),
+	INDEX `FK_s_page_views_log_i_products` (`pid`),
+	CONSTRAINT `FK_s_page_views_log_i_products` 
+    FOREIGN KEY (`pid`) 
+    REFERENCES `i_products` (`id`) 
+    ON UPDATE CASCADE 
+    ON DELETE CASCADE,
+	CONSTRAINT `FK_s_page_views_log_m_members` 
+    FOREIGN KEY (`mid`) 
+    REFERENCES `m_members` (`id`) 
+    ON UPDATE CASCADE 
+    ON DELETE CASCADE
+) COMMENT='系統操作紀錄';
+
+
+-- 商品瀏覽紀錄表
+CREATE TABLE `s_product_page_views` (
+	`id` BIGINT(19) UNSIGNED NOT NULL COMMENT '編號',
+	`mid` BIGINT(19) UNSIGNED NOT NULL COMMENT '使用者編號',
+	`vid` BIGINT(19) UNSIGNED NOT NULL COMMENT '瀏覽頁面紀錄編號',
+	`product_id` BIGINT(19) UNSIGNED NOT NULL COMMENT '瀏覽頁面紀錄編號',
+	`duration` INT(11) NULL NOT NULL COMMENT "紀錄時間(秒)",
+	`view_end` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '結束瀏覽時間',
+	`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '創建時間',
+	PRIMARY KEY (`id`),
+	INDEX `FK_s_product_page_views_m_members` (`mid`),
+	INDEX `FK_s_page_views_log_views_w_pages` (`vid`),
+	INDEX `FK_s_product_page_views_s_product_page_views` (`product_id`),
+	CONSTRAINT `FK_s_product_page_views_m_members` 
+    FOREIGN KEY (`mid`) 
+    REFERENCES `m_members` (`id`)
+    ON UPDATE CASCADE 
+    ON DELETE CASCADE,
+	CONSTRAINT `FK_s_product_page_views_s_product_page_views` 
+    FOREIGN KEY (`product_id`) 
+    REFERENCES `s_product_page_views` (`id`)
+    ON UPDATE CASCADE 
+    ON DELETE CASCADE,
+	CONSTRAINT `FK_s_page_views_log_views_w_pages` 
+    FOREIGN KEY (`vid`) 
+    REFERENCES `s_page_views_log` (`id`) 
+    ON UPDATE CASCADE 
+    ON DELETE CASCADE
+) COMMENT='系統操作紀錄';
+
+
+
 
 
 -- 插入基本身份組
