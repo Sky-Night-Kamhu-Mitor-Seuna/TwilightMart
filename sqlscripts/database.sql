@@ -396,11 +396,11 @@ CREATE TABLE `s_page_views_log` (
     REFERENCES `m_members` (`id`) 
     ON UPDATE CASCADE 
     ON DELETE CASCADE
-) COMMENT='系統操作紀錄';
+) COMMENT='頁面瀏覽紀錄';
 
 
 -- 商品瀏覽紀錄表
-CREATE TABLE `s_product_page_views` (
+CREATE TABLE `s_product_views` (
 	`id` BIGINT(19) UNSIGNED NOT NULL COMMENT '編號',
 	`mid` BIGINT(19) UNSIGNED NOT NULL COMMENT '使用者編號',
 	`vid` BIGINT(19) UNSIGNED NOT NULL COMMENT '瀏覽頁面紀錄編號',
@@ -427,7 +427,7 @@ CREATE TABLE `s_product_page_views` (
     REFERENCES `s_page_views_log` (`id`) 
     ON UPDATE CASCADE 
     ON DELETE CASCADE
-) COMMENT='系統操作紀錄';
+) COMMENT='商品瀏覽紀錄';
 
 
 
