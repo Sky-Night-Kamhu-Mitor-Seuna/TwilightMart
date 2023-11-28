@@ -363,7 +363,7 @@ CREATE TABLE `s_system_log` (
   `mid` BIGINT(19) UNSIGNED NOT NULL COMMENT '操作者',
 	`status` INT(11) NOT NULL DEFAULT '0' COMMENT '類型 0:無效操作 1:存取成功 2:存取被拒',
 	`action` VARCHAR(50) NOT NULL COMMENT '動作',
-	`hash` VARCHAR(64) NOT NULL COMMENT '用於確認操作是否許可',
+	`hash` VARCHAR(64) NOT NULL COMMENT '雜湊',
 	`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '創建時間',
 	PRIMARY KEY (`id`),
 	INDEX `FK_s_system_log_m_members` (`operator`),
