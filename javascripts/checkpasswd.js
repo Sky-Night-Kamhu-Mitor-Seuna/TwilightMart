@@ -1,4 +1,4 @@
-function checkpw($pwid,$pwcheckid,$pwhint) {
+function checkpw($pwid, $pwcheckid, $pwhint) {
     $str = "";
     $value = document.getElementById($pwid).value;
     if ($value.length < 8) $str+="❎ 密碼長度低於八個字元\t\n";
