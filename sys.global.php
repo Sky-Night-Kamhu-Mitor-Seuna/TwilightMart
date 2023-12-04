@@ -6,13 +6,12 @@
 *************************************************************/
 require_once 'sys.include.php';
 session_start();
-// ob_start();
 /*************************************************************/
 // 版本資訊
 $version="alpha.1.0.0";
 $generator="Visual Studio Code";
-$author="snkms.com";
-$design="snkms.com";
+$author="MaizuRoad";
+$design="Yin、SN-Koarashi、MaizuRoad";
 /*************************************************************/
 define("SERVER_DOMAIN_NAME", $_SERVER['SERVER_NAME']);
 define("SERVER_MD5", hash('md5', SERVER_DOMAIN_NAME));
@@ -31,11 +30,11 @@ $sql = "SELECT * FROM `".CONFIG_TABLES['website']."` WHERE `domain` = ? LIMIT 1"
 $result = $db->prepare($sql, [SERVER_DOMAIN_NAME]);
 if(empty($result)) exit("ERROR DOMAIN!!");
 define("WEBSITE",$result[0]);
-
-$siteName=WEBSITE['displayname'];
-$distribution=WEBSITE['distribution'];
-$themeColor="#".WEBSITE['theme'];
-$iconUrl=WEBSITE['icon'];
+define("WEBSITE_ID", WEBSITE['id']); 
+define("WEBSITE_NAME",  WEBSITE['displayname']); 
+define("WEBSITE_DISTRIBUTION", WEBSITE['distribution']); 
+define("WEBSITE_THENE_COLOR", "#".WEBSITE['theme']); 
+define("WEBSITE_ICON_URL", WEBSITE['icon']); 
 
 if(!isset($_COOKIE['lang'])) setcookie("lang","zh_TW");
 $lang=$_COOKIE['lang'];
@@ -53,7 +52,21 @@ define("STORE_CLIENT_BACK_URL", $result[0]['store_client_back_url']);  // [返�
 define("STORE_NOTIFY_URL", $result[0]['store_notify_url']);            // 使用者付款完成時，藍新金流發送交易狀態結果的接收網址   
 /*************************************************************/
 // 權限處理
-$mPermissions = new permissions($db);
-// $mPermissions->setTables(CONFIG_TABLES['member_roles'], CONFIG_TABLES['role_permissions'], CONFIG_TABLES['roles'], CONFIG_TABLES['permissions']);
-
+$permissions = new permissions($db);
+$permissions->setTables(CONFIG_TABLES['member_roles'], CONFIG_TABLES['role_permissions'], CONFIG_TABLES['roles'], CONFIG_TABLES['permissions']);
+/*************************************************************/
+// 紀錄表處理
+$log = new syslog($db);
+/*************************************************************/
+// 用戶的網際協定位址及使用裝置
+if (!empty($_SERVER["HTTP_CLIENT_IP"])) $USER_IP_ADDRESS = $_SERVER["HTTP_CLIENT_IP"];
+elseif(!empty($_SERVER["HTTP_X_FORWARDED_FOR"])) $USER_IP_ADDRESS = $_SERVER["HTTP_X_FORWARDED_FOR"];
+else $USER_IP_ADDRESS = $_SERVER["REMOTE_ADDR"];
+$USER_AGENT = (strlen($_SERVER['HTTP_USER_AGENT']) > 255) ? "unknown" : $_SERVER['HTTP_USER_AGENT'] ;
+/*************************************************************/
+// 雪花算法ID
+$sf = new snowflake();
+/*************************************************************/
+// 測試用資訊
+$TESTID = 589605057335390208;
 ?>

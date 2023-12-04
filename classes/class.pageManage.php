@@ -7,7 +7,7 @@
 *************************************************************/
 class pageManage{
     private $conn;
-    private $pageComponent="w_page_component";
+    // private $pageComponent="w_page_component";
     private $pages="w_pages";
     
     public function __construct($db)
@@ -25,6 +25,16 @@ class pageManage{
         $row = $this->conn->prepare($sql,[$pid]);
         $result = empty($row) ? false : $row[0]['id'];
         return $result;
+    }
+    /************************************************
+     * ### 新增頁面 ###
+     * @param obj $db 資料庫
+     ************************************************/
+    public function findPageInformation($wid) : array
+    {   
+        $sql = "SELECT * FROM {$this->pages} WHERE `wid` = ? AND `status` <> 0;";
+        $row = $this->conn->prepare($sql, [$wid]);
+        return $row;
     }
     /************************************************
      * ### 新增頁面 ###

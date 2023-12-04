@@ -1,55 +1,33 @@
-<div class="memberProfile container-fluid">
-    <div class="memberProfileInfo row mt-3" {$ProfileColor}>
-        <div class="col-12 d-flex align-items-center">
-            <div class="memberProfileImage mr-3" onmouseover="show('AVATAR_UPLOADICON')" onmouseout="hide('AVATAR_UPLOADICON')" style="position: relative;">
-                <!--class="rounded-circle"-->
-                <img src="{$avatar}" id="profileImg" />
-                <span id="AVATAR_UPLOADICON" class="material-icons uploadIcon" onclick="trigger('AVATAR_IMAGE_UPLOAD')">&#xe9fc;</span>
-                <form id="AVATAR" enctype="multipart/form-data">
-                    <input name="IMAGE_UPLOAD" id="AVATAR_IMAGE_UPLOAD" type="file" style="display: none;" accept=".png,.jpg,.jpeg" onchange="uploadImage('AVATAR')">
-                    <input name="IMAGE_TYPE" id="AVATAR_IMAGE_TYPE" type="hidden" value="USER_AVATAR">
-                    <input name="IMAGE_RENAME" id="AVATAR_IMAGE_RENAME" type="hidden" value="{$mid}">
-                </form>
-              </div>
-            <div class="memberProfileName">
-                <h1 class="mb-0">{$nickname}</h1>
-                <p class="mb-0">({$account})</p>
-            </div>
-        </div>
-        <div class="col-12 memberProfileContent">
-            <p>{$introduction}</p>
-        </div>
-    </div>
+{* 請從 $component.param 抓取元件參數 *}
 
-    {if $isself}
-    <div class="row mt-3 memberProfileToolBar">
-        <nav class="col-12 navbar navbar-expand-lg" {$ProfileToolBarColor}>
-            <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>-->
-            <div class="collapse navbar-collapse " id="navbarNav">
-                <ul class="navbar-nav">
-                    {if isset($tools)}
-                    {foreach $tools as $tool}
-                    <li class="nav-item membertool {if $toolAction == $tool['link']}active{/if}">
-                        <a class="nav-link bold" href="?page=member&action={$tool['link']}">{$tool['title']}</a>
-                    </li>
-                    {foreachelse}
-                    <!--沒有工具-->
-                    {/foreach}
-                    {/if}
-                </ul>
-            </div>
-        </nav>
+
+<div class="profileCard left" {if isset($user.profileColor)}style="background-color: {$user.profileColor};" {/if}>
+    <img class="left" src="/assets/images/pexels-mark-glancy-1564506.jpg" />
+    <div style="width: 100%;">
+        <h2>{if isset($user.nickname)}{$user.nickname}{/if}</h2>
+        <div class="profileDescription" {if isset($user.profileColor)}style="color: {$user.profileColor};" {/if}>
+            {if isset($user.introduction)}{$user.introduction}{/if}
+        </div>
+        {if isset($user.roles)}
+        {foreach $user.roles as $role}
+        <button class="tag" {if isset($user.profileColor)}style="color: {$user.profileColor};" {/if}>#{$role}</button>
+        {/foreach}
+        {/if}
+        <code style="display: none;">{$user.mid}</code>
     </div>
-    {if isset($tools)}
-    {foreach $tools as $toolComponent}
-    <!--[{$toolComponent['component_id']}]{$toolComponent['displayname']}-->
-    {if $toolAction == $toolComponent['link']}
-    {include file="components/component_{$toolComponent['component_id']}.htm"}
-    {/if}
-    <!--[NaN]-->
-    {/foreach}
-    {/if}
-    {/if}
 </div>
+
+<!-- <div class="profileCard right">
+    <div style="width: 100%;">
+        <h2>{if isset($user.introduction)}{$user.nickname}{/if}</h2>
+        <div class="profileDescription">
+            {if isset($user.introduction)}{$user.introduction}{/if}
+        </div>
+        {if isset($user.roles)}
+        {foreach $user.roles as $role}
+        <button class="tag">#{$role}</button>
+        {/foreach}
+        {/if}
+    </div>
+    <img class="right" src="/assets/images/pexels-mark-glancy-1564506.jpg" />
+</div> -->

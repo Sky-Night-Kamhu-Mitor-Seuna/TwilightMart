@@ -114,6 +114,12 @@ INSERT INTO `m_permissions` (`name`, `displayname`) VALUES ('post_manage', '管�
 -- INSERT INTO `m_permissions` (`name`, `displayname`) VALUES ('product_review', '評價商品');
 
 -- 新增元件
+INSERT INTO `s_components` (`name`, `description`, `params`) VALUES ('null', '無', "");
+INSERT INTO `s_components` (`name`, `description`, `params`) VALUES ('navbar', '導覽列', '[{"displayname":"首頁","link":"?route=home","icon":"e88a"},{"displayname":"商店","link":"?route=store","icon":"e051"},{"displayname":"關於","link":[{"displayname":"關於團隊","link":"?route=about","icon":"e7ef"},{"displayname":"免責聲明","link":"?route=disclaimer","icon":"f04c"},{"displayname":"版本訊息","link":"?jump=https://github.com/Sky-Night-Kamhu-Mitor-Seuna/TwilightMart","icon":"f04c"}]}]');
+INSERT INTO `s_components` (`name`, `description`, `params`) VALUES ('banner', '橫幅', '{"style":0,"image":"/assets/images/webdesign.svg","message":["Hello Im MaizuRoad","Freut mich, Sie kennenzulernen","這是一朵美麗的小花"],"button":[{"displayname":"see more>>","link":"?route=home"}]}');
+INSERT INTO `s_components` (`name`, `description`, `params`) VALUES ('login', '登入', '');
+INSERT INTO `s_components` (`name`, `description`, `params`) VALUES ('register', '註冊', '');
+INSERT INTO `s_components` (`name`, `description`, `params`) VALUES ('logout', '登出', '');
 -- INSERT INTO `s_components` (`name`,`description`) VALUES ("error","404");
 -- INSERT INTO `s_components` (`name`,`description`) VALUES ("ann","公告");
 -- INSERT INTO `s_components` (`name`,`description`) VALUES ("signup","創建帳號");
@@ -134,23 +140,6 @@ INSERT INTO `m_permissions` (`name`, `displayname`) VALUES ('post_manage', '管�
 -- 插入會員 root 密碼：P@55word
 INSERT INTO `m_members` (`id`, `account`, `nickname`, `password`) VALUES (589605057335390208, 'root', 'Administrator', '3fbfeb0ee307127bbd4ef7da33f7b57a9ff3c7357da182c5bfccc2a4f599c6f9');
 INSERT INTO `m_members_profile` (`mid`) VALUES (589605057335390208);
-
--- 導覽列
-CREATE TABLE IF NOT EXISTS `w_navbar` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `wid` BIGINT(19) UNSIGNED NOT NULL COMMENT '網站編號ID',
-  `name` VARCHAR(50) NOT NULL,
-  `displayname` VARCHAR(50) NOT NULL,
-  `link` VARCHAR(255) NOT NULL,
-  `status` INT(3) NOT NULL DEFAULT 1 COMMENT '啟用狀態1啟用 0關閉',
-  KEY (`wid`),
-  CONSTRAINT `fk_websiteId_id` 
-    FOREIGN KEY (`wid`)
-    REFERENCES `s_website`(`id`)
-    ON DELETE CASCADE 
-    ON UPDATE CASCADE,
-  PRIMARY KEY(id)
-) COMMENT='導覽列';
 
 -- 網站頁面
 CREATE TABLE IF NOT EXISTS `w_pages` (
@@ -356,19 +345,31 @@ CREATE TABLE IF NOT EXISTS `p_order_items` (
     ON UPDATE CASCADE
 ) COMMENT='訂單商品明細表';
 
+-- 檔案系統
+CREATE TABLE `w_files` (
+    `id` BIGINT(19) UNSIGNED NOT NULL COMMENT "檔案名稱及編號",
+    `original_name` VARCHAR(255) NOT NULL COMMENT "檔案原始名稱",
+    `path` VARCHAR(255) NOT NULL COMMENT "檔案路徑",
+    `size` INT(10) UNSIGNED NOT NULL COMMENT "檔案大小",
+    `type` VARCHAR(100) NOT NULL COMMENT "檔案類型jpg, jepg, png...etc",
+    `uploaded_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT "檔案上傳時間",
+    PRIMARY KEY (`id`)
+) COMMENT='檔案管理系統';
+
 -- 系統操作紀錄表
 CREATE TABLE `s_system_log` (
 	`id` BIGINT(19) UNSIGNED NOT NULL COMMENT '操作編號',
 	`wid` BIGINT(19) UNSIGNED NOT NULL COMMENT '網站編號',
   `mid` BIGINT(19) UNSIGNED NOT NULL COMMENT '操作者',
-	`status` INT(11) NOT NULL DEFAULT '0' COMMENT '類型 0:無效操作 1:存取成功 2:存取被拒',
+  `ip_address` VARCHAR(39) NOT NULL DEFAULT '0.0.0.0' COMMENT 'IP位址',
+	`status` INT(3) NOT NULL DEFAULT '0' COMMENT '類型 0:無效操作 1:存取成功 2:存取被拒',
 	`action` VARCHAR(1024) NOT NULL COMMENT '動作',
-	`hash` VARCHAR(64) NOT NULL COMMENT '雜湊',
+	`hash` CHAR(64) NOT NULL COMMENT '雜湊',
 	`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '創建時間',
 	PRIMARY KEY (`id`),
-	INDEX `FK_s_system_log_m_members` (`operator`),
+	INDEX `FK_s_system_log_m_members` (`mid`),
 	INDEX `FK_s_system_log_s_website` (`wid`),
-	CONSTRAINT `FK_s_system_log_m_members` FOREIGN KEY (`operator`) REFERENCES `m_members` (`id`),
+	CONSTRAINT `FK_s_system_log_m_members` FOREIGN KEY (`mid`) REFERENCES `m_members` (`id`),
 	CONSTRAINT `FK_s_system_log_s_website` FOREIGN KEY (`wid`) REFERENCES `s_website` (`id`)
 ) COMMENT='系統操作紀錄';
 
@@ -377,7 +378,7 @@ CREATE TABLE `s_page_views_log` (
 	`id` BIGINT(19) UNSIGNED NOT NULL COMMENT '編號',
 	`mid` BIGINT(19) UNSIGNED NOT NULL COMMENT '使用者編號',
 	`pid` BIGINT(19) UNSIGNED NOT NULL COMMENT '頁面編號',
-	`ip_address` VARCHAR(45) NOT NULL DEFAULT '0.0.0.0' COMMENT 'IP位址',
+	`ip_address` VARCHAR(39) NOT NULL DEFAULT '0.0.0.0' COMMENT 'IP位址',
 	`member_agent` VARCHAR(255) NOT NULL DEFAULT 'unknown' COMMENT '會員使用裝置',
 	`referrer_url` VARCHAR(2048) NULL DEFAULT NULL COMMENT '來源網址',
   `duration` INT(11) NOT NULL COMMENT "紀錄時間(秒)",
@@ -411,15 +412,15 @@ CREATE TABLE `s_product_views` (
 	PRIMARY KEY (`id`),
 	INDEX `FK_s_product_page_views_m_members` (`mid`),
 	INDEX `FK_s_page_views_log_views_w_pages` (`vid`),
-	INDEX `FK_s_product_page_views_s_product_page_views` (`product_id`),
+	INDEX `FK_s_product_page_views_i_products` (`product_id`),
 	CONSTRAINT `FK_s_product_page_views_m_members` 
     FOREIGN KEY (`mid`) 
     REFERENCES `m_members` (`id`)
     ON UPDATE CASCADE 
     ON DELETE CASCADE,
-	CONSTRAINT `FK_s_product_page_views_s_product_page_views` 
+	CONSTRAINT `FK_s_product_page_views_i_products` 
     FOREIGN KEY (`product_id`) 
-    REFERENCES `s_product_page_views` (`id`)
+    REFERENCES `i_products` (`id`)
     ON UPDATE CASCADE 
     ON DELETE CASCADE,
 	CONSTRAINT `FK_s_page_views_log_views_w_pages` 
@@ -448,16 +449,16 @@ UPDATE `m_role_permissions` SET `permissions` = `permissions` | 0x2000 WHERE rid
 INSERT INTO `m_member_roles` (`wid`, `mid`, `rid`) VALUES (589605057335390208, 589605057335390208, 589605057335390209);
 
 -- 插入導覽列連結
-INSERT INTO `w_navbar` (`wid`, `name`, `displayname`, `link`) VALUES (589605057335390208, "Home", "首頁", "?page=home");
-INSERT INTO `w_navbar` (`wid`, `name`, `displayname`, `link`) VALUES (589605057335390208, "Store", "商店", "?page=store");
-INSERT INTO `w_navbar` (`wid`, `name`, `displayname`, `link`) VALUES (589605057335390208, "About", "關於我們", "?page=about");
+-- INSERT INTO `w_navbar` (`wid`, `name`, `displayname`, `link`) VALUES (589605057335390208, "Home", "首頁", "?page=home");
+-- INSERT INTO `w_navbar` (`wid`, `name`, `displayname`, `link`) VALUES (589605057335390208, "Store", "商店", "?page=store");
+-- INSERT INTO `w_navbar` (`wid`, `name`, `displayname`, `link`) VALUES (589605057335390208, "About", "關於我們", "?page=about");
 
 -- 插入頁面
 INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390211, 589605057335390208, "錯誤", "err", "錯誤頁面", 2);
 INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390212, 589605057335390208,"首頁","home","網站的首頁", 2);
 INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390213, 589605057335390208,"登入","login","登入頁面", 2);
 INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390214, 589605057335390208,"登出","logout","登出頁面", 2);
-INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390215, 589605057335390208,"註冊","signup","註冊頁面", 2);
+INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390215, 589605057335390208,"註冊","register","註冊頁面", 2);
 INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390216, 589605057335390208,"帳戶","member","用戶頁面", 2);
 INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390217, 589605057335390208,"付款","check1_payment","購買確認頁面", 2);
 INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`, `status`) VALUES (589605057335390218, 589605057335390208,"付款","check2_payment","結帳頁面", 2);
@@ -470,6 +471,12 @@ INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`) VALUES
 
 
 -- 新增頁面元件 
+INSERT INTO `w_page_component` (`id`, `pid`, `cid`, `displayname`, `position`, `params`) VALUES (589605057335390212, 589605057335390212, 2, '導覽列', 0, '[{"displayname":"首頁","link":"?route=home","icon":"e88a"},{"displayname":"商店","link":"?route=store","icon":"e051"},{"displayname":"關於","link":[{"displayname":"關於團隊","link":"?route=about","icon":"e7ef"},{"displayname":"免責聲明","link":"?route=disclaimer","icon":"f04c"},{"displayname":"版本訊息","link":"?jump=https://github.com/Sky-Night-Kamhu-Mitor-Seuna/TwilightMart","icon":"f04c"}]}]');
+INSERT INTO `w_page_component` (`id`, `pid`, `cid`, `displayname`, `position`, `params`) VALUES (589605057335390213, 589605057335390212, 3, '導覽列', 1, '{"style":0,"image":"/assets/images/webdesign.svg","message":["Hello Im MaizuRoad "],"button":[{"displayname":"see more>>","link":"?route=home"}]}');
+INSERT INTO `w_page_component` (`id`, `pid`, `cid`, `displayname`, `position`, `params`) VALUES (589605057335390214, 589605057335390212, 3, '導覽列', 2, '{"style":1,"image":["/assets/images/24HR.svg","/assets/images/SRRVICE.svg"],"message":["Your most trusted shopping platform","您最值得信賴的購物平台"]}');
+INSERT INTO `w_page_component` (`id`, `pid`, `cid`, `displayname`, `position`, `params`) VALUES (589605057335390215, 589605057335390213, 4, '登入', 0, '');
+INSERT INTO `w_page_component` (`id`, `pid`, `cid`, `displayname`, `position`, `params`) VALUES (589605057335390216, 589605057335390215, 5, '註冊', 0, '');
+INSERT INTO `w_page_component` (`id`, `pid`, `cid`, `displayname`, `position`, `params`) VALUES (589605057335390217, 589605057335390214, 6, '登出', 0, '');
 -- INSERT INTO `w_page_component` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES (589605057335390223, "錯誤",1,1,0,"{}");
 -- INSERT INTO `w_page_component` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES (589605057335390224, "公告",2,2,0,"{}");
 -- INSERT INTO `w_page_component` (`id`, `pid`, `cid`, `displayname`, `component_id`, `page_id`, `position`, `params`) VALUES ("644ca8d7df45e","登入畫面",4,4,0,"{}");

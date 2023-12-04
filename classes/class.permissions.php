@@ -23,12 +23,14 @@ class permissions
      * @param string $member_roles
      * @param string $role_permissions
      * @param string $roles
+     * @param string $permissions
      ************************************************/
-    public function setTables($member_roles, $role_permissions, $roles) : bool
+    public function setTables($member_roles, $role_permissions, $roles, $permissions) : bool
     {
         $this->member_roles = $member_roles;
         $this->role_permissions = $role_permissions;
         $this->roles = $roles;
+        $this->permissions = $permissions;
         return true;
     }
     /************************************************
@@ -82,6 +84,20 @@ class permissions
         return $result;
     }
     /************************************************
+     * ### 確認使用者身份組 ###
+     * @param int $mid 使用者id
+     * @param int $wid 網站id
+     ************************************************/
+    public function getMemberRoles($mid, $wid) : array
+    {
+        $sql = "SELECT r.displayname, r.name, r.id
+        FROM `{$this->member_roles}` AS mr 
+        JOIN `{$this->roles}` AS r 
+        WHERE mr.mid = ? AND mr.wid = ? AND r.id = mr.rid AND r.name <> 'everyone' AND r.status <> 0 ;";
+        $roles = $this->conn->prepare($sql,[$mid, $wid]);
+        return $roles;
+    }
+    /************************************************
      * ### 取得身分組權限陣列 ###
      * @param int $rid — 身份組id
      * @param bool $containsParent — 是否包含父身分組權限
@@ -101,14 +117,13 @@ class permissions
     /************************************************
      * ### 顯示所有權限 ###
      * @param int $rid — 身份組id
-     * @param bool $containsParent — 是否包含父身分組權限
      ************************************************/
-    public function getAllPermissionsArray() : array
-    {
-        $sql = "SELECT * FROM `{$this->permissions}`;";
-        $permissions = $this->conn->each($sql);
-        return $permissions;
-    }
+    // public function getAllPermissionsArray() : array
+    // {
+    //     $sql = "SELECT * FROM `{$this->permissions}`;";
+    //     $permissions = $this->conn->each($sql);
+    //     return $permissions;
+    // }
     /************************************************
      * ### 確認使用者是否能存取物件 ###
      * @param int $mid 使用者id
@@ -138,6 +153,7 @@ class permissions
      ************************************************/
     public function changeMemberRoles($mid, $wid, $rid, $action="ADD") : bool
     {
+        $action = strtoupper($action);
         $memberHaveRole = in_array($rid, $this->checkMemberRoles($mid, $wid));
         switch($action){
             case "DEL":
@@ -201,17 +217,17 @@ class permissions
         $rDisplayname = $rName;
         $row = $this->conn->prepare($sql, [$rName, $rDisplayname, $rid]);
 
-        return empty($rows);
+        return empty($row);
     }
     /************************************************
      * ### 修改身份組權限 ###
      * @param int $rid 身份組id
-     * @param int $wid 網站id
      * @param string $rPermissions 權限編輯項目
      * @param string $action 動作 `ADD`:增加 `DEL`:刪除
      ************************************************/
     public function editRolesPermission($rid, $rPermissions, $action="ADD") : bool
     {
+        $action = strtoupper($action);
         if(!$this->checkRolesStatus($rid)) return false;
         switch($action){
             case "DEL":
@@ -226,7 +242,7 @@ class permissions
         }
         
         $row = $this->conn->prepare($sql, [$rPermissions, $rid]);
-        return empty($rows);
+        return empty($row);
     }
     /************************************************
      * ### 修改身份組父身分組 ###
@@ -236,9 +252,21 @@ class permissions
     public function editRolesParent($rid, $rParentId) : bool
     {
         if(!$this->checkRolesStatus($rid)) return false;
-        $sql = "UPDATE `{$this->roles}` SET `parent_id` = ? WHERE id = ?;";
+        $sql = "UPDATE `{$this->roles}` SET `parent_id` = ? WHERE `id` = ?;";
         
         $row = $this->conn->prepare($sql, [$rParentId, $rid]);
-        return empty($rows);
+        return empty($row);
+    }
+    /************************************************
+     * ### 取得everyone身分組 ###
+     * @param int $wid 網站id
+     ************************************************/
+    public function getRoleEveryoneId($wid) : int
+    {
+        if(!$this->checkRolesStatus($wid)) return 0;
+        $sql = "SELECT `id` FROM`{$this->roles}` WHERE `name` = 'everyone' AND `wid` = ?;";
+
+        $row = $this->conn->prepare($sql, [$wid]);
+        return empty($row) ? 0 : $row[0]['id'];
     }
 }

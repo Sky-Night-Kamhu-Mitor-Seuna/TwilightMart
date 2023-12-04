@@ -1,28 +1,12 @@
 {include file="header.htm"}
-{include file="cart.htm"}
-<div style="height: 40px;">隱藏文字</div>
-<div class="container-fluid">
-    <div class="mainBox">
-        <div class="row">
-            <!--<div class="col-md-2">
-                <br/>
-                {* include file="components/component_7.htm" *}
-            </div>
-            <div class="col-md-8">-->
-            <div style="width: 80%;padding: 0;margin: 0 auto;">
-                <div class="mainBoxMask">
-                    {foreach $webObjects as $webComponent => $component}
-                        <!--[{$component['component_id']}]{$component['displayname']}-->
-                        {include file="components/component_{$component['component_id']}.htm"}
-                    {/foreach}
-                    <br/>
-                </div>
-            </div>
-            <!--<div class="col-md-2">
-                <br/>
-                {* include file="components/component_7.htm" *}
-            </div>-->
-        </div>
-    </div>
-</div>
+<article style="min-height: 96.7vh;">
+{*include file="cart.htm"*}
+{foreach $pageComponents as $component }
+{* 請從 $component.param 抓取元件參數 *}
+<!-------------------------------->
+<!-- 元件ID: {$component.id} -->
+<!-- 元件名稱: {$component.displayname} -->
+{include file="components/component_{$component.cid}.htm"}
+{/foreach}
+</article>
 {include file="footer.htm"}

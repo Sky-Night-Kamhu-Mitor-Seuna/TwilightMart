@@ -33,7 +33,7 @@ class pageRouter{
      ************************************************/
     public function getPageComponent($pid) : array
     {
-        $sql = "SELECT `displayname`, `cid`, `params` FROM {$this->pageComponent} WHERE `pid` = ? AND `status` <> 0 ORDER BY `position` ASC;";
+        $sql = "SELECT `id`, `displayname`, `cid`, `params` FROM {$this->pageComponent} WHERE `pid` = ? AND `status` <> 0 ORDER BY `position` ASC;";
         $row = $this->conn->prepare($sql, [$pid]);
         return $row;
     }

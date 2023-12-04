@@ -1,28 +1,31 @@
-<div class="AccountTitle">
-  <h1>Login<!-- Account--></h1>
-  <p>
-    This project is sponsored by<br />
-    <a href="https://www.snkms.com/" target="_blank">Sky-Night Kamhu Mitor Seuna</a>
-  </p>
+{* 請從 $component.param 抓取元件參數 *}
+
+<!-- login -->
+<div class="login-background">
+    <div class="login">
+        <h2>LOGIN</h2>
+        <div class="logo">
+            <a href="#這顆按鈕沒啥屁用只是跟你說Hello"><img src="/assets/images/logo.png" /></a>
+        </div>
+        <form class="login-form" action="" method="POST">
+            <div class="login-textbox">
+                <input value="{if isset($account)}{$account}{/if}" type="text" placeholder="Account" name="account"
+                    id="account" minlength="3" maxlength="18" pattern="[a-zA-Z0-9\._\-#@$]+" required />
+                <span class="material-icons">&#xe7fd</span>
+            </div>
+            <div class="login-textbox">
+                <input type="password" placeholder="Password" name="password" id="password" maxlength="513" required />
+                <span class="material-icons">&#xe73c</span>
+            </div>
+            {if isset($loginfail)}
+            <span style="color: red;">* Incorrect account or password</span>
+            {else}
+            <br />
+            {/if}
+            <button type="submit">LOGIN</button>
+            <a href="?route=register">沒有帳號嗎? 建立一個新用戶</a>
+            <a class="backhome" href="?route=home">BACK</a>
+        </form>
+    </div>
 </div>
-<form id="register-form" name="register" action="" method="POST">
-  <div class="form-item">
-    <label for="account">Account</label>
-    <input type="text" name="account" id="account" placeholder="Account" minlength="3" maxlength="18"
-      pattern="[a-zA-Z0-9\._\-#@$]+" required value="{if isset($INPUTaccount)}{$INPUTaccount}{/if}" />
-    <br />
-  </div>
-  <div class="form-item">
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" placeholder="Password" maxlength="513" required />
-    {if $check == "LOGINFAIL"}
-    <span class="form-error">* Incorrect account or password</span>
-    {else}
-    <br />
-    {/if}
-  </div>
-  <input name="submit" type="submit" value="Login" />
-</form>
-<div class="back-login">
-  <a href="?page=signup">Don't have an account yet? Sign up now!!</a>
-</div>
+<!-- login EOF-->

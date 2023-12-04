@@ -23,7 +23,8 @@ class snowflake {
     /************************************************
      * ### 初始化 ###
     ************************************************/
-    public function __construct($dataCenterId=31, $workerId=31) {
+    public function __construct($dataCenterId=31, $workerId=31) 
+    {
         //self::$sequenceBits = $sequenceBits;
         self::$maxDataCenterId = -1 ^ (-1 << self::$dataCenterIdBits);
         self::$maxWorkerId = -1 ^ (-1 << self::$workerIdBits);
@@ -40,14 +41,16 @@ class snowflake {
      * ### 取得時間戳記根 ###
      * 產生Timestamp(41位元)
     ************************************************/
-    private function timeGen() : int {
+    private function timeGen() : int 
+    {
         return (int)(microtime(true) * 1000);
     }
 
     /************************************************
      * ### 取得下一個時間戳 ###
     ************************************************/
-    private function tilNextMillis($lastTimestamp) : int {
+    private function tilNextMillis($lastTimestamp) : int 
+    {
         $timestamp = $this->timeGen();
         while ($timestamp <= $lastTimestamp) $timestamp = $this->timeGen();
         return $timestamp;
@@ -62,18 +65,21 @@ class snowflake {
      * 44 - 48 Bits $workerId之保留位元  
      * 49 - 60 Bits $sequenceBits之保留位元  
     ************************************************/
-    public function getId($timestamp=null) : int {
+    public function getId($timestamp=null) : int 
+    {
 
-        $timestamp = ($timestamp <> null) ? $timestamp : $this->timeGen();
+        $timestamp = (!is_null($timestamp)) ? $timestamp : $this->timeGen();
 
         // 系統鐘時間產生錯誤
         if ($timestamp < $this->lastTimestamp) throw new Exception("[WANG] Clock moved backwards.");
 
         // 確認時間戳是否重複
-        if ($this->lastTimestamp == $timestamp) {
+        if ($this->lastTimestamp == $timestamp) 
+        {
             $this->sequence = ($this->sequence + 1) & self::$sequenceMask;
             if ($this->sequence == 0) $timestamp = $this->tilNextMillis($this->lastTimestamp);
-        } else $this->sequence = 0;
+        } 
+        else $this->sequence = 0;
 
         $this->lastTimestamp = $timestamp;
         
@@ -84,5 +90,4 @@ class snowflake {
                $this->sequence;
     }
 }
-
 ?>

@@ -1,8 +1,49 @@
-<div class="AccountTitle">
-  <h1>Logout</h1>
-  <p>
-    正在跳轉頁面...<br />
-    This project is sponsored by<br />
-    <a href="https://www.snkms.com/" target="_blank">Sky-Night Kamhu Mitor Seuna</a>
-  </p>
+{* 請從 $component.param 抓取元件參數 *}
+
+<!-- signup -->
+<div class="login-background">
+    <div class="login">
+        <h2>REGISTER</h2>
+        <!-- <div class="logo">
+            <a href="#點了不會怎樣，登入頁面也有這個沒屁用的功能"><img src="/assets/images/logo.png" /></a>
+        </div> -->
+        <span id="passwordHint" style="display: block;margin: 16px 0px;">&nbsp;</span>
+        <form class="login-form" action="" method="POST">
+            <div class="login-textbox">
+                <input value="{if isset($nickname)}{$nickname}{/if}" type="text" placeholder="Nickname" name="nickname"
+                    id="nickname" minlength="3" maxlength="18" required />
+                <span class="material-icons">&#xef73</span>
+            </div>
+            <div class="login-textbox">
+                <input value="{if isset($account)}{$account}{/if}" type="text" placeholder="Account" name="account"
+                    id="account" minlength="3" maxlength="18" pattern="[a-zA-Z0-9\._\-#@$]+" required />
+                <span class="material-icons">&#xe853</span>
+            </div>
+
+            <div class="login-textbox">
+                <input type="password" placeholder="Password" name="password" id="password" maxlength="513" required
+                    onchange="checkpw('password','passwordCheck','passwordHint')" />
+                <span class="material-icons">&#xe73c</span>
+            </div>
+
+            <div class="login-textbox">
+                <input type="password" placeholder="Enter the password again" name="passwordCheck" id="passwordCheck"
+                    maxlength="513" required onchange="checkpw('password','passwordCheck','passwordHint')" />
+                <span class="material-icons">&#xe73c</span>
+            </div>
+            {if $errorMessage == "ACCOUNT_EXISTS"}
+            <span style="color: red;">* Account already exists</span>
+            {elseif $errorMessage == "ACCOUNT_ERROR"}
+            <span style="color: red;">* Wrong account</span>
+            {elseif $errorMessage == "PASSWORD_NO_MATCH"}
+            <span style="color: red;">* Passwords do not match</span>
+            {elseif $errorMessage == "PASSWORD_WRONG"}
+            <span style="color: red;">* Wrong password</span>
+            {/if}
+            <button type="submit">SIGN UP!!</button>
+            <br />
+            <a class="backhome" href="?route=login">BACK LOGIN</a>
+        </form>
+    </div>
 </div>
+<!-- signup EOF-->

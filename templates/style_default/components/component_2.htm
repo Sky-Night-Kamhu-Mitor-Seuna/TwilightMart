@@ -1,19 +1,46 @@
-<br />
-<div class="announcement">
-    <ul class="announcementTabs">
-        {foreach $announcement as $content}
-        <li class="announcementTab"><a onclick="announcementSwitch(event, '{$content@key}')" href="#selectedTab" {if
-                $content@first}class="announcementActive" {/if}>{$content@key}</a></li>
+{* 請從 $component.param 抓取元件參數 *}
+
+<!-- NavberTop -->
+<nav class="navbarTop">
+    <div class="logo">
+        <a href="?route=home"><img src="/assets/images/logo.png"></a>
+        {if isset($siteName)}<h2>{$siteName}</h2>{/if}
+    </div>
+    <form class="searchBar" method="POST" action="?route=search">
+        <input type="search" name="search" placeholder="新會員享優惠免運" /><input class="material-icons" value="&#xe8b6"
+            type="submit" name="submit" autocomplete="搜尋項目" />
+    </form>
+    <div class="menu">
+        {foreach $component.param as $navbar}
+        {if is_array($navbar.link)}
+        <div class="dropdown">
+            <button><span class="material-icons">&#xe5cf&nbsp;</span>{$navbar.displayname}</button>
+            <div class="list">
+                {foreach $navbar.link as $dropdown}
+                <button onclick="window.location.href='{$dropdown.link}'"><span
+                        class="material-icons">&#x{$dropdown.icon}&nbsp;</span>{$dropdown.displayname}</button>
+                {/foreach}
+            </div>
+        </div>
+        {else}
+        <button onclick="window.location.href='{$navbar.link}'"><span
+                class="material-icons">&#x{$navbar.icon}&nbsp;</span>{$navbar.displayname}</button>
+        {/if}
         {/foreach}
-    </ul>
-    <hr>
-    <ul>
-        {foreach $announcement as $content}
-        <li id="{$content@key}" class="announcementContent">
-            <p>
-                {$content}
-            </p>
-        </li>
-        {/foreach}
-    </ul>
+        {if isset($mid)}
+        <button class="material-icons" onclick="$('#cartMask').toggle(); updateCartUI();" href="#cart">
+            &#xeb88
+        </button>
+        <button class="material-icons" onclick="window.location.href='?route=member'">
+            &#xe853
+        </button>
+        {/if}
+        <button class="material-icons" onclick="window.location.href='?route={if isset($mid)}logout{else}login{/if}'">
+            &#x{if isset($mid)}e9ba{else}ea77{/if};
+        </button>
+    </div>
+</nav>
+<div style="height: 86px;">
+    <code>沒想到你會到這裡</code>
 </div>
+<!-- NavberTop EOF -->

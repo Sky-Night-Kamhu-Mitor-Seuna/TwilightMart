@@ -1,67 +1,7 @@
-<div class="AccountTitle">
-  <h1>{if isset({$type})}{$type}{/if}</h1>
-  <p>{if isset({$typeDesc})}{$typeDesc}{/if}</p>
+{* 請從 $component.param 抓取元件參數 *}
+
+<!-- Null -->
+<div style="height: 500px;">
+<span style="display: none;">無</span>
 </div>
-<div class="container" style="width: 100%;">
-  <!-- <div class="mt-3">
-    <div class="row">
-      <div class="col-md-3 form-group">
-        <label for="sort">排序：</label>
-        <select class="form-control" id="sort">
-          <option value="related">相關性</option>
-          <option value="views">瀏覽人次</option>
-          <option value="sales">熱銷商品</option>
-          <option value="date">上架日期</option>
-          <option value="price">價格</option>
-        </select>
-      </div>
-      <div class="col-md-3 form-group">
-        <label for="price-range">價格區間：</label>
-        <div class="input-group">
-          <input type="text" class="form-control" id="min-price" placeholder="最低價格" />
-          <div class="input-group-append">
-            <span class="input-group-text">-</span>
-          </div>
-          <input type="text" class="form-control" id="max-price" placeholder="最高價格" />
-        </div>
-      </div>
-      <div class="col-md-3 form-group">
-        <label for="show-num">顯示：</label>
-        <select class="form-control" id="show-num">
-          <option value="10">10</option>
-          <option value="20">20</option>
-          <option value="50">50</option>
-        </select>
-      </div>
-      <div class="col-md-3 form-group">
-        <label for="total-num">顯示筆數：</label>
-        <span id="total-num">0</span> 筆商品
-      </div>
-    </div>
-  </div> -->
-  <div class="row" style="width: 100%; margin: 0 auto;">
-    {foreach $products as $pro}
-    <!--商品編號: {$pro.id}-->
-    <div class="col-sm-12 col-md-6 col-lg-3">
-      <div class="card StoreCard">
-        <a href="?page=product&pid={$pro.id}">
-          <div>
-            <img src="{$pro.image_url}" class="card-img-top" alt="[PRODUCT{$pro.name}({$pro.id})IMAGE]" />
-          </div>
-        </a>
-        <div class="card-body" style="padding: 0;">
-          <h5 class="card-title">{$pro.name}</h5>
-          <!-- <p class="card-text">[{$pro.type}]</p> -->
-          <p class="card-text">＄{$pro.price}</p>
-          <button onclick="{if isset($loggedin)}addToCart('{$pro.id}','{$pro.name}',{$pro.price}){else}javascript:location.href='?page=login'{/if}">加入購物車</button>
-        </div>
-      </div>
-    </div>
-    {foreachelse}
-    <div style="margin: 10px auto; text-align: center; width: 100%;">
-      <h1>沒有商品，哭哭</h1>
-      <img src="/assets/images/quaso.png" class="card-img-top" alt="quaso" />
-    </div>
-    {/foreach}
-  </div>
-</div>
+<!-- Null EOF -->
