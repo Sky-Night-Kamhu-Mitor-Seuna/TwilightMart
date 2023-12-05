@@ -1,0 +1,136 @@
+/*************************************************************
+ * 
+ * 導覽列
+ * 
+ *************************************************************/
+.navbarTop {
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 auto;
+    padding: 15px;
+    gap: 20px;
+    backdrop-filter: blur(16px) saturate(120%);
+    box-shadow: 0 10px 10px rgba(0, 0, 0, .2);
+}
+
+.logo,
+.menu {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.logo img {
+    height: 50px;
+    border-radius: 8px;
+}
+
+.navbarTop>.menu {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.navbarTop>.menu .dropdown {
+    position: relative;
+}
+
+.navbarTop>.menu .dropdown>button {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.navbarTop>.menu .dropdown:hover .list,
+.list.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.navbarTop>.menu .list {
+    transition: 0.25s;
+    position: absolute;
+    top: 50px;
+    right: -20px;
+    display: grid;
+    border-radius: 8px;
+    box-shadow: 0 40px 40px rgba(0, 0, 0, .06);
+    /* padding: 9px 0px; */
+    width: 200px;
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* .navbarTop > .menu .list::before {
+    content: "";
+    background: inherit;
+    position: absolute;
+    top: -1px;
+    right: 45px;
+    width: 0px;
+    height: 00px;
+    border-style: solid;
+    border-width: 0 12px 12px 12px;
+    border-color: transparent #FFF transparent transparent;
+    rotate: -45deg;
+  } */
+/* .navbarTop>.menu .list>button{
+    border: none;
+    border-radius: 0px;
+  } */
+
+
+.navbarTop>.menu .list>button {
+    padding: 10px 0;
+    border: none;
+    border-radius: 0px;
+}
+
+.navbarTop>.menu .list>button:first-child {
+    border-radius: 12px 12px 0 0;
+}
+
+.navbarTop>.menu .list>button:last-child {
+    border-radius: 0 0 12px 12px;
+}
+
+
+.searchBar {
+    margin: 0 auto;
+    width: 25%;
+    display: flex;
+    align-items: center;
+}
+
+.searchBar * {
+    display: inline;
+    border: 3px solid transparent;
+    border-radius: 30px;
+    padding: 8px 8px;
+    font-size: 15px;
+    line-height: 0.9;
+}
+
+.searchBar input[type="search"] {
+    outline: none;
+    border-radius: 15px 0 0 15px;
+    width: 100%;
+}
+
+/* .searchBar input[type="search"]:focus{
+    width: 100%;
+  } */
+.searchBar input[type="submit"] {
+    border-radius: 0 15px 15px 0;
+    font-size: 20px;
+    line-height: normal;
+    vertical-align: middle;
+}

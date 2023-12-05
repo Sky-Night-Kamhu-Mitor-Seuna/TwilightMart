@@ -7,7 +7,7 @@
 /* 背景顏色 */
 /************************************************************/
 button.material-icons {
-  background-color: transparent;
+    background-color: transparent;
 }
 
 .searchBar input[type="submit"]:hover,
@@ -15,16 +15,16 @@ button.material-icons {
 button:not(.material-icons),
 .navbarTop>.menu .list>button:hover,
 .profileCard {
-  background-color: #2879f6;
+    background-color: #2879f6;
 }
 
 body,
 .banner:nth-child(odd) {
-  background-color: #141414;
+    background-color: #141414;
 }
 
 .banner:nth-child(even) {
-  background-color: #204f98;
+    background-color: #204f98;
 }
 
 .yinShopping,
@@ -33,18 +33,19 @@ button:hover:not(.material-icons),
 .navbarTop>.menu .list>button,
 .profileCard button,
 .profileDescription {
-  background-color: #fff;
+    background-color: #fff;
 }
 
 /* .searchBar input[type="submit"] {
-  background-color: #131313;
-} */
+    background-color: #131313;
+  } */
 
-footer,
-.navbarTop {
-  background-color: #212121;
+footer {
+    background-color: #212121;
 }
-
+.navbarTop {
+    background-color: rgb(33, 33, 33, .8);
+}
 /************************************************************/
 /* 文字顏色 */
 /************************************************************/
@@ -58,11 +59,12 @@ footer a:hover,
 .profileCard button,
 .profileCard button:hover,
 .profileDescription {
-  color: #2879f6;
+    color: #2879f6;
 }
 
-code:hover ,.profileCard .tag:hover {
-  color: #f62885;
+code:hover,
+.profileCard .tag:hover {
+    color: #f62885;
 }
 
 button,
@@ -73,12 +75,14 @@ footer a,
 .banner,
 .navbarTop>.menu .list>button:hover,
 .logo>h2,
-.profileCard {
-  color: #fff;
+.profileCard,
+.recommendProduct>h1,
+.card-details {
+    color: #fff;
 }
 
 .searchBar input[type="search"] {
-  color: #000;
+    color: #000;
 }
 
 
@@ -87,28 +91,28 @@ footer a,
 /************************************************************/
 .login>form input:focus,
 .searchBar input[type="search"]:focus {
-  border-color: #287af6;
+    border-color: #287af6;
 }
 
 /* .yinSearch-bar {
-  border: 1px solid #161616;
-}
-
-.yinDetails .yinTags span {
-  border: 1.5px solid rgba(255 255 255 / 0.4);
-} */
+    border: 1px solid #161616;
+  }
+  
+  .yinDetails .yinTags span {
+    border: 1.5px solid rgba(255 255 255 / 0.4);
+  } */
 
 /************************************************************/
 /* 特殊顏色 */
 /************************************************************/
 /* 導覽列下拉選單顏色 */
 /* .navbarTop>.menu .list::before {
-  border-top: 1px solid #FFF;
-  border-right: 1px solid #FFF;
-  background-color: #FFF;
-} */
+    border-top: 1px solid #FFF;
+    border-right: 1px solid #FFF;
+    background-color: #FFF;
+  } */
 
 /* .navbarTop>.menu .list {
-  background: #FFF;
-  border: 0px solid #FFF;
-} */
+    background: #FFF;
+    border: 0px solid #FFF;
+  } */

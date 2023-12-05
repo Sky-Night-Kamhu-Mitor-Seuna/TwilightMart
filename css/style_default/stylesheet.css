@@ -7,136 +7,108 @@
 /* 字體 */
 /************************************************************/
 @font-face {
-  font-family: "JhengHei";
-  src: url("./font/JhengHei.ttf");
+    font-family: "JhengHei";
+    src: url("./font/JhengHei.ttf");
 }
 
 /* @import url(https://fonts.googleapis.com/earlyaccess/cwtexyen.css); */
 /************************************************************/
 /* 禁用所有元素文字選取 */
 * {
-  /* font-family: "cwTeXYen", "sans-serif", "JhengHei", "微軟正黑體 Light", "黑體-繁"; */
-  font-family: "JhengHei", "微軟正黑體 Light", "黑體-繁";
-  vertical-align: baseline;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  text-decoration: none;
-  list-style-type: none;
+    /* font-family: "cwTeXYen", "sans-serif", "JhengHei", "微軟正黑體 Light", "黑體-繁"; */
+    font-family: "JhengHei", "微軟正黑體 Light", "黑體-繁";
+    vertical-align: baseline;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    text-decoration: none;
+    list-style-type: none;
+    box-sizing: border-box;
 }
 
 code {
-  -webkit-user-select: text;
-  -moz-user-select: text;
-  -ms-user-select: text;
-  user-select: text;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
 }
 
 
 /* input[type="text"], input[type="password"], input[type="submit"], textarea{
-	border-radius: 5px;
-	font-size: 16px;
-}
-input[type="text"], input[type="password"], textarea {
-	width: 100%;
-	padding: 7px;
-}
-input[type="submit"] {
-	padding: 7px 20px;
-	border: none;
-	font-weight: bold;
-	cursor: pointer;
-	transition: all .2s;
-} */
+      border-radius: 5px;
+      font-size: 16px;
+  }
+  input[type="text"], input[type="password"], textarea {
+      width: 100%;
+      padding: 7px;
+  }
+  input[type="submit"] {
+      padding: 7px 20px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all .2s;
+  } */
 
 /************************************************************/
 code,
 button,
 .searchBar * {
-  transition: 0.3s ease;
+    transition: 0.3s ease;
 }
 
 a:hover {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 body {
-  /* font-family: Arial, sans-serif; */
-  margin: 0;
-  padding: 0;
-  /* overflow: scroll; */
-  scrollbar-width: none;
+    /* font-family: Arial, sans-serif; */
+    margin: 0;
+    padding: 0;
+    /* overflow: scroll; */
+    scrollbar-width: none;
 }
 
 button {
-  cursor: pointer;
-  border: none;
-  border-radius: 30px;
-  font-weight: 900;
-  line-height: 1;
+    cursor: pointer;
+    border: none;
+    border-radius: 30px;
+    font-weight: 900;
+    line-height: 1;
 }
 
 button:not(.material-icons) {
-  padding: 12px 20px;
-  font-size: 10pt;
+    padding: 12px 20px;
+    font-size: 10pt;
 }
 
 button.material-icons {
-  padding: 12px 0px;
-  font-size: 24pt;
+    padding: 12px 0px;
+    font-size: 24pt;
 }
 
 button {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 span.material-icons {
-  font-size: 14px;
-  line-height: normal;
-  vertical-align: middle;
+    font-size: 14px;
+    line-height: normal;
+    vertical-align: middle;
 }
-form input{
-  outline: none;
-  border: 2px solid transparent; 
+
+form input {
+    outline: none;
+    border: 2px solid transparent;
 }
-form input[type="submit"]{
-  cursor: pointer;
+
+form input[type="submit"] {
+    cursor: pointer;
 }
-footer{
-  text-align: center;
+
+footer {
+    text-align: center;
 }
+
 /************************************************************/
-/*------ 第五頁------*/
-.yinShopping {
-  height: 1300px;
-}
-
-
-.yinSearch-bar {
-  display: flex;
-  align-items: center;
-  width: 50%;
-  margin: 10px;
-  border: 1px solid;
-  border-radius: 2px;
-  overflow: hidden;
-  margin-right: 10%;
-}
-
-.yinSearch-bar > input {
-  flex: 1;
-  padding: 10px;
-  border: none;
-  outline: none;
-}
-
-
-
-
-.yinGuidedTour {
-  width: 150px;
-  height: 1500px;
-  padding: 10px;
-  gap: 50px;
-}

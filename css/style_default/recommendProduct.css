@@ -1,0 +1,119 @@
+/*************************************************************
+ * 
+ * 推薦商品
+ * 
+ *************************************************************/
+ .recommendProduct {
+    min-height: 660px;
+    margin: 50px auto 0 auto;
+    border: 0;
+    border-radius: 2% 33% 0 0;
+    /* background-color: rgba(255, 255, 255, .1); */
+}
+
+.recommendProduct>h1 {
+    font-size: 30px;
+    font-weight: 900;
+    padding: 30px 40px;
+    width: 100%;
+}
+
+.recommendProduct>h1>span {
+    font-size: 72px;
+}
+
+/*--------以下都是第三頁卡牌的動態--------*/
+
+.wrapper {
+    margin: 10px auto;
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.card {
+    position: relative;
+    width: 200px;
+    height: 280px;
+    background: transparent;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+    -webkit-box-reflect: below 2px linear-gradient(transparent, #0004);
+}
+
+.card-image {
+    z-index: 2;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    transition: .3s;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .3s;
+}
+
+.card:hover .card-image img {
+    transform: scale(1.2);
+}
+
+.card-details {
+    position: absolute;
+    bottom: -100%;
+    width: 100%;
+    height: 40%;
+    padding: 10px 20px;
+    background: rgba(0, 0, 0, .66);
+    backdrop-filter: blur(16px) saturate(120%);
+    transition: .3s;
+    z-index: 2;
+}
+
+.card:hover .card-details {
+    bottom: -5px;
+}
+
+.card-details h1,
+.card-details h2 {
+    font-weight: 700;
+}
+
+.card-details h1 {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.card-details h2 {
+    font-weight: 400;
+    font-size: 10px;
+    margin-bottom: 10px;
+    opacity: .6;
+}
+
+/* .card-details .tags {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 10px;
+    
+}
+
+.card-details .tags span {
+    padding: 1px 4px;
+    color: #fff;
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
+    border-radius: 8px;
+} */
+
+/*------------------以上都是第三頁卡牌的動態------------------*/

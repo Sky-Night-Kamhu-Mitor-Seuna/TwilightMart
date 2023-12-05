@@ -1,0 +1,24 @@
+/*************************************************************
+ * 
+ * 橫幅元件
+ * 
+ *************************************************************/
+.banner {
+    display: grid;
+    place-items: center;
+    padding: 160px;
+    gap: 10px;
+}
+
+.banner-image {
+    display: flex;
+}
+
+.banner-title {
+    font-size: 30px;
+    font-weight: 900;
+    line-height: 0.5;
+    padding: 10px 0px 0px 40px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
