@@ -323,17 +323,19 @@ CREATE TABLE `w_files` (
 CREATE TABLE `s_system_log` (
 	`id` BIGINT(19) UNSIGNED NOT NULL COMMENT '操作編號',
 	`wid` BIGINT(19) UNSIGNED NOT NULL COMMENT '網站編號',
-  `mid` BIGINT(19) UNSIGNED NOT NULL COMMENT '操作者',
+  `operator` VARCHAR(255) NOT NULL DEFAULT 'unknown' COMMENT '操作者',
   `ip_address` VARCHAR(39) NOT NULL DEFAULT '0.0.0.0' COMMENT 'IP位址',
 	`status` INT(3) NOT NULL DEFAULT '0' COMMENT '類型 0:無效操作 1:存取成功 2:存取被拒',
 	`action` VARCHAR(1024) NOT NULL COMMENT '動作',
 	`hash` CHAR(64) NOT NULL COMMENT '雜湊',
 	`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '創建時間',
 	PRIMARY KEY (`id`),
-	INDEX `FK_s_system_log_m_members` (`mid`),
 	INDEX `FK_s_system_log_s_website` (`wid`),
-	CONSTRAINT `FK_s_system_log_m_members` FOREIGN KEY (`mid`) REFERENCES `m_members` (`id`),
-	CONSTRAINT `FK_s_system_log_s_website` FOREIGN KEY (`wid`) REFERENCES `s_website` (`id`)
+	CONSTRAINT `FK_s_system_log_s_website` 
+   FOREIGN KEY (`wid`)
+   REFERENCES `s_website` (`id`)
+   ON UPDATE CASCADE 
+   ON DELETE CASCADE
 ) COMMENT='系統操作紀錄';
 
 -- 頁面瀏覽紀錄表
