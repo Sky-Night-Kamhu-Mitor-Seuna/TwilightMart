@@ -26,7 +26,7 @@ if (isset($_GET['mid']) || isset($_SESSION['mid'])) {
     exit;
 }
 // 檢查用戶是否存仔或者被停用
-$sql = "SELECT mp.introduction, mp.theme, m.nickname, m.account, mp.background 
+$sql = "SELECT mp.avatar, mp.introduction, mp.theme, m.nickname, m.account, mp.background 
 FROM `" . CONFIG_TABLES['members_profile'] . "` AS mp 
 JOIN `" . CONFIG_TABLES['members'] . "` AS m 
 WHERE m.id = ? AND m.id = mp.mid AND `status` <> 0 ;";
@@ -46,12 +46,13 @@ $memberColor = $result[0]['theme'] ? $result[0]['theme'] : $colors[array_rand($c
 // }
 // 基本配置
 $roles = $permissions->getMemberRoles($id, WEBSITE_ID);
-foreach($roles as $role){
+foreach ($roles as $role) {
     $roleDisplayname[] = $role['displayname'];
 }
 $userInformation = array(
     "mid" => $id,
     'nickname' => $result[0]['nickname'],
+    'avatar' => $result[0]['avatar'],
     'account' => $result[0]['account'],
     'introduction' => $result[0]['introduction'],
     'profileColor' => "{$memberColor} 1.0);'",
