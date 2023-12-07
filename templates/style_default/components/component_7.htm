@@ -1,8 +1,8 @@
 {* 請從 $component.param 抓取元件參數 *}
 
-
+<!-- profileCard -->
 <div class="profileCard left" {if isset($user.profileColor)}style="background-color: {$user.profileColor};" {/if}>
-    <img class="left" src="/assets/images/pexels-mark-glancy-1564506.jpg" />
+    <img class="left" src="{if isset($user.avatar)}{$user.avatar}{else}/assets/images/quaso.png{/if}" />
     <div style="width: 100%;">
         <h2>{if isset($user.nickname)}{$user.nickname}{/if}</h2>
         <div class="profileDescription" {if isset($user.profileColor)}style="color: {$user.profileColor};" {/if}>
@@ -16,7 +16,7 @@
         <code style="display: none;">{$user.mid}</code>
     </div>
 </div>
-
+<!-- profileCard 靠右版本 -->
 <!-- <div class="profileCard right">
     <div style="width: 100%;">
         <h2>{if isset($user.introduction)}{$user.nickname}{/if}</h2>
@@ -31,3 +31,4 @@
     </div>
     <img class="right" src="/assets/images/pexels-mark-glancy-1564506.jpg" />
 </div> -->
+<!-- profileCard EOF -->
