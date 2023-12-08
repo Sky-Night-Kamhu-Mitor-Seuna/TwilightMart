@@ -6,6 +6,10 @@
 - [composer](https://getcomposer.org/)/2.5.4  
 - ~~[codeigniter](https://codeigniter.tw/)/4.1.5~~  
 
+### Smarty開發流程示意圖
+![](assets/Smarty開発プロセス.png)
+
+### 說明
 **安裝Apache**  
 ```shell
 sudo dnf install httpd -y
