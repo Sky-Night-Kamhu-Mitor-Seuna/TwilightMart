@@ -99,19 +99,19 @@
   INSERT INTO `s_newebpay` (`wid`,`store_prefix`,`store_id`,`store_hash_key`,`store_hash_iv`,`store_return_url`,`store_client_back_url`,`store_notify_url`) VALUES(589605057335390208,'0','0','0','0','https://personal.snkms.com/projects/steam/','https://personal.snkms.com/projects/steam/','https://personal.snkms.com/projects/steam/api/done.php');
 
   -- 插入權限
-  INSERT INTO `m_permissions` (`name`, `displayname`) VALUES ('*', '所有權限');
-  INSERT INTO `m_permissions` (`name`, `displayname`) VALUES ('group', '群組管理');
-  INSERT INTO `m_permissions` (`name`, `displayname`) VALUES ('website', '網站基本資料維護');
-  INSERT INTO `m_permissions` (`name`, `displayname`) VALUES ('menu', '選單維護');
-  INSERT INTO `m_permissions` (`name`, `displayname`) VALUES ('page', '頁面維護');
-  INSERT INTO `m_permissions` (`name`, `displayname`) VALUES ('product_create', '商品建檔');
-  INSERT INTO `m_permissions` (`name`, `displayname`) VALUES ('product_category', '商品分類');
-  INSERT INTO `m_permissions` (`name`, `displayname`) VALUES ('order_view', '訂單查詢');
-  INSERT INTO `m_permissions` (`name`, `displayname`) VALUES ('order_manage', '訂單管理');
-  INSERT INTO `m_permissions` (`name`, `displayname`) VALUES ('order_customer_service', '訂單客服');
-  INSERT INTO `m_permissions` (`name`, `displayname`) VALUES ('sales_report', '銷售統計報表');
-  INSERT INTO `m_permissions` (`name`, `displayname`) VALUES ('post_create', '張貼貼文');
-  INSERT INTO `m_permissions` (`name`, `displayname`) VALUES ('post_manage', '管理貼文');
+  INSERT INTO `m_permissions` (`name`, `displayname`) VALUES ('*', '所有權限'), 
+    ('group', '群組管理'), 
+    ('website', '網站基本資料維護'), 
+    ('menu', '選單維護'), 
+    ('page', '頁面維護'), 
+    ('product_create', '商品建檔'), 
+    ('product_category', '商品分類'), 
+    ('order_view', '訂單查詢'), 
+    ('order_manage', '訂單管理'), 
+    ('order_customer_service', '訂單客服'), 
+    ('sales_report', '銷售統計報表'); 
+  -- ('post_create', '張貼貼文');
+  -- ('post_manage', '管理貼文');
   -- INSERT INTO `m_permissions` (`name`, `displayname`) VALUES ('product_review', '評價商品');
 
   -- 新增元件
