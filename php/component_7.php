@@ -16,7 +16,7 @@ $includeCss[] = "./css/" . WEBSITE['stylesheet'] . "/profileCard.css";
 // $includeJs[] = "./javascripts/.js";
 /****************************************************************************************/
 // 預設顏色表
-$colors = ['rgba(36, 117, 178,', 'rgba(178, 36, 36,', 'rgba(228, 92, 16,', 'rgba(31, 170, 0,', 'rgba(123, 35, 167,'];
+$colors = ['#3F769E', '#CC8200', '#9A71B5', '#EA6C6C'];
 // 必須至少登入或者有附上mid
 if (isset($_GET['mid']) || isset($_SESSION['mid'])) {
     $id = (isset($_GET['mid']) ? $_GET['mid'] : $_SESSION['mid']);
@@ -55,7 +55,7 @@ $userInformation = array(
     'avatar' => $result[0]['avatar'],
     'account' => $result[0]['account'],
     'introduction' => $result[0]['introduction'],
-    'profileColor' => "{$memberColor} 1.0);'",
+    'profileColor' => "{$memberColor}",
     'roles' => $roleDisplayname
     // 'isself' => $isself
 );

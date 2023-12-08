@@ -74,7 +74,7 @@ if (isset($_POST['password']) && isset($_POST['account']) && isset($_POST['nickn
     } else {
         $smarty->assign("errorMessage", "ACCOUNT_ERROR");
     }
-    
+    $log->addSystemLog($sf->getId(), WEBSITE_ID, $_SESSION['sessionId'], $USER_IP_ADDRESS, "REGISTER", 0);
 }
 
 // 如果已經登入將直接跳轉回會員頁面
