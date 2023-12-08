@@ -13,8 +13,7 @@ button.material-icons {
 .searchBar input[type="submit"]:hover,
 .searchBar input[type="search"]:focus~input[type="submit"],
 button:not(.material-icons),
-.navbarTop>.menu .list>button:hover,
-.profileCard {
+.navbarTop>.menu .list>button:hover {
     background-color: #2879f6;
 }
 
@@ -23,6 +22,7 @@ body,
     background-color: #141414;
 }
 
+.profileCard button,
 .banner:nth-child(even) {
     background-color: #204f98;
 }
@@ -31,8 +31,8 @@ body,
 .searchBar input[type="submit"],
 button:hover:not(.material-icons),
 .navbarTop>.menu .list>button,
-.profileCard button,
-.profileDescription {
+.profileDescription,
+.productItem {
     background-color: #fff;
 }
 
@@ -43,9 +43,15 @@ button:hover:not(.material-icons),
 footer {
     background-color: #212121;
 }
+
 .navbarTop {
     background-color: rgb(33, 33, 33, .8);
 }
+
+#floatingShoppingList {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
 /************************************************************/
 /* 文字顏色 */
 /************************************************************/
@@ -56,14 +62,12 @@ footer a:hover,
 .searchBar input[type="search"]:hover,
 .searchBar input[type="submit"],
 .navbarTop>.menu .list>button,
-.profileCard button,
-.profileCard button:hover,
-.profileDescription {
+.profileCard button:hover {
     color: #2879f6;
 }
 
 code:hover,
-.profileCard .tag:hover {
+.profileCard .tag:hover,#floatingShoppingList .deleteProduct {
     color: #f62885;
 }
 
@@ -77,15 +81,19 @@ footer a,
 .logo>h2,
 .profileCard,
 .recommendProduct>h1,
+.profileCard button,
 .card-details {
     color: #fff;
 }
 
-.searchBar input[type="search"] {
+.searchBar input[type="search"],
+.profileDescription {
     color: #000;
 }
 
-
+#floatingShoppingList .deleteProduct:hover{
+    color: #b22424;   
+}
 /************************************************************/
 /* 邊框顏色 */
 /************************************************************/
@@ -101,6 +109,9 @@ footer a,
   .yinDetails .yinTags span {
     border: 1.5px solid rgba(255 255 255 / 0.4);
   } */
+.profileCard button {
+    border-color: #FFF;
+}
 
 /************************************************************/
 /* 特殊顏色 */
