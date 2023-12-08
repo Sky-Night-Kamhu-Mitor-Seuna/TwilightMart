@@ -5,6 +5,11 @@ require_once '../sys.global.php';
 $r = new snowflake();
 echo "<title>測試".($r->getId())."</title>";
 
+// $a = new productManage($db);
+// echo "-----------------------------<br/>";
+// if($a->addProduct($sf->getId(),589605057335390208,"Hi",0.0,10)) echo "OK";
+// else echo "NO";
+
 
 // $db->debugmode(true);    
 // $c->deletePageComponents($r->getId(),589605057335390211,1,"TEST")
@@ -14,16 +19,12 @@ echo "<title>測試".($r->getId())."</title>";
 // }else{
 //     echo "no";
 // }
-$pm = new pageManage($db);
-$p = new permissions($db);
-$l = new syslog($db);
 // print_r($l->getLog(589605057335390208));
 
 // echo $l->getLog(589605057335390208)[0]['COUNT(*)'];
-$p = new permissions($db);
+
 // print_r($p->getRolePermissionsArray(589605057335390208));
 // $l->addLog($r->getId(), 589605057335390208, 589605057335390208, "TEST測試".$r->getId(), 0);
-$j=1;
 
 
 
@@ -39,10 +40,10 @@ $j=1;
 //     $j++;
 // }
 
-for($i = 1 ; $i < 3000 ; $i++){
-    $l->addSystemLog($r->getId(), 589605057335390208, 589605057335390208, $USER_IP_ADDRESS, "TEST測試".$r->getId(), 0);
-    $l->addViewLog($r->getId(), $TESTID, 5896085308993630212, $USER_IP_ADDRESS, $USER_AGENT);
-} 
+// for($i = 1 ; $i < 3000 ; $i++){
+//     $l->addSystemLog($r->getId(), 589605057335390208, 589605057335390208, $USER_IP_ADDRESS, "TEST測試".$r->getId(), 0);
+//     $l->addViewLog($r->getId(), $TESTID, 5896085308993630212, $USER_IP_ADDRESS, $USER_AGENT);
+// } 
 // if($p->addRoles($r->getId(),589605057335390208)){
 //     echo "done";
 // }else{
