@@ -1,101 +1,94 @@
-function addToCart(id, name, price) {
-    var quantity = 1;
-    var cart = getCookie("cart");
-    var i=0;
-    if(cart != null) {
-        cart = JSON.parse(cart);
-        for(i=0; i<cart.length; i++) {
-            if(cart[i].id == id) {
-                cart[i].quantity++;
-                quantity = cart[i].quantity;
-                break;
-            }
-        }
-    } 
-    else cart = [];
-    if(i == cart.length) {
-        cart.push({
-            "id": id,
-            "name": name,
-            "quantity": quantity,
-            "price": price
-        });
-    }
-    setCookie("cart", JSON.stringify(cart), 7);
-    updateCartUI();
+$(function(){
+	$('div.card[data-id]').on('click','button.btn',function(){
+		let productId = $(this).parents('.card').data('id');
+		let productName = $(this).parents('.card').find('.card-title').text();
+		
+		updateCartItem(productId, productName, 1);
+		updateCartItemView();
+	});
+	
+	$('#CartView').on('click',function(){
+		$('#floatingShoppingList').toggleClass('d-none');
+		
+		if(!$('#floatingShoppingList').is(':hidden')){
+			updateCartItemView();
+		}
+	});
+});
+function updateCartItemView(){
+	$('#floatingShoppingList .card-body').empty();
+	//從資料庫查詢資料
+	$.ajax({
+	  url: 'http://127.0.0.1/',
+	  method: 'POST',
+	  data: {
+		userId: '11123'
+	  },
+	  success:function(res){
+			// 測試用
+			let arr = (localStorage.getItem('cart'))?JSON.parse(localStorage.getItem('cart')):{};
+			
+			for(let o in arr){
+				$('#floatingShoppingList .card-body').append(
+					`<div><div class="d-inline-block">${arr[o].name}</div> <input onchange="updateCartItem('${o}', '${arr[o].name}', this.value, true);" type="number" value="${arr[o].amount}" /> <button onclick="deleteCartItem('${o}');" class="btn btn-danger">刪除</button></div>`
+				);
+			}
+		},
+	  error:function(err){
+		console.log(err)
+	  },
+	});
 }
 
-function updateCartUI() {
-    var cart = getCookie("cart");
-    if(cart != null) {
-        cart = JSON.parse(cart);
-        var total = 0;
-        var itemHTML = "";
-        for(var i=0; i<cart.length; i++) {
-            var totalPrice = cart[i].price * cart[i].quantity;
-            total += totalPrice;
-            itemHTML += "<tr>";
-            itemHTML += "<th scope='row'>" + (i+1) + "</th>";
-            itemHTML += "<td>" + cart[i].name + "</td>";
-            itemHTML += "<td><input type='number' min=1 class='form-control' value='" + cart[i].quantity + "' onchange='updateQuantity(" + i + ", " + cart[i].price + ", this.value)'/></td>";
-            itemHTML += "<td>" + cart[i].price + "</td>";
-            itemHTML += "<td>" + totalPrice.toFixed(2) + "</td>";
-            itemHTML += `<td><a onclick='removeCartItem("${cart[i].id}")'>X</a>`+ "</td>";
-            itemHTML += "</tr>";
-        }
-        itemHTML += "<tr><td colspan='4'>總共</td><td>" + total.toFixed(2) + "</td></tr>";
-        $("#items").html(itemHTML);
-        
-        if(cart.length > 0) {
-            $("#cart").show();
-            // $("body").addClass("modal-open");
-        } else {
-            $("#cart").hide();
-            // $("body").removeClass("modal-open");
-        }
-    }else{closeCart();}
-}
+function updateCartItem(productId, productName, amount, isUpdating){
+	amount = parseInt(amount);
 
-function updateQuantity(index, price, quantity) {
-    var cart = getCookie("cart");
-    if(cart != null) {
-        cart = JSON.parse(cart);
-        cart[index].quantity = quantity<1 ? 1:quantity;
-        setCookie("cart", JSON.stringify(cart), 7);
-        updateCartUI();
-    }
-}
+	// 新增資料到資料庫
+	$.ajax({
+	  url: 'http://127.0.0.1/',
+	  method: 'POST',
+	  data: {
+		id: productId,
+		name: productName,
+		amount: amount,
+	  },
+	  success:function(res){
+			// 測試用
+			let arr = (localStorage.getItem('cart'))?JSON.parse(localStorage.getItem('cart')):{};
+			
+			arr[productId] = {
+				name: productName,
+				amount: (arr[productId]?.amount && !isUpdating)?arr[productId].amount+amount:amount
+			};
+			
+			localStorage.setItem('cart', JSON.stringify(arr));
+		},
+	  error:function(err){
+		console.log(err)
+	  },
+	});
+};
 
-function removeCartItem(id) {
-    var cart = getCookie("cart");
-    if(cart != null) {
-        cart = JSON.parse(cart);
-        for(var i=0; i<cart.length; i++) {
-            if(cart[i].id == id) {
-                cart.splice(i, 1);
-                break;
-            }
-        }
-        setCookie("cart", JSON.stringify(cart), 7);
-        updateCartUI();
-    }
-}
-
-
-function closeCart() {
-    $("#cartMask").hide();
-    // $("body").removeClass("modal-open");
-}
-
-function buy() {
-    var cart = getCookie("cart");
-    if(cart != null) {
-        alert("開發中");
-        deleteCookie("cart");
-        updateCartUI();
-        closeCart();
-    }else{
-        alert("目前沒有商品");
-        closeCart();
-    }
-}
+function deleteCartItem(productId){
+	// 新增資料到資料庫
+	$.ajax({
+	  url: 'http://127.0.0.1/',
+	  method: 'POST',
+	  data: {
+		id: productId
+	  },
+	  success:function(res){
+			// 測試用
+			let arr = (localStorage.getItem('cart'))?JSON.parse(localStorage.getItem('cart')):{};
+			
+			delete arr[productId];
+			
+			localStorage.setItem('cart', JSON.stringify(arr));
+			
+			updateCartItemView();
+		},
+	  error:function(err){
+		console.log(err)
+	  },
+	});
+};
