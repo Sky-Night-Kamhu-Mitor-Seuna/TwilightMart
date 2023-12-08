@@ -9,5 +9,5 @@
     require_once 'classes/class.permissions.php';
     require_once 'classes/class.log.php';
     require_once 'classes/class.file.php';
-    // require_once 'classes/class.pageManage.php';
+    require_once 'classes/class.productManage.php';
 ?>
