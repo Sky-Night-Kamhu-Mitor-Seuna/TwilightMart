@@ -40,13 +40,13 @@ Design設計師:       {$design}
     {if isset($ogimage)}<meta property="og:image" content="{$ogimage}">{/if}  
     {if isset($language)}<meta http-equiv="Content-Language" content="{$language}">{/if}  
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">  
-    
 <!--Link---------------------------------------------------------------------------------------------------->
     {if isset($icon)}<link rel="icon" type="image/x-icon" href="{$icon}">{/if}
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     {section name=i loop=$css}<link rel="stylesheet" type="text/css" href="{$css[i]}">  
-    {sectionelse}no css  {/section}
+    {sectionelse}no css{/section}
 <!---------------------------------------------------------------------------------------------------------->
 </head>
 <title>{if isset($title)}{$title}{else}unknow{/if}</title>

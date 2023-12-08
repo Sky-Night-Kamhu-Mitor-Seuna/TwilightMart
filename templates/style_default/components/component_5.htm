@@ -31,14 +31,18 @@
                     maxlength="513" required onchange="checkpw('password','passwordCheck','passwordHint')" />
                 <span class="material-icons">&#xe73c</span>
             </div>
-            {if $errorMessage == "ACCOUNT_EXISTS"}
-            <span style="color: red;">* Account already exists</span>
-            {elseif $errorMessage == "ACCOUNT_ERROR"}
-            <span style="color: red;">* Wrong account</span>
-            {elseif $errorMessage == "PASSWORD_NO_MATCH"}
-            <span style="color: red;">* Passwords do not match</span>
-            {elseif $errorMessage == "PASSWORD_WRONG"}
-            <span style="color: red;">* Wrong password</span>
+            {if $errorMessage eq "ACCOUNT_EXISTS"}
+            <!-- Account already exists -->
+            <span style="color: red;">* 帳戶已存在</span>
+            {elseif $errorMessage eq "ACCOUNT_ERROR"}
+            <!-- Wrong account -->
+            <span style="color: red;">* 帳號錯誤，請使用英文及數字組合</span>
+            {elseif $errorMessage eq "PASSWORD_NO_MATCH"}
+            <!-- Passwords do not match -->
+            <span style="color: red;">* 再次輸入密碼錯誤</span>
+            {elseif $errorMessage eq "PASSWORD_WRONG"}
+            <!-- Wrong password -->
+            <span style="color: red;">* 密碼格式不符，請符合複雜性密碼原則</span>
             {/if}
             <button type="submit">SIGN UP!!</button>
             <br />

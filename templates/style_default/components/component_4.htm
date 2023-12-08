@@ -5,7 +5,7 @@
     <div class="login">
         <h2>LOGIN</h2>
         <div class="logo">
-            <a href="#這顆按鈕沒啥屁用只是跟你說Hello"><img src="/assets/images/logo.png" /></a>
+            <a href="#這顆按鈕沒啥屁用只是跟你說Hello"><img src="{$icon}" /></a>
         </div>
         <form class="login-form" action="" method="POST">
             <div class="login-textbox">
@@ -18,7 +18,13 @@
                 <span class="material-icons">&#xe73c</span>
             </div>
             {if isset($loginfail)}
-            <span style="color: red;">* Incorrect account or password</span>
+            {if $loginfail eq "LOGINFAIL"}
+            <!-- Incorrect account or password -->
+            <span style="color: red;">* 帳號或密碼錯誤</span>
+            {else}
+            <!-- This account has been disabled, please contact your system administrator -->
+            <span style="color: red;">* 此帳戶已被停用，請洽詢系統管理員</span>
+            {/if}
             {else}
             <br />
             {/if}

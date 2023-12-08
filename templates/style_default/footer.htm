@@ -2,10 +2,11 @@
             © Snkms.com 天夜之心開發工作室. SINCE 2013.｜ 前端設計 Design: <a href="#">{$design}</a>｜ 後端設計 Developer: <a href="#">{$author}</a>
         </footer>
         <!--Script-------------------------------------------------------------------------------------------------->
-        {section name=i loop=$js}<script type="text/javascript" src="{$js[i]}"></script>  
-        {sectionelse}no js  {/section}
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        {section name=i loop=$js}<script type="text/javascript" src="{$js[i]}"></script>  
+        {sectionelse}no js{/section}
         <script>
             // 禁用F12功能
             // document.onkeydown = function(e) {

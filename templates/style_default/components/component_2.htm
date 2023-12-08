@@ -3,7 +3,7 @@
 <!-- NavberTop -->
 <nav class="navbarTop">
     <div class="logo">
-        <a href="?route=home"><img src="/assets/images/logo.png"></a>
+        <a href="?route=home"><img src="{$icon}"></a>
         {if isset($siteName)}<h2>{$siteName}</h2>{/if}
     </div>
     <form class="searchBar" method="POST" action="?route=search">
@@ -28,7 +28,7 @@
         {/if}
         {/foreach}
         {if isset($mid)}
-        <button class="material-icons" onclick="$('#cartMask').toggle(); updateCartUI();" href="#cart">
+        <button id="CartView" class="material-icons" onclick="$('#cartMask').toggle(); updateCartUI();" href="#cart">
             &#xeb88
         </button>
         <button class="material-icons" onclick="window.location.href='?route=member'">
@@ -40,7 +40,72 @@
         </button>
     </div>
 </nav>
-<div style="height: 86px;">
-    <code>沒想到你會到這裡</code>
+<div style="height: 86px;width: 100%;margin: 0 auto;">
+    <code>如果看到這行，代表你導覽列並不是第一個元件，請修復它</code>
+</div>
+<!-- --------------------------------------------------- -->
+<div id="floatingShoppingList" class="d-none">
+    <div class="list">
+        <!-- 商品 1 -->
+        <div class="productItem">
+            <div class="productImage" >
+                <a href=""><img src="/assets/images/4156_G_1598386817236.jpg" style="max-width: 100px;"></a> <!-- 第一欄 -->
+            </div>
+            <div style="width: 65%;text-align: center;">
+                <!-- #商品名稱# / #尺寸# / #顏色# -->
+                澎湖狗母魚丸
+            </div>
+            <div style="width: 20%;text-align: center;"> 
+                200.00
+            </div>
+            <div style="width: 10%;text-align: center;">
+                1
+                <!-- <form style="text-align: center;">
+                    <input value=1 type="number" min="1" required style="width: 20px;">
+                </form> -->
+            </div>
+            <button class="deleteProduct material-icons" style="width: 50px;">&#xe872</button>
+        </div>
+        <div class="productItem">
+            <div class="productImage" >
+                <a href=""><img src="/assets/images/800x.jpg" style="max-width: 100px;"></a> <!-- 第一欄 -->
+            </div>
+            <div style="width: 65%;text-align: center;">
+                <!-- #商品名稱# / #尺寸# / #顏色# -->
+                澎湖干貝醬
+            </div>
+            <div style="width: 20%;text-align: center;"> 
+                120.00
+            </div>
+            <div style="width: 10%;text-align: center;">
+                2
+                <!-- <form style="text-align: center;">
+                    <input value=1 type="number" min="1" required style="width: 20px;">
+                </form> -->
+            </div>
+            <button class="deleteProduct material-icons" style="width: 50px;">&#xe872</button>
+        </div>
+        <div class="productItem">
+            <div class="productImage" >
+                <a href=""><img src="/assets/images/3135_thumb_G_1532050340642.jpg" style="max-width: 100px;"></a> <!-- 第一欄 -->
+            </div>
+            <div style="width: 65%;text-align: center;">
+                <!-- #商品名稱# / #尺寸# / #顏色# -->
+                澎湖小管
+            </div>
+            <div style="width: 20%;text-align: center;"> 
+                315.00
+            </div>
+            <div style="width: 10%;text-align: center;">
+                1
+                <!-- <form style="text-align: center;">
+                    <input value=1 type="number" min="1" required style="width: 20px;">
+                </form> -->
+            </div>
+            <button class="deleteProduct material-icons" style="width: 50px;">&#xe872</button>
+        </div>
+    </div>
+    <div style="margin: 0 auto;width: 100%;color: #FFF;text-align: center;">總價: 755.00</div><br/>
+    <div style="width: 100%;text-align: center;"><button>結帳</button></div>
 </div>
 <!-- NavberTop EOF -->
