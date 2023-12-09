@@ -99,7 +99,8 @@
   INSERT INTO `s_newebpay` (`wid`,`store_prefix`,`store_id`,`store_hash_key`,`store_hash_iv`,`store_return_url`,`store_client_back_url`,`store_notify_url`) VALUES(589605057335390208,'0','0','0','0','https://personal.snkms.com/projects/steam/','https://personal.snkms.com/projects/steam/','https://personal.snkms.com/projects/steam/api/done.php');
 
   -- 插入權限
-  INSERT INTO `m_permissions` (`name`, `displayname`) VALUES ('*', '所有權限'), 
+  INSERT INTO `m_permissions` (`name`, `displayname`) VALUES
+    ('*', '所有權限'), 
     ('group', '群組管理'), 
     ('website', '網站基本資料維護'), 
     ('menu', '選單維護'), 
@@ -110,9 +111,7 @@
     ('order_manage', '訂單管理'), 
     ('order_customer_service', '訂單客服'), 
     ('sales_report', '銷售統計報表'); 
-  -- ('post_create', '張貼貼文');
-  -- ('post_manage', '管理貼文');
-  -- INSERT INTO `m_permissions` (`name`, `displayname`) VALUES ('product_review', '評價商品');
+  
 
   -- 新增元件
   INSERT INTO `s_components` (`id`, `name`, `description`, `params`, `permissions`) VALUES
@@ -259,6 +258,28 @@
       ON DELETE CASCADE 
       ON UPDATE CASCADE
   ) COMMENT='商品資料表';
+
+  -- 購物車資料表
+  CREATE TABLE `i_cart` (
+    `id` BIGINT(19) UNSIGNED NOT NULL COMMENT '購物車ID',
+    `product_id` BIGINT(19) UNSIGNED NOT NULL COMMENT '商品ID',
+    `wid` BIGINT(19) UNSIGNED NOT NULL COMMENT '網站ID',
+    `mid` BIGINT(19) UNSIGNED NOT NULL COMMENT '會員ID',
+    `specification` LONGTEXT NOT NULL DEFAULT '[]' COMMENT '商品規格',
+    `color` LONGTEXT NOT NULL DEFAULT '[]' COMMENT '商品顏色',
+    `quantity` INT(11) NOT NULL DEFAULT 1 COMMENT '商品數量',
+    -- `status` TINYINT(3) NOT NULL DEFAULT 1 COMMENT '購買狀態: 0刪除 1未結帳 2已結帳',
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '創建時間',
+    `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新時間',
+    PRIMARY KEY (`id`),
+    INDEX `FK_i_cart_s_website` (`wid`),
+    INDEX `FK_i_cart_m_members` (`mid`),
+    INDEX `FK_i_cart_i_products` (`product_id`),
+    CONSTRAINT `FK_i_cart_i_products` FOREIGN KEY (`product_id`) REFERENCES `i_products` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT `FK_i_cart_m_members` FOREIGN KEY (`mid`) REFERENCES `m_members` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT `FK_i_cart_s_website` FOREIGN KEY (`wid`) REFERENCES `s_website` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
+  ) COMMENT='購物車資料表';
+
 
   -- 訂單資訊
   -- (0)未付款

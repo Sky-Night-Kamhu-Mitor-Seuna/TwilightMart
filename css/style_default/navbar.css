@@ -3,8 +3,51 @@
  * 導覽列
  * 
  *************************************************************/
+/* 購物車 */
+#floatingShoppingList {
+    z-index: 998;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(16px) saturate(120%);
+}
+
+#floatingShoppingList .list {
+    width: 80%;
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+    overflow-y: auto;
+    max-height: 90vh;
+}
+
+.productItem {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    color: #333;
+}
+
+.productItem .productImage img {
+    width: auto;
+    max-height: 75px;
+    margin-right: 15px;
+}
+
+
+#floatingShoppingList .deleteProduct {
+    
+    text-align: center;
+    font-size: 24px;
+}
+
+
+/***************************************************/
 .navbarTop {
-    z-index: 1;
+    z-index: 999;
     position: fixed;
     top: 0;
     left: 0;
@@ -20,7 +63,7 @@
 }
 
 .logo,
-.menu {
+.navbarTop>.menu {
     padding: 0;
     margin: 0;
     display: flex;
@@ -87,8 +130,8 @@
     border-radius: 0px;
   } */
 
-
 .navbarTop>.menu .list>button {
+    z-index: 999;
     padding: 10px 0;
     border: none;
     border-radius: 0px;
