@@ -5,9 +5,7 @@
  * 主文字顏色 .mainColor
  * 主背景顏色 .mainBackgroundColor
  * 主按鍵顏色 .mainButtonColor 
- * 輔文字顏色 .secondaryColor
  * 輔背景顏色 .secondaryBackgroundColor
- * 輔按鈕顏色 .secondaryButtonColor
  *
  *************************************************************/
 /* 底色 */
@@ -21,23 +19,23 @@ body {
 /************************************************************/
 /* 主色 */
 .mainBackgroundColor {
-    background-color: #2879f6;
+    background-color: #212121;
 }
 
 /* 輔色 */
 .secondaryBackgroundColor {
-    background-color: #FFF;
+    background-color: #2879f6;
 }
 
 /* 次要輔色 */
-.thirdSecondaryBackgroundColor {
+/* .thirdSecondaryBackgroundColor {
     background-color: #141414;
-}
+} */
 
 /* 次要輔色2 */
-.fourthSecondaryColor {
+/* .fourthSecondaryColor {
     background-color: #FFF;
-}
+} */
 
 /************************************************************/
 /* 文字顏色 */
@@ -50,23 +48,21 @@ a,
 }
 
 /* 輔色 */
-a:hover,
-.secondaryColor,
-.secondaryColor * {
+a:hover {
     color: #2879f6;
 }
 
 /* 次要輔色 */
-.thirdSecondaryColor,
+/* .thirdSecondaryColor,
 .thirdSecondaryColor * {
     color: #FFF;
-}
+} */
 
 /* 次要輔色2 */
-.fourthSecondaryColor,
+/* .fourthSecondaryColor,
 .fourthSecondaryColor * {
     color: #141414;
-}
+} */
 
 /************************************************************/
 /* 按鈕顏色 */
@@ -118,6 +114,12 @@ button:hover,
     background-color: transparent;
 }
 
+/************************************************************/
+/* 框線顏色 */
+/************************************************************/
+.mainBorderColor{
+    border-color: #2879f6;
+}
 /************************************************************/
 /* 特殊顏色 */
 /************************************************************/
