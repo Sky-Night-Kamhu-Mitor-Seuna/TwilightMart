@@ -8,88 +8,125 @@
  * 輔文字顏色 .secondaryColor
  * 輔背景顏色 .secondaryBackgroundColor
  * 輔按鈕顏色 .secondaryButtonColor
- * 次要輔文字顏色 .thirdSecondaryColor
- * 次要輔背景顏色 .thirdSecondaryBackgroundColor
- * 次要輔按鈕顏色 .thirdSecondaryButtonColor
  *
  *************************************************************/
+/* 底色 */
+/************************************************************/
+body {
+    background-color: #212121;
+}
+
+/************************************************************/
 /* 背景顏色 */
 /************************************************************/
-button.material-icons {
-    background-color: transparent;
-}
-button:not(.material-icons){
-    color: #fff;
+/* 主色 */
+.mainBackgroundColor {
     background-color: #2879f6;
 }
 
-.profileCard button{
-    background-color: #204f98;
+/* 輔色 */
+.secondaryBackgroundColor {
+    background-color: #FFF;
 }
 
-.profileCard button:hover {
+/* 次要輔色 */
+.thirdSecondaryBackgroundColor {
+    background-color: #141414;
+}
+
+/* 次要輔色2 */
+.fourthSecondaryColor {
+    background-color: #FFF;
+}
+
+/************************************************************/
+/* 文字顏色 */
+/************************************************************/
+/* 主色 */
+a,
+.mainColor,
+.mainColor * {
+    color: #FFF;
+}
+
+/* 輔色 */
+a:hover,
+.secondaryColor,
+.secondaryColor * {
     color: #2879f6;
+}
+
+/* 次要輔色 */
+.thirdSecondaryColor,
+.thirdSecondaryColor * {
+    color: #FFF;
+}
+
+/* 次要輔色2 */
+.fourthSecondaryColor,
+.fourthSecondaryColor * {
+    color: #141414;
+}
+
+/************************************************************/
+/* 按鈕顏色 */
+/************************************************************/
+/* 主色 */
+button {
+    background-color: #2879f6;
+    color: #FFF;
+}
+
+button:hover {
+    background-color: #FFF;
+    color: #2879f6;
+}
+
+/* 主色 */
+button,
+.mainButtonColor,
+.mainButtonColor *,
+.secondaryButtonColor:hover,
+.secondaryButtonColor:hover * {
+    color: #FFF;
 }
 
 button,
-button:hover:not(.material-icons){
-    background-color: #fff;
-    color: #2879f6;
-}
-.navbarTop>.menu .list>button{
-    color: #2879f6;
-}
-
-.navbarTop>.menu .list>button:hover {
+.mainButtonColor,
+.secondaryButtonColor:hover {
     background-color: #2879f6;
 }
 
-.profileCard button {
-    border-color: #FFF;
+/* 輔色 */
+button:hover,
+.secondaryButtonColor,
+.secondaryButtonColor *,
+.mainButtonColor:hover,
+.mainButtonColor:hover * {
+    color: #2879f6;
 }
 
-.navbarTop>.menu .list>button{
-    background-color: #fff;
+button:hover,
+.secondaryButtonColor,
+.mainButtonColor:hover {
+    background-color: #FFF;
 }
 
-.searchBar input[type="submit"]:hover,
-.searchBar input[type="search"]:focus~input[type="submit"]{
-    background-color: #2879f6;
-}
-
-.navbarTop>.menu .list>button:hover,
-.profileCard button{
-    color: #fff;
+/* 如果是特殊Icon則固定透明，顏色將繼承主色 */
+.material-icons,
+.material-icons:hover {
+    background-color: transparent;
 }
 
 /************************************************************/
-/* 背景顏色 */
+/* 特殊顏色 */
 /************************************************************/
-body,
-.secondaryBackgroundColor,
 .banner:nth-child(even) {
     background-color: #141414;
 }
 
 .banner:nth-child(odd) {
     background-color: #204f98;
-}
-
-.thirdSecondaryBackgroundColor,
-.yinShopping,
-.searchBar input[type="submit"],
-
-.profileDescription,
-.productItem {
-    background-color: #fff;
-}
-
-/* .searchBar input[type="submit"] {
-    background-color: #131313;
-  } */
-
-footer {
-    background-color: #212121;
 }
 
 .navbarTop {
@@ -99,62 +136,48 @@ footer {
 #floatingShoppingList {
     background-color: rgba(0, 0, 0, 0.7);
 }
-/************************************************************/
-/* 文字顏色 */
-/************************************************************/
-code,
-footer a:hover,
-.login>form input:focus~span,
-.searchBar input[type="search"]:hover,
-.searchBar input[type="submit"]{
+
+input[type="submit"] {
+    background-color: #fff;
+}
+
+input[type="submit"]:hover,
+input[type="search"]:focus~input[type="submit"] {
+    background-color: #2879f6;
+}
+
+.searchBar input[type="submit"]:hover,
+.searchBar input[type="search"]:focus~input[type="submit"] {
+    color: #fff;
+}
+
+input:focus {
+    border-color: #287af6;
+}
+
+form input:focus~span,
+input[type="search"]:hover,
+input[type="submit"] {
+    color: #2879f6;
+}
+
+input[type="search"] {
+    color: #000;
+}
+
+code {
     color: #2879f6;
 }
 
 code:hover,
-.profileCard .tag:hover,#floatingShoppingList .deleteProduct {
+.delete {
     color: #f62885;
 }
 
-
-footer,
-footer a,
-.searchBar input[type="submit"]:hover,
-.searchBar input[type="search"]:focus~input[type="submit"],
-.banner,
-.logo>h2,
-.profileCard,
-.recommendProduct>h1,
-.card-details {
-    color: #fff;
+.delete:hover {
+    color: #b22424;
 }
 
-.searchBar input[type="search"],
-.profileDescription {
-    color: #000;
-}
-
-#floatingShoppingList .deleteProduct:hover{
-    color: #b22424;   
-}
-/************************************************************/
-/* 邊框顏色 */
-/************************************************************/
-.login>form input:focus,
-.searchBar input[type="search"]:focus {
-    border-color: #287af6;
-}
-
-/* .yinSearch-bar {
-    border: 1px solid #161616;
-  }
-  
-  .yinDetails .yinTags span {
-    border: 1.5px solid rgba(255 255 255 / 0.4);
-  } */
-
-/************************************************************/
-/* 特殊顏色 */
-/************************************************************/
 /* 導覽列下拉選單顏色 */
 /* .navbarTop>.menu .list::before {
     border-top: 1px solid #FFF;
