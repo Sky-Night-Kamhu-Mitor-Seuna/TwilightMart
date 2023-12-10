@@ -1,7 +1,16 @@
 /*************************************************************
  *
  * CSS樣式設定 - 顏色配置
- * By Yin, MaizuRoad
+ *
+ * 主文字顏色 .mainColor
+ * 主背景顏色 .mainBackgroundColor
+ * 主按鍵顏色 .mainButtonColor 
+ * 輔文字顏色 .secondaryColor
+ * 輔背景顏色 .secondaryBackgroundColor
+ * 輔按鈕顏色 .secondaryButtonColor
+ * 次要輔文字顏色 .thirdSecondaryColor
+ * 次要輔背景顏色 .thirdSecondaryBackgroundColor
+ * 次要輔按鈕顏色 .thirdSecondaryButtonColor
  *
  *************************************************************/
 /* 背景顏色 */
@@ -9,28 +18,67 @@
 button.material-icons {
     background-color: transparent;
 }
+button:not(.material-icons){
+    color: #fff;
+    background-color: #2879f6;
+}
 
-.searchBar input[type="submit"]:hover,
-.searchBar input[type="search"]:focus~input[type="submit"],
-button:not(.material-icons),
+.profileCard button{
+    background-color: #204f98;
+}
+
+.profileCard button:hover {
+    color: #2879f6;
+}
+
+button,
+button:hover:not(.material-icons){
+    background-color: #fff;
+    color: #2879f6;
+}
+.navbarTop>.menu .list>button{
+    color: #2879f6;
+}
+
 .navbarTop>.menu .list>button:hover {
     background-color: #2879f6;
 }
 
+.profileCard button {
+    border-color: #FFF;
+}
+
+.navbarTop>.menu .list>button{
+    background-color: #fff;
+}
+
+.searchBar input[type="submit"]:hover,
+.searchBar input[type="search"]:focus~input[type="submit"]{
+    background-color: #2879f6;
+}
+
+.navbarTop>.menu .list>button:hover,
+.profileCard button{
+    color: #fff;
+}
+
+/************************************************************/
+/* 背景顏色 */
+/************************************************************/
 body,
-.banner:nth-child(odd) {
+.secondaryBackgroundColor,
+.banner:nth-child(even) {
     background-color: #141414;
 }
 
-.profileCard button,
-.banner:nth-child(even) {
+.banner:nth-child(odd) {
     background-color: #204f98;
 }
 
+.thirdSecondaryBackgroundColor,
 .yinShopping,
 .searchBar input[type="submit"],
-button:hover:not(.material-icons),
-.navbarTop>.menu .list>button,
+
 .profileDescription,
 .productItem {
     background-color: #fff;
@@ -51,18 +99,14 @@ footer {
 #floatingShoppingList {
     background-color: rgba(0, 0, 0, 0.7);
 }
-
 /************************************************************/
 /* 文字顏色 */
 /************************************************************/
-button:hover,
 code,
 footer a:hover,
 .login>form input:focus~span,
 .searchBar input[type="search"]:hover,
-.searchBar input[type="submit"],
-.navbarTop>.menu .list>button,
-.profileCard button:hover {
+.searchBar input[type="submit"]{
     color: #2879f6;
 }
 
@@ -71,17 +115,15 @@ code:hover,
     color: #f62885;
 }
 
-button,
+
 footer,
 footer a,
 .searchBar input[type="submit"]:hover,
 .searchBar input[type="search"]:focus~input[type="submit"],
 .banner,
-.navbarTop>.menu .list>button:hover,
 .logo>h2,
 .profileCard,
 .recommendProduct>h1,
-.profileCard button,
 .card-details {
     color: #fff;
 }
@@ -109,9 +151,6 @@ footer a,
   .yinDetails .yinTags span {
     border: 1.5px solid rgba(255 255 255 / 0.4);
   } */
-.profileCard button {
-    border-color: #FFF;
-}
 
 /************************************************************/
 /* 特殊顏色 */
