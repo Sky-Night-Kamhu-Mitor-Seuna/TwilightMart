@@ -8,6 +8,13 @@
 // GLOBAL
 require 'sys.global.php';
 /*************************************************************/
+// 調適資訊
+if ((strpos($USER_AGENT, 'curl') !== false) /*&& CONFIG_GENERAL['debug']*/) 
+{
+    echo "Session ID: {$_SESSION['sessionId']}\nIP: {$USER_IP_ADDRESS}";
+    exit;
+}
+/*************************************************************/
 // Smarty配置
 ob_start();
 require_once 'libs/smarty/Smarty.class.php';
@@ -22,7 +29,6 @@ $template = 'main.htm';
 $templatesDir = "templates/" . WEBSITE['stylesheet'];
 $defaultCss = array(
     "./css/" . WEBSITE['stylesheet'] . "/stylesheet.css",
-    "./css/" . WEBSITE['stylesheet'] . "/color.css",
     "./css/" . WEBSITE['stylesheet'] . "/scrollbar .css"
 );
 $defaultJs = array(
@@ -37,6 +43,7 @@ $defaultJs = array(
 );
 $includeCss = $defaultCss;
 $includeJs = $defaultJs;
+$includeCss[] = "./css/" . WEBSITE['stylesheet'] . "/color.css";
 /*************************************************************/
 // 頁面跳轉(之後補)
 if (isset($_GET['jump'])) header("Location: {$_GET['jump']}");

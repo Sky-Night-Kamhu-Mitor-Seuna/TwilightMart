@@ -3,7 +3,17 @@ require_once '../sys.global.php';
 // 589605057335390208
 
 $r = new snowflake();
+$ppp = new cartManage($db);
 echo "<title>測試".($r->getId())."</title>";
+
+
+if($ppp->changeCart($sf->getId(),589605308993630209,589605057335390208,589605057335390208,10,"[]","[]","REM")){
+    echo "done";
+}
+else{
+    echo "no";
+}
+
 
 // $a = new productManage($db);
 // echo "-----------------------------<br/>";

@@ -10,4 +10,5 @@
     require_once 'classes/class.log.php';
     require_once 'classes/class.file.php';
     require_once 'classes/class.productManage.php';
+    require_once 'classes/class.cartManage.php';
 ?>

@@ -1,30 +1,21 @@
 {* 請從 $component.param 抓取元件參數 *}
 
-<!-- Null -->
-<!-- products list -->
-<div style="margin: 0 auto;" class="w-75">
-	<h1>商品列表</h1>
-	<div class="list">
-	<!-- <div class="d-inline-block card w-25" data-id="1">
-		<div class="card-body m-2">
-			<div class="d-inline-block"><img class="img-thumbnail" src="https://cdn.discordapp.com/attachments/1174601819490615356/1180439950550896671/image.png?ex=657d6d5f&is=656af85f&hm=fc86d2364e9e06cf92336a45186b423af480ec9107f5c1b82490d7382f672027&" /></div>
-			<div class="d-block card-title">商品名稱A</div>
-			<div class="d-block card-text">
-				<div class="d-inline-block">$5000</div>
-				<button class="btn btn-success">直接購買</button>
+<!-- productsList -->
+<div class="mainColor productList">
+    <div class="wrapper">
+		{foreach $products as $product}
+        <div class="card">
+            <a href="" target="_self" class="card-image">
+                <img src="{$product.cover_photo}" alt="Location Unknown">
+			</a>
+            <div class="mainBackgroundColor card-details">
+                <p class="productName">{$product.name}</p>
+                <p class="productDescription">{$product.description}</p>
+				<p class="productDescription">$ {$product.price}</p>
+				<button style="width: 100%;" onclick="{if isset($mid)}updateCartItem('{$product.id}',1,'[]','[]');{else}window.location.href='?route=login'{/if}">放入購物車</button>
 			</div>
-		</div>
-	</div>
-	<div class="d-inline-block card w-25" data-id="2">
-		<div class="card-body m-2">
-			<div class="d-inline-block"><img class="img-thumbnail" src="https://cdn.discordapp.com/attachments/1174601819490615356/1180439950550896671/image.png?ex=657d6d5f&is=656af85f&hm=fc86d2364e9e06cf92336a45186b423af480ec9107f5c1b82490d7382f672027&" /></div>
-			<div class="d-block card-title">商品名稱B</div>
-			<div class="d-block card-text">
-				<div class="d-inline-block">$5000</div>
-				<button class="btn btn-success">直接購買</button>
-			</div>
-		</div>
-	</div> -->
-	</div>
+        </div>
+		{/foreach}
+    </div>
 </div>
-<!-- Null EOF -->
+<!-- productsList EOF -->

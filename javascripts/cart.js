@@ -22,6 +22,7 @@ $(function(){
 });
 function updateCartItemView(){
 	$('#floatingShoppingList .list').empty();
+	$('#floatingShoppingList #productsCount').empty();
 	//從資料庫查詢資料
 	$.ajax({
 	  url: '/api/api.shopping_cart.php',
@@ -33,10 +34,11 @@ function updateCartItemView(){
 			// 測試用
 			// let arr = (localStorage.getItem('cart'))?JSON.parse(localStorage.getItem('cart')):{};
 			console.log(res);
+			amount = 0;
 			for(let o in res){
 				$('#floatingShoppingList .list').append(
 					`<!-- ${res[o].product_id} -->
-					<div class="productItem">
+					<div class="productItem" style="background-color: rgba(255,255,255,.9);color: #000">
 					<div class="productImage" >
 						<a href=""><img src="/assets/images/4156_G_1598386817236.jpg" style="max-width: 100px;"></a> <!-- 第一欄 -->
 					</div>
@@ -53,10 +55,14 @@ function updateCartItemView(){
 						<input onchange="updateCartItem('${o}', '${res[o].name}', this.value, true);" type="number" value="${res[o].amount}" />
 						</form> -->
 					</div>
-					<button class="deleteProduct material-icons" style="width: 50px;" onclick="deleteCartItem('${o}');">&#xe872</button>
+					<button class="delete material-icons" style="width: 50px;" onclick="deleteCartItem('${o}');">&#xe872</button>
 					</div>`
 				);
+				amount += res[o].price * res[o].quantity;
 			}
+			if(amount > 0) $('#floatingShoppingList #productsCount').append(`總價: `+amount);
+			else $('#floatingShoppingList #productsCount').append(`目前沒有任何商品`);
+			
 		},
 	  error:function(err){
 		console.log(err)
@@ -66,7 +72,7 @@ function updateCartItemView(){
 
 function updateCartItem(productId, productQuantity, productSpecification, productColor){
 	productQuantity = parseInt(productQuantity);
-
+	// productId = parseInt(productId);
 	// 新增資料到資料庫
 	$.ajax({
 	  url: '/api/api.shopping_cart.php',
@@ -79,18 +85,19 @@ function updateCartItem(productId, productQuantity, productSpecification, produc
 		product_color: productColor,
 	  },
 	  success:function(res){
+			// console.log(res);
 			// 測試用
-			let cartId = Object.keys(res)[0];
-			let arr = (localStorage.getItem('cart'))?JSON.parse(localStorage.getItem('cart')):{};
-			arr[cartId] = {
-				name: res[cartId]['name'],
-				spec: res[cartId]['specification'],
-				color: res[cartId]['color'],
-				// amount: (arr[productId]?.amount && !isUpdating)?arr[productId].amount+amount:amount
-				amount:  res[cartId]['quantity']
-			};
-			
-			localStorage.setItem('cart', JSON.stringify(arr));
+			// let cartId = Object.keys(res)[0];
+			// let arr = (localStorage.getItem('cart'))?JSON.parse(localStorage.getItem('cart')):{};
+			// arr[cartId] = {
+			// 	name: res[cartId]['name'],
+			// 	spec: res[cartId]['specification'],
+			// 	color: res[cartId]['color'],
+			// 	// amount: (arr[productId]?.amount && !isUpdating)?arr[productId].amount+amount:amount
+			// 	amount:  res[cartId]['quantity']
+			// };
+			updateCartItemView();
+			// localStorage.setItem('cart', JSON.stringify(arr));
 		},
 	  error:function(err){
 		console.log(err)
