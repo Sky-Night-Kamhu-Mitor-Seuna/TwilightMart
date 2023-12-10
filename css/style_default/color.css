@@ -157,7 +157,7 @@ input:focus {
     border-color: #287af6;
 }
 
-form input:focus~span,
+/* form input:focus~span, */
 input[type="search"]:hover,
 input[type="submit"] {
     color: #2879f6;

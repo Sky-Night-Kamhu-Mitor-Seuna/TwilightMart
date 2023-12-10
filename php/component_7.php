@@ -49,6 +49,8 @@ $roles = $permissions->getMemberRoles($id, WEBSITE_ID);
 foreach ($roles as $role) {
     $roleDisplayname[] = $role['displayname'];
 }
+if(empty($roles)) $roleDisplayname=[];
+// if($result[0]['status'] == 0) $smarty->assign("status", "disable");
 $userInformation = array(
     "mid" => $id,
     'nickname' => $result[0]['nickname'],
@@ -56,7 +58,7 @@ $userInformation = array(
     'account' => $result[0]['account'],
     'introduction' => $result[0]['introduction'],
     'profileColor' => "{$memberColor}",
-    'roles' => $roleDisplayname
+    'roles' => $roleDisplayname,
     // 'isself' => $isself
 );
 $smarty->assign("user", $userInformation);

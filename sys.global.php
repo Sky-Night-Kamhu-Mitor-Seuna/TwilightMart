@@ -65,6 +65,8 @@ $productManage = new productManage($db);
 // 頁面
 $pageRouter = new pageRouter($db);
 $pageManage = new pageManage($db);
+// 頁面
+$file = new files();
 // 雪花算法ID
 $sf = new snowflake();
 /*************************************************************/

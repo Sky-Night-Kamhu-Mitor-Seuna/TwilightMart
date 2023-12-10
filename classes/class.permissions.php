@@ -84,6 +84,21 @@ class permissions
         return $result;
     }
     /************************************************
+     * ### 確認用戶是否具有任何一項管理員權限 ###
+     * @param int $mid 使用者id
+     * @param int $wid 網站id
+     ************************************************/
+    public function isAdmin($mid, $wid) : bool
+    {
+        $roles = $this->getMemberRoles($mid, $wid);
+        foreach($roles as $key => $role) $mRolesId[] = $role['id'];
+        if(empty($mRolesId)) return false;
+        foreach($mRolesId as $rid){
+            if($this->getRolePermissions($rid)) return true;
+        }
+        return false;
+    }
+    /************************************************
      * ### 確認使用者身份組 ###
      * @param int $mid 使用者id
      * @param int $wid 網站id

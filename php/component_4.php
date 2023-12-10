@@ -11,7 +11,7 @@ $includeCss[]="./css/".WEBSITE['stylesheet']."/login.css";
 /****************************************************************************************/
 // 如果已經登入將直接跳轉回會員頁面
 if(isset($_SESSION['mid'])){
-    $log->addSystemLog($sf->getId(), WEBSITE_ID,$result[0]['id'], $USER_IP_ADDRESS, "LOGIN", 0);
+    $log->addSystemLog($sf->getId(), WEBSITE_ID,$_SESSION['mid'], $USER_IP_ADDRESS, "LOGIN", 0);
     header("location: ?route=member");
     exit;
 }

@@ -1,6 +1,4 @@
 function announcementSwitch(evt, tabName) {
-    $('.announcementContent').hide();
-    $('.announcementTab a').removeClass('announcementActive');
+    $('.adminBackstageContentText').hide();
     $('#' + tabName).show();
-    evt.currentTarget.className += ' announcementActive';
 }

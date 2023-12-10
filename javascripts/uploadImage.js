@@ -1,26 +1,41 @@
-function show(obj) {
-    document.getElementById(obj).style.display = "block";
+function uploadImage(action) {
+  let inputFile = document.getElementById("IMAGE_UPLOAD");
+  let file = inputFile.files[0];
+  let formData = new FormData();
+  formData.append("action", action);
+  formData.append("uploadfile", file);
+
+  $.ajax({
+    url: "/api/api.uploadfile.php",
+    type: "POST",
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function (res) {
+      console.log(res);
+      updateImage(res[0], action);
+      location.reload()
+    },
+    error: function (err) {
+      console.log(err);
+    },
+  });
 }
-function hide(obj) {
-    document.getElementById(obj).style.display = "none";
-}
-function trigger(obj) {
-    document.getElementById(obj).click();
-}
-function uploadImage(obj) {
-    let formData = new FormData();
-    formData.append("IMAGE_UPLOAD", document.getElementById(obj+"_IMAGE_UPLOAD").files[0]);
-    formData.append("IMAGE_TYPE", document.getElementById(obj+"_IMAGE_TYPE").value);
-    formData.append("IMAGE_RENAME", document.getElementById(obj+"_IMAGE_RENAME").value);
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", "/api/upload/");
-    xhr.send(formData);
-    xhr.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
-            if (this.responseText!=null) {
-                console.log(this.responseText);
-                location.reload();
-            }
-        }
-    };
+
+function updateImage(path, action) {
+  // 新增資料到資料庫
+  $.ajax({
+    url: "/api/api.updateImage.php",
+    method: "POST",
+    data: {
+      path: path,
+      action: action,
+    },
+    success: function (res) {
+        console.log(res);
+    },
+    error: function (err) {
+      console.log(err);
+    },
+  });
 }

@@ -8,17 +8,17 @@
 require_once "../sys.global.php";
 $cart = new cartManage($db);
 /****************************************************************************************/
-if (isset($_REQUEST ['action']) && isset($_SESSION['mid'])) 
+if (isset($_POST ['action']) && isset($_SESSION['mid'])) 
 {
     // $systemAction = "CHANGE_CART";
     $memberId = $_SESSION['mid'];
-    $action = empty($_REQUEST ['action']) ? null : $_REQUEST ['action'];
-    $cartId = isset($_REQUEST ['cart_id']) ? $_REQUEST ['cart_id'] : null;
+    $action = empty($_POST ['action']) ? null : $_POST ['action'];
+    $cartId = isset($_POST ['cart_id']) ? $_POST ['cart_id'] : null;
 
-    $productId = isset($_REQUEST ['product_id']) ? intval($_REQUEST ['product_id']) : null;
-    $productQuantity = isset($_REQUEST ['product_quantity']) ? intval($_REQUEST ['product_quantity']) : null;
-    $productSpecification = isset($_REQUEST ['product_specification']) ? $_REQUEST ['product_specification'] : "[]";
-    $productColor = isset($_REQUEST ['product_color']) ? $_REQUEST ['product_color'] : "[]";
+    $productId = isset($_POST ['product_id']) ? intval($_POST ['product_id']) : null;
+    $productQuantity = isset($_POST ['product_quantity']) ? intval($_POST ['product_quantity']) : null;
+    $productSpecification = isset($_POST ['product_specification']) ? $_POST ['product_specification'] : "[]";
+    $productColor = isset($_POST ['product_color']) ? $_POST ['product_color'] : "[]";
     header("Content-type: application/json");
     switch ($action) {
         case "UPDATE":

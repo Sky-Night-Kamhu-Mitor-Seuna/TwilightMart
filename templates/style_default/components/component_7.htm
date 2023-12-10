@@ -12,7 +12,7 @@
         {/foreach}
         {/if}
         <div class="profileDescription" {if isset($user.profileColor)}style="border-color:{$user.profileColor};background-color:rgba(255, 255, 255,1);color: rgba(0,0,0,1);" {/if}>
-            {if isset($user.introduction)}{$user.introduction}{/if}
+            {if isset($status)}<span class="delete">* 該帳戶已被停用 *</span>{else}{if isset($user.introduction)}{$user.introduction}{/if}{/if}
         </div>
         <code style="display: none;">{$user.mid}</code>
     </div>

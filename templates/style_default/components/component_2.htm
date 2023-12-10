@@ -17,19 +17,23 @@
             <button class="mainButtonColor"><span class="material-icons">&#xe5cf&nbsp;</span>{$navbar.displayname}</button>
             <div class="list">
                 {foreach $navbar.link as $dropdown}
-                <button class="secondaryButtonColor" onclick="window.location.href='{$dropdown.link}'"><span
-                        class="material-icons">&#x{$dropdown.icon}&nbsp;</span>{$dropdown.displayname}</button>
+                <button class="secondaryButtonColor" onclick="window.location.href='{$dropdown.link}'">{if isset($dropdown.icon)}<span
+                        class="material-icons">&#x{$dropdown.icon}&nbsp;</span>{/if}{$dropdown.displayname}</button>
                 {/foreach}
             </div>
         </div>
         {else}
-        <button class="mainButtonColor" onclick="window.location.href='{$navbar.link}'"><span
-                class="material-icons">&#x{$navbar.icon}&nbsp;</span>{$navbar.displayname}</button>
+        <button class="mainButtonColor" onclick="window.location.href='{$navbar.link}'">{if isset($navbar.icon)}<span
+                class="material-icons">&#x{$navbar.icon}&nbsp;</span>{/if}{$navbar.displayname}</button>
         {/if}
         {/foreach}
         {if isset($mid)}
+        {if isset($admin)}
+        <button class="mainButtonColor" onclick="window.location.href='?route=admin'"><span
+            class="material-icons">&#xe8b8&nbsp;</span>管理</button>
+        {/if}
         <button id="CartView" class="mainButtonColor material-icons" href="#cart">
-            &#xeb88
+            &#xe8cc
         </button>
         <button class="mainButtonColor material-icons" onclick="window.location.href='?route=member'">
             &#xe853

@@ -79,6 +79,6 @@ if (isset($_POST['password']) && isset($_POST['account']) && isset($_POST['nickn
 
 // 如果已經登入將直接跳轉回會員頁面
 if (isset($_SESSION['account'])) {
-    header("location: ?page=member");
+    header("location: ?route=member");
     exit;
 }

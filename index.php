@@ -84,12 +84,21 @@ if (isset($_SESSION['LastVisitedPageData'])) {
 if ($timeDiff > 0)
     $log->addViewLog($sf->getId(), $viewUser, $pageId, $USER_IP_ADDRESS, $USER_AGENT, $timeDiff, $referrerUrl);
 /*************************************************************/
-// 網站使用物件
+// 網站使用物件及存取權限
 $componentIncludePHPList = array();
 $componentTemplateList = array();
+$needPermissions = 0;
 foreach ($pageRouter->getPageComponent($pageId) as $key => $webObject) {
     if (!in_array($webObject['cid'], $componentIncludePHPList)) $componentIncludePHPList[] = $webObject['cid'];
     $componentTemplateList[$key] = ["id" => $webObject['id'], "displayname" => $webObject['displayname'], "cid" => $webObject['cid'], "param" => json_decode($webObject['params'], true)];
+    $needPermissions |= $webObject['permissions'];
+}
+// 網站存取權確認，倘若沒有存取權則跳至錯誤頁面
+if(isset($_SESSION['mid']) && $needPermissions){
+    if(!$permissions->checkMemberPermissions($_SESSION['mid'], WEBSITE_ID, $needPermissions)){
+        header("location: ?route=member");
+        exit;
+    }
 }
 // 將元件資訊寫進smartyAssign
 $smarty->assign("pageComponents", $componentTemplateList);
@@ -116,7 +125,11 @@ $smarty->assign("design", $design);
 $smarty->assign("version", $version);
 /************************************************************/
 // 使用者資訊
-if (isset($_SESSION["mid"])) $smarty->assign("mid", $_SESSION["mid"]);
+if (isset($_SESSION["mid"])) {
+    $smarty->assign("mid", $_SESSION["mid"]);
+    $IS_ADMIN = $permissions->isAdmin($_SESSION['mid'], WEBSITE_ID);
+    if($IS_ADMIN) $smarty->assign("admin",  $IS_ADMIN);
+}
 else setcookie("cart", null, time() - 86400);
 /************************************************************/
 // 設置最後一次訪問頁面
