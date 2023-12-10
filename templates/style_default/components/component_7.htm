@@ -1,7 +1,7 @@
 {* 請從 $component.param 抓取元件參數 *}
 
 <!-- profileCard -->
-<div class="profileCard">
+<div class="mainColor profileCard">
     <img src="{if isset($user.avatar)}{$user.avatar}{else}/assets/images/quaso.png{/if}" {if isset($user.profileColor)}style="background-color: {$user.profileColor};"{/if}/>
     <div>
         <h2>{if isset($user.nickname)}{$user.nickname}{/if}</h2>
@@ -11,7 +11,7 @@
         <button class="tag" {if isset($user.profileColor)}style="background-color: {$user.profileColor};" {/if}><span class="material-icons" >&#xe7ef</span>&nbsp;{$role}</button>
         {/foreach}
         {/if}
-        <div class="profileDescription" {if isset($user.profileColor)}style="border-color:{$user.profileColor};" {/if}>
+        <div class="fourthSecondaryColor fourthSecondaryColor profileDescription" {if isset($user.profileColor)}style="border-color:{$user.profileColor};" {/if}>
             {if isset($user.introduction)}{$user.introduction}{/if}
         </div>
         <code style="display: none;">{$user.mid}</code>

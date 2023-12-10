@@ -2,7 +2,7 @@
 
 {if $component.param.style eq 0}
 <!-- banner1 -->
-<div class="banner">
+<div class="mainColor banner">
     <div class="banner-image">
         <img src="{$component.param.image}" style="width: 220px;">
     </div>
@@ -17,7 +17,7 @@
 <!-- banner1 EOF -->
 {elseif $component.param.style eq 1}
 <!-- banner2 -->
-<div class="banner">
+<div class="mainColor banner">
     <span class="banner-title">
         {foreach $component.param.message as $msg}
         {if $msg@first}

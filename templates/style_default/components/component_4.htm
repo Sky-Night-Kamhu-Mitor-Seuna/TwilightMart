@@ -1,8 +1,8 @@
 {* 請從 $component.param 抓取元件參數 *}
 
 <!-- login -->
-<div class="login-background">
-    <div class="login">
+<div class="mainColor login-background">
+    <div class="thirdSecondaryBackgroundColor login">
         <h2>LOGIN</h2>
         <div class="logo">
             <a href="#這顆按鈕沒啥屁用只是跟你說Hello"><img src="{$icon}" /></a>
@@ -20,10 +20,10 @@
             {if isset($loginfail)}
             {if $loginfail eq "LOGINFAIL"}
             <!-- Incorrect account or password -->
-            <span style="color: red;">* 帳號或密碼錯誤</span>
+            <span class="delete">* 帳號或密碼錯誤</span>
             {else}
             <!-- This account has been disabled, please contact your system administrator -->
-            <span style="color: red;">* 此帳戶已被停用，請洽詢系統管理員</span>
+            <span class="delete">* 此帳戶已被停用，請洽詢系統管理員</span>
             {/if}
             {else}
             <br />

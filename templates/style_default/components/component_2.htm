@@ -1,7 +1,7 @@
 {* 請從 $component.param 抓取元件參數 *}
 
 <!-- NavberTop -->
-<nav class="navbarTop">
+<nav class="mainColor navbarTop">
     <div class="logo">
         <a href="?route=home"><img src="{$icon}"></a>
         {if isset($siteName)}<h2>{$siteName}</h2>{/if}
@@ -14,28 +14,28 @@
         {foreach $component.param as $navbar}
         {if is_array($navbar.link)}
         <div class="dropdown">
-            <button><span class="material-icons">&#xe5cf&nbsp;</span>{$navbar.displayname}</button>
+            <button class="mainButtonColor"><span class="material-icons">&#xe5cf&nbsp;</span>{$navbar.displayname}</button>
             <div class="list">
                 {foreach $navbar.link as $dropdown}
-                <button onclick="window.location.href='{$dropdown.link}'"><span
+                <button class="secondaryButtonColor" onclick="window.location.href='{$dropdown.link}'"><span
                         class="material-icons">&#x{$dropdown.icon}&nbsp;</span>{$dropdown.displayname}</button>
                 {/foreach}
             </div>
         </div>
         {else}
-        <button onclick="window.location.href='{$navbar.link}'"><span
+        <button class="mainButtonColor" onclick="window.location.href='{$navbar.link}'"><span
                 class="material-icons">&#x{$navbar.icon}&nbsp;</span>{$navbar.displayname}</button>
         {/if}
         {/foreach}
         {if isset($mid)}
-        <button id="CartView" class="material-icons" href="#cart">
+        <button id="CartView" class="mainButtonColor material-icons" href="#cart">
             &#xeb88
         </button>
-        <button class="material-icons" onclick="window.location.href='?route=member'">
+        <button class="mainButtonColor material-icons" onclick="window.location.href='?route=member'">
             &#xe853
         </button>
         {/if}
-        <button class="material-icons" onclick="window.location.href='?route={if isset($mid)}logout{else}login{/if}'">
+        <button class="mainButtonColor material-icons" onclick="window.location.href='?route={if isset($mid)}logout{else}login{/if}'">
             &#x{if isset($mid)}e9ba{else}ea77{/if};
         </button>
     </div>
@@ -48,7 +48,7 @@
     <div class="list">
         
     </div>
-    <div style="margin: 0 auto;width: 100%;color: #FFF;text-align: center;">總價: 755.00</div><br/>
+    <div id="productsCount" style="margin: 0 auto;width: 100%;color: #FFF;text-align: center;"></div><br/>
     <div style="width: 100%;text-align: center;"><button>結帳</button></div>
 </div>
 <!-- NavberTop EOF -->
