@@ -23,12 +23,12 @@ class files
     public function setPath($folderPath = "unknown"): bool
     {
         $this->folderPath = "../assets/uploads/{$folderPath}";
-        try {
-            if (!is_dir($this->folderPath)) mkdir($this->folderPath, $this->permission, true);
-            return true;
-        } catch (Exception $e) {
-            return false;
+        if (!is_dir($this->folderPath)) {
+            if (!@mkdir($this->folderPath, $this->permission, true)) {
+                return false;
+            }
         }
+        return true;
     }
     /************************************************
      * ### 取得目錄位址 ###
@@ -45,14 +45,14 @@ class files
     public function upload($file, $fileRename = null): string
     {
         if (is_null($fileRename)) $fileRename = $file['name'];
-        else{
+        else {
             $fileExtension = pathinfo($file['name'], PATHINFO_EXTENSION);
             $fileRename .= '.' . $fileExtension;
         }
         try {
             $targetPath = "{$this->folderPath}/{$fileRename}";
             if (move_uploaded_file($file['tmp_name'], $targetPath)) return $targetPath;
-            else return "";
+            else return $file['tmp_name'];
         } catch (Exception $e) {
             return $e;
         }
