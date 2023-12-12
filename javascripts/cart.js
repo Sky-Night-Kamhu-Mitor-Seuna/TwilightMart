@@ -40,7 +40,7 @@ function updateCartItemView(){
 					`<!-- ${res[o].product_id} -->
 					<div class="productItem" style="background-color: rgba(255,255,255,.9);color: #000">
 					<div class="productImage" >
-						<a href=""><img src="/assets/images/4156_G_1598386817236.jpg" style="max-width: 100px;"></a> <!-- 第一欄 -->
+						<a href=""><img src="${res[o].images[0]}" style="max-width: 100px;"></a> <!-- 第一欄 -->
 					</div>
 					<div style="width: 65%;text-align: center;">
 						<!-- #商品名稱# / #尺寸# / #顏色# -->

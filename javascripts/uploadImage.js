@@ -1,8 +1,9 @@
-function uploadImage(action) {
-  let inputFile = document.getElementById("IMAGE_UPLOAD");
+function uploadImage(action, id) {
+  let inputFile = document.getElementById(id);
   let file = inputFile.files[0];
   let formData = new FormData();
   formData.append("action", action);
+  formData.append("id", id);
   formData.append("uploadfile", file);
 
   $.ajax({
@@ -13,7 +14,7 @@ function uploadImage(action) {
     contentType: false,
     success: function (res) {
       console.log(res);
-      updateImage(res[0], action);
+      updateImage(res[0], action, id);
       location.reload()
     },
     error: function (err) {
@@ -22,7 +23,7 @@ function uploadImage(action) {
   });
 }
 
-function updateImage(path, action) {
+function updateImage(path, action, id) {
   // 新增資料到資料庫
   $.ajax({
     url: "/api/api.updateImage.php",
@@ -30,6 +31,7 @@ function updateImage(path, action) {
     data: {
       path: path,
       action: action,
+      id: id
     },
     success: function (res) {
         console.log(res);
