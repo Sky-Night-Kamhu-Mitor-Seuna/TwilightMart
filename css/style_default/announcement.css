@@ -1,0 +1,20 @@
+.adminBackstage{
+	width: 85%;
+	border-radius: 30px;
+	padding: 20px;
+	margin: 70px auto;
+}
+
+.adminBackstageContentText {
+	padding: 20px;
+	border-top: none;
+}
+.adminBackstageContentText {
+	display: none;
+}
+.adminBackstageContentText:first-child {
+	display: block;
+}
+.adminBackstageContent{
+    height: 200px;
+}
