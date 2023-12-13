@@ -35,9 +35,9 @@ $defaultJs = array(
     // "./javascripts/jquery-3.2.1.min.js",
     // "./javascripts/jquery-3.3.1.slim.min.js",
     "./javascripts/bootstrap.min.js",
-    "./javascripts/checkView.js",
+    // "./javascripts/checkView.js",
     "./javascripts/popper.min.js",
-    "./javascripts/change.js",
+    // "./javascripts/change.js",
     "./javascripts/biscuit.js",
     "./javascripts/cart.js"
 );
@@ -89,26 +89,31 @@ $componentIncludePHPList = array();
 $componentTemplateList = array();
 $needPermissions = 0;
 foreach ($pageRouter->getPageComponent($pageId) as $key => $webObject) {
-    if (!in_array($webObject['cid'], $componentIncludePHPList)) $componentIncludePHPList[] = $webObject['cid'];
-    $componentTemplateList[$key] = ["id" => $webObject['id'], "displayname" => $webObject['displayname'], "cid" => $webObject['cid'], "param" => json_decode($webObject['params'], true)];
+    if (!in_array($webObject['name'], $componentIncludePHPList)) $componentIncludePHPList[] = $webObject['name'];
+    $componentTemplateList[$key] = [
+        "id" => $webObject['id'], 
+        "displayname" => $webObject['displayname'], 
+        "template" => $webObject['template'],
+        "param" => json_decode($webObject['params'], true)];
     $needPermissions |= $webObject['permissions'];
 }
 // 網站存取權確認，倘若沒有存取權則跳至錯誤頁面
 if(isset($_SESSION['mid']) && $needPermissions){
     if(!$permissions->checkMemberPermissions($_SESSION['mid'], WEBSITE_ID, $needPermissions)){
-        header("location: ?route=member");
+        header("location: ?route=member&lose_permission");
         exit;
     }
 }
 // 將元件資訊寫進smartyAssign
 $smarty->assign("pageComponents", $componentTemplateList);
 // 引入相關PHP
-foreach ($componentIncludePHPList as $id) include_once "php/component_{$id}.php";
+foreach ($componentIncludePHPList as $cName) include_once "php/{$cName}.php";
 /*************************************************************/
 $smarty->assign("css", $includeCss);
 $smarty->assign("js", $includeJs);
 $smarty->assign("generator", $generator);
 $smarty->assign("author", $author);
+$smarty->assign("wid", WEBSITE_ID);
 $smarty->assign("siteName", WEBSITE_NAME);
 $smarty->assign("themeColor", WEBSITE_THENE_COLOR);
 $smarty->assign("distribution", WEBSITE_DISTRIBUTION);

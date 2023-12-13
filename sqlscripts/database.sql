@@ -446,40 +446,40 @@ INSERT INTO `s_components` (`id`, `name`, `description`, `params`, `permissions`
   INSERT INTO `m_member_roles` (`wid`, `mid`, `rid`) VALUES (589605057335390208, 589605057335390208, 589605057335390209);
 
   -- 插入頁面
--- INSERT INTO `w_pages` (`id`, `wid`, `name`, `displayname`, `icon`, `description`, `status`) VALUES
--- 	(589605057335390211, 589605057335390208, 'err', '錯誤', '/assets/images/logo', '錯誤頁面', 2),
--- 	(589605057335390212, 589605057335390208, 'home', '首頁', '/assets/images/logo', '網站的首頁', 2),
--- 	(589605057335390213, 589605057335390208, 'login', '登入', '/assets/images/logo', '登入頁面', 2),
--- 	(589605057335390214, 589605057335390208, 'logout', '登出', '/assets/images/logo', '登出頁面', 2),
--- 	(589605057335390215, 589605057335390208, 'register', '註冊', '/assets/images/logo', '註冊頁面', 2),
--- 	(589605057335390216, 589605057335390208, 'member', '帳戶', '/assets/images/logo', '用戶頁面', 2),
--- 	(589605057335390221, 589605057335390208, 'store', '商店', '/assets/images/logo', '商店頁面', 2),
--- 	(589605057335390222, 589605057335390208, 'product', '商品', '/assets/images/logo', '商品詳細頁面', 2),
--- 	(589605057335390223, 589605057335390208, 'about', '關於', '/assets/images/logo', '關於我們', 1),
--- 	(589605057335390224, 589605057335390208, 'admin', '管理員頁面', '/assets/images/logo', '管理員操作夜面', 2),
--- 	(589605057335390225, 589605057335390208, 'setting', '個人化', '/assets/images/logo', '個人化頁面', 2),
--- 	(589605057335390226, 589605057335390208, 'site-management', '網站編輯工具', '/assets/images/logo', '網站編輯工具', 2);
+INSERT INTO `w_pages` (`id`, `wid`, `name`, `displayname`, `icon`, `description`, `status`) VALUES
+	(589605057335390211, 589605057335390208, 'err', '錯誤', '/assets/images/logo', '錯誤頁面', 2),
+	(589605057335390212, 589605057335390208, 'home', '首頁', '/assets/images/logo', '網站的首頁', 2),
+	(589605057335390213, 589605057335390208, 'login', '登入', '/assets/images/logo', '登入頁面', 2),
+	(589605057335390214, 589605057335390208, 'logout', '登出', '/assets/images/logo', '登出頁面', 2),
+	(589605057335390215, 589605057335390208, 'register', '註冊', '/assets/images/logo', '註冊頁面', 2),
+	(589605057335390216, 589605057335390208, 'member', '帳戶', '/assets/images/logo', '用戶頁面', 2),
+	(589605057335390221, 589605057335390208, 'store', '商店', '/assets/images/logo', '商店頁面', 2),
+	(589605057335390222, 589605057335390208, 'product', '商品', '/assets/images/logo', '商品詳細頁面', 2),
+	(589605057335390223, 589605057335390208, 'about', '關於', '/assets/images/logo', '關於我們', 1),
+	(589605057335390224, 589605057335390208, 'admin', '管理員頁面', '/assets/images/logo', '管理員操作夜面', 2),
+	(589605057335390225, 589605057335390208, 'setting', '個人化', '/assets/images/logo', '個人化頁面', 2),
+	(589605057335390226, 589605057335390208, 'site-management', '網站編輯工具', '/assets/images/logo', '網站編輯工具', 2);
   
-  -- INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`) VALUES (589605057335390223, 589605057335390208,"關於","about","關於我們");
+  INSERT INTO `w_pages` (`id`, `wid`, `displayname`, `name`, `description`) VALUES (589605057335390223, 589605057335390208,"關於","about","關於我們");
 
   -- 新增頁面元件 
 -- INSERT INTO `w_page_component` (`id`, `pid`, `cid`, `displayname`, `position`, `params`, `permissions`, `status`) VALUES
--- 	(589605057335390212, 589605057335390212, 2, '首頁導覽列', 0, '[{"displayname":"首頁","link":"?route=home","icon":"e88a"},{"displayname":"商店","link":"?route=store","icon":"e051"},{"displayname":"關於","link":[{"displayname":"關於團隊","link":"?route=about","icon":"e7ef"},{"displayname":"免責聲明","link":"?route=disclaimer","icon":"f04c"},{"displayname":"版本訊息","link":"?jump=https://github.com/Sky-Night-Kamhu-Mitor-Seuna/TwilightMart","icon":"f04c"}]}]', 0, 1),
--- 	(589605057335390213, 589605057335390212, 3, '首頁橫幅', 1, '{"style":0,"image":"/assets/images/webdesign.svg","message":["Hello Im MaizuRoad "],"button":[{"displayname":"see more>>","link":"?route=home"}]}', 0, 1),
--- 	(589605057335390214, 589605057335390212, 3, '首頁橫幅', 2, '{"style":1,"image":["/assets/images/24HR.svg","/assets/images/SRRVICE.svg"],"message":["Your most trusted shopping platform","您最值得信賴的購物平台"]}', 0, 1),
--- 	(589605057335390215, 589605057335390213, 4, '登入', 0, '', 0, 1),
--- 	(589605057335390216, 589605057335390215, 5, '註冊', 0, '', 0, 1),
--- 	(589605057335390217, 589605057335390214, 6, '登出', 0, '', 0, 1),
--- 	(589605057335390218, 589605057335390216, 2, '帳戶導覽列', 0, '[{"displayname":"首頁","link":"?route=home","icon":"e88a"},{"displayname":"商店","link":"?route=store","icon":"e051"},{"displayname":"設定","link":[{"displayname":"個人化","link":"?route=setting","icon":"f02e"},{"displayname":"說明","link":"?route=disclaimer","icon":"e887"}]}]', 0, 1),
--- 	(589605057335390219, 589605057335390216, 7, '帳戶資訊卡', 1, '', 0, 1),
--- 	(589695957335390220, 589605057335390221, 2, '商店導覽列', 0, '[{"displayname":"首頁","link":"?route=home","icon":"e88a"},{"displayname":"商店","link":"?route=store","icon":"e051"},{"displayname":"關於","link":[{"displayname":"關於團隊","link":"?route=about","icon":"e7ef"},{"displayname":"免責聲明","link":"?route=disclaimer","icon":"f04c"},{"displayname":"版本訊息","link":"?jump=https://github.com/Sky-Night-Kamhu-Mitor-Seuna/TwilightMart","icon":"f04c"}]}]', 0, 1),
--- 	(589695957335390221, 589605057335390221, 9, '商品清單', 1, '', 0, 1),
--- 	(589695957335390222, 589605057335390224, 10, '管理員首頁', 1, NULL, 0, 1),
--- 	(589695957335390223, 589605057335390224, 2, '管理員導覽列', 0, '[{"displayname":"網站管理","link":[{"displayname":"站台管理","link":"?route=site-management"},{"displayname":"頁面管理","link":"?route=page-management"},{"displayname":"金流管理","link":"?route=payment-management"},{"displayname":"報表工具","link":"?route=report-tool"}]},{"displayname":"商品管理","link":[{"displayname":"商品管理","link":"?route=product-management"},{"displayname":"分類管理","link":"?route=category-management"}]},{"displayname":"群組管理","link":[{"displayname":"身分組管理","link":"?route=role-management"},{"displayname":"會員管理","link":"?route=member-management"}]},{"displayname":"訂單管理","link":[{"displayname":"查詢訂單","link":"?route=order-query"},{"displayname":"訂單編輯","link":"?route=order-edit"}]}]', 0, 1),
--- 	(589695957335390224, 589605057335390225, 11, '會員個人化', 1, NULL, 0, 1),
--- 	(589695957335390225, 589605057335390225, 2, '會員個人化導覽列', 0, '[{"displayname":"首頁","link":"?route=home","icon":"e88a"},{"displayname":"商店","link":"?route=store","icon":"e051"},{"displayname":"設定","link":[{"displayname":"個人化","link":"?route=setting","icon":"f02e"},{"displayname":"說明","link":"?route=disclaimer","icon":"e887"}]}]', 0, 1),
--- 	(589695957335390226, 589605057335390226, 2, '管理員導覽列', 0, '[{"displayname":"網站管理","link":[{"displayname":"站台管理","link":"?route=site-management"},{"displayname":"頁面管理","link":"?route=page-management"},{"displayname":"金流管理","link":"?route=payment-management"},{"displayname":"報表工具","link":"?route=report-tool"}]},{"displayname":"商品管理","link":[{"displayname":"商品管理","link":"?route=product-management"},{"displayname":"分類管理","link":"?route=category-management"}]},{"displayname":"群組管理","link":[{"displayname":"身分組管理","link":"?route=role-management"},{"displayname":"會員管理","link":"?route=member-management"}]},{"displayname":"訂單管理","link":[{"displayname":"查詢訂單","link":"?route=order-query"},{"displayname":"訂單編輯","link":"?route=order-edit"}]}]', 0, 1),
--- 	(589695957335390227, 589605057335390226, 12, '網站編輯工具', 1, '', 4, 1);
+	(589605057335390212, 589605057335390212, 2, '首頁導覽列', 0, '[{"displayname":"首頁","link":"?route=home","icon":"e88a"},{"displayname":"商店","link":"?route=store","icon":"e051"},{"displayname":"關於","link":[{"displayname":"關於團隊","link":"?route=about","icon":"e7ef"},{"displayname":"免責聲明","link":"?route=disclaimer","icon":"f04c"},{"displayname":"版本訊息","link":"?jump=https://github.com/Sky-Night-Kamhu-Mitor-Seuna/TwilightMart","icon":"f04c"}]}]', 0, 1),
+	(589605057335390213, 589605057335390212, 3, '首頁橫幅', 1, '{"style":0,"image":"/assets/images/webdesign.svg","message":["Hello Im MaizuRoad "],"button":[{"displayname":"see more>>","link":"?route=home"}]}', 0, 1),
+	(589605057335390214, 589605057335390212, 3, '首頁橫幅', 2, '{"style":1,"image":["/assets/images/24HR.svg","/assets/images/SRRVICE.svg"],"message":["Your most trusted shopping platform","您最值得信賴的購物平台"]}', 0, 1),
+	(589605057335390215, 589605057335390213, 4, '登入', 0, '', 0, 1),
+	(589605057335390216, 589605057335390215, 5, '註冊', 0, '', 0, 1),
+	(589605057335390217, 589605057335390214, 6, '登出', 0, '', 0, 1),
+	(589605057335390218, 589605057335390216, 2, '帳戶導覽列', 0, '[{"displayname":"首頁","link":"?route=home","icon":"e88a"},{"displayname":"商店","link":"?route=store","icon":"e051"},{"displayname":"設定","link":[{"displayname":"個人化","link":"?route=setting","icon":"f02e"},{"displayname":"說明","link":"?route=disclaimer","icon":"e887"}]}]', 0, 1),
+	(589605057335390219, 589605057335390216, 7, '帳戶資訊卡', 1, '', 0, 1),
+	(589695957335390220, 589605057335390221, 2, '商店導覽列', 0, '[{"displayname":"首頁","link":"?route=home","icon":"e88a"},{"displayname":"商店","link":"?route=store","icon":"e051"},{"displayname":"關於","link":[{"displayname":"關於團隊","link":"?route=about","icon":"e7ef"},{"displayname":"免責聲明","link":"?route=disclaimer","icon":"f04c"},{"displayname":"版本訊息","link":"?jump=https://github.com/Sky-Night-Kamhu-Mitor-Seuna/TwilightMart","icon":"f04c"}]}]', 0, 1),
+	(589695957335390221, 589605057335390221, 9, '商品清單', 1, '', 0, 1),
+	(589695957335390222, 589605057335390224, 10, '管理員首頁', 1, NULL, 0, 1),
+	(589695957335390223, 589605057335390224, 2, '管理員導覽列', 0, '[{"displayname":"網站管理","link":[{"displayname":"站台管理","link":"?route=site-management"},{"displayname":"頁面管理","link":"?route=page-management"},{"displayname":"金流管理","link":"?route=payment-management"},{"displayname":"報表工具","link":"?route=report-tool"}]},{"displayname":"商品管理","link":[{"displayname":"商品管理","link":"?route=product-management"},{"displayname":"分類管理","link":"?route=category-management"}]},{"displayname":"群組管理","link":[{"displayname":"身分組管理","link":"?route=role-management"},{"displayname":"會員管理","link":"?route=member-management"}]},{"displayname":"訂單管理","link":[{"displayname":"查詢訂單","link":"?route=order-query"},{"displayname":"訂單編輯","link":"?route=order-edit"}]}]', 0, 1),
+	(589695957335390224, 589605057335390225, 11, '會員個人化', 1, NULL, 0, 1),
+	(589695957335390225, 589605057335390225, 2, '會員個人化導覽列', 0, '[{"displayname":"首頁","link":"?route=home","icon":"e88a"},{"displayname":"商店","link":"?route=store","icon":"e051"},{"displayname":"設定","link":[{"displayname":"個人化","link":"?route=setting","icon":"f02e"},{"displayname":"說明","link":"?route=disclaimer","icon":"e887"}]}]', 0, 1),
+	(589695957335390226, 589605057335390226, 2, '管理員導覽列', 0, '[{"displayname":"網站管理","link":[{"displayname":"站台管理","link":"?route=site-management"},{"displayname":"頁面管理","link":"?route=page-management"},{"displayname":"金流管理","link":"?route=payment-management"},{"displayname":"報表工具","link":"?route=report-tool"}]},{"displayname":"商品管理","link":[{"displayname":"商品管理","link":"?route=product-management"},{"displayname":"分類管理","link":"?route=category-management"}]},{"displayname":"群組管理","link":[{"displayname":"身分組管理","link":"?route=role-management"},{"displayname":"會員管理","link":"?route=member-management"}]},{"displayname":"訂單管理","link":[{"displayname":"查詢訂單","link":"?route=order-query"},{"displayname":"訂單編輯","link":"?route=order-edit"}]}]', 0, 1),
+	(589695957335390227, 589605057335390226, 12, '網站編輯工具', 1, '', 4, 1);
 
   -- 插入商品
   INSERT INTO `i_products` (`id`, `wid`, `name`, `price`, `description`, `types`, `quantity`, `status`) VALUES 

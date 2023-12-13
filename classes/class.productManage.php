@@ -26,7 +26,7 @@ class productManage
      ************************************************/
     public function getProductInformation($wid, $product_id=0): array
     {
-        $sql = "SELECT * FROM {$this->products} WHERE `wid` = ? AND `status` ".($product_id != 0 ? "AND `id` = ? " : "").";";
+        $sql = "SELECT * FROM {$this->products} WHERE `wid` = ? ".($product_id != 0 ? "AND `id` = ? " : "")." ORDER BY `status` DESC;";
         $params = ($product_id != 0) ? [$wid, $product_id] : [$wid] ;
         $result = $this->conn->prepare($sql, $params);
         if (empty($result)) return [];
@@ -82,9 +82,8 @@ class productManage
      ************************************************/
     public function addProduct($id, $wid, $name, $price, $quantity = -1, $description = "", $types = [], $tags = [], $specification = [], $color = []): bool
     {
-        if ((is_numeric($price) || !is_int($quantity) || ($price < 0 || $quantity < -2))) return false;
+        if (!preg_match('/^[.0-9]+$/', $price) || !is_int($quantity) || $price < 0 || $quantity < -2) return false;
         $productParams = $this->formatProductParams($types, $tags, $specification, $color);
-
         $sql = "INSERT INTO {$this->products} (`id`, `wid`, `name`, `description`, `types`, `tags`, `specification`, `color`, `price`, `quantity`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
         $result = $this->conn->prepare($sql, [$id, $wid, htmlspecialchars($name), htmlspecialchars($description), $productParams['types'], $productParams['tags'], $productParams['spec'], $productParams['color'], $price, $quantity]);
         return empty($result);
@@ -109,6 +108,19 @@ class productManage
         $productParams = $this->formatProductParams($types, $tags, $specification, $color);
         $sql = "UPDATE {$this->products} SET `name` = ?,  `description` = ?, `types` = ?, `tags` = ?, `specification` = ?, `color` = ? `price` = ?, `quantity` = ? WHERE `wid` = ? AND `id` = ?;";
         $result = $this->conn->prepare($sql, [$id, $wid, htmlspecialchars($name), htmlspecialchars($description), $productParams['types'], $productParams['tags'], $productParams['spec'], $productParams['color'], $price, $quantity]);
+        return empty($result);
+    }
+    /************************************************
+     * ### 變更商品狀態商品 ###  
+     * 
+     * @param int $productId 商品id
+     * @param int $wid 網站id
+     * @param int $status 狀態
+     ************************************************/
+    public function changeProductStatus($id, $wid, $status ): bool
+    {
+        $sql = "UPDATE {$this->products} SET `status` = ? WHERE `wid` = ? AND `id` = ?;";
+        $result = $this->conn->prepare($sql, [$status, $wid, $id]);
         return empty($result);
     }
 }

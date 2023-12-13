@@ -11,6 +11,7 @@ class pageRouter{
 
     private $pageComponent="w_page_component";
     private $pages="w_pages";
+    private $components="s_components";
     public function __construct($db)
     {
         $this->conn = $db;
@@ -33,7 +34,10 @@ class pageRouter{
      ************************************************/
     public function getPageComponent($pid) : array
     {
-        $sql = "SELECT `id`, `displayname`, `cid`, `params`, `permissions` FROM {$this->pageComponent} WHERE `pid` = ? AND `status` <> 0 ORDER BY `position` ASC;";
+        $sql = "SELECT `page_component`.`id`, `page_component`.`displayname`, `components`.`name`, `components`.`template`, `page_component`.`params`, `page_component`.`permissions` 
+        FROM {$this->pageComponent} AS `page_component`
+        JOIN {$this->components} AS `components` ON `components`.`id` = `page_component`.`cid`
+        WHERE `pid` = ? AND `status` <> 0 ORDER BY `position` ASC;";
         $row = $this->conn->prepare($sql, [$pid]);
         return $row;
     }

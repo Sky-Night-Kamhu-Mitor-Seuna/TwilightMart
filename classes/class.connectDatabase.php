@@ -66,7 +66,7 @@ class DBConnection{
      * @param string $SQL SQL語句
      * @param bool $print_r 是否直接印出
      ************************************************/
-    public function single($SQL,$print_r=false) : array
+    public function single($SQL,$print_r=false) //: array | bool
     {
         try{
             $outputValue=$this->connection->query($SQL)->fetch(PDO::FETCH_ASSOC);
@@ -81,7 +81,7 @@ class DBConnection{
      * @param string $SQL SQL語句
      * @param bool $print_r 是否直接印出
      ************************************************/
-    public function each($SQL,$print_r=false) : array
+    public function each($SQL,$print_r=false) //: array | bool
     {
         try{ 
             $outputValue=$this->connection->query($SQL)->fetchAll(PDO::FETCH_ASSOC);
@@ -98,7 +98,7 @@ class DBConnection{
      * @param array $DATA 代填入值
      * @param bool $print_r 是否直接印出
      ************************************************/
-    public function prepare($SQL,$DATA=array(null),$print_r=false) : array
+    public function prepare($SQL,$DATA=array(null),$print_r=false) : array //| bool
     {
         try{
             if(!is_array($DATA)){throw new Exception("Error: wrong data type.");}

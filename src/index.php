@@ -1,20 +1,19 @@
 <?php
 require_once '../sys.global.php';
 // 589605057335390208
-
-$r = new snowflake();
-$ppp = new cartManage($db);
-echo "<title>測試".($r->getId())."</title>";
+echo "<title>測試".($sf->getId())."</title>";
+// if(isset($_SESSION['id']))
 
 
-if($ppp->changeCart($sf->getId(),589605308993630209,589605057335390208,589605057335390208,10,"[]","[]","REM")){
-    echo "done";
-}
-else{
-    echo "no";
-}
+print_r($pageRouter->getPageComponent(1329205667356995587));
+// if($permissions->isAdmin(1328444050906279936, WEBSITE_ID)){
+//     echo "done";
+// }
+// else{
+//     echo "no";
+// }
 
-
+// echo hash("sha256", 1234);
 // $a = new productManage($db);
 // echo "-----------------------------<br/>";
 // if($a->addProduct($sf->getId(),589605057335390208,"Hi",0.0,10)) echo "OK";

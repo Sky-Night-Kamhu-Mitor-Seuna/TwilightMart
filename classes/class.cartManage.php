@@ -83,14 +83,22 @@ class cartManage
     public function getCart($wid, $mid, $cartId = null): array
     {
         $sql = "SELECT `cart`.`id`, `cart`.`product_id`, `products`.`name`, `products`.`description`, `products`.`types` , 
-        `cart`.`specification`, `cart`.`color`, 
-        `cart`.`quantity`, `products`.`price`
+        `cart`.`specification`, `cart`.`color`, `products`.`images`, 
+        `cart`.`quantity`, `products`.`price`, `products`.`status`
         FROM {$this->cart} AS `cart`
         JOIN {$this->products} AS `products` ON `cart`.`product_id` = `products`.`id`
-        WHERE `cart`.`mid` = ? AND `cart`.`wid` = ? AND `cart`.`quantity` <> 0 
-        AND `products`.`status` <> 0 ".(is_null($cartId) ? "" : "AND `cart`.`id` = ? ").";";
+        WHERE `cart`.`mid` = ? AND `cart`.`wid` = ? AND `cart`.`quantity` <> 0 ".(is_null($cartId) ? "" : "AND `cart`.`id` = ? ").";";
         $arr = is_null($cartId) ? [$mid, $wid] : [$mid, $wid, $cartId];
         $result = $this->conn->prepare($sql, $arr);
+        if(!empty($result)){
+            foreach($result as $key => $res){
+                $result[$key]['images'] = json_decode($res['images'],true);
+                if($res['status'] != 1){
+                    $sql = "UPDATE {$this->cart} SET `quantity` = 0 WHERE `id` = ?;";
+                    $this->conn->prepare($sql,[$res['id']]);
+                }
+            }
+        }
         return empty($result) ? [] : $result;
     }
 }
