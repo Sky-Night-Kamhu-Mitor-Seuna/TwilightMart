@@ -114,19 +114,23 @@
   
 
   -- 新增元件
-INSERT INTO `s_components` (`id`, `name`, `description`, `params`, `permissions`) VALUES
-	(1, 'null', '無', '', 0),
-	(2, 'navbar', '導覽列', '[{"displayname":"首頁","link":"?route=home","icon":"e88a"},{"displayname":"商店","link":"?route=store","icon":"e051"},{"displayname":"關於","link":[{"displayname":"關於團隊","link":"?route=about","icon":"e7ef"},{"displayname":"免責聲明","link":"?route=disclaimer","icon":"f04c"},{"displayname":"版本訊息","link":"?jump=https://github.com/Sky-Night-Kamhu-Mitor-Seuna/TwilightMart","icon":"f04c"}]}]', 0),
-	(3, 'banner', '橫幅', '{"style":0,"image":"/assets/images/webdesign.svg","message":["Hello Im MaizuRoad","Freut mich, Sie kennenzulernen","這是一朵美麗的小花"],"button":[{"displayname":"see more>>","link":"?route=home"}]}', 0),
-	(4, 'login', '登入', '', 0),
-	(5, 'register', '註冊', '', 0),
-	(6, 'logout', '登出', '', 0),
-	(7, 'profileCard', '個人頁面資訊卡', '', 0),
-	(8, 'recommendProduct', '推薦商品', '', 0),
-	(9, 'productList', '商品清單', '', 0),
-	(10, 'adminBackstage', '管理員首頁', '', 0),
-	(11, 'memberProfileEdit', '個人化', '', 0),
-	(12, 'websiteInformationEdit', '站台資訊編輯', '', 4);
+INSERT INTO `s_components` (`id`, `name`, `description`, `params`, `template`, `permissions`) VALUES
+	(1, 'null', '無', '', 'unknown', 0),
+	(2, 'navbar', '導覽列', '[{"displayname":"首頁","link":"?route=home","icon":"e88a"},{"displayname":"商店","link":"?route=store","icon":"e051"},{"displayname":"關於","link":[{"displayname":"關於團隊","link":"?route=about","icon":"e7ef"},{"displayname":"免責聲明","link":"?route=disclaimer","icon":"f04c"},{"displayname":"版本訊息","link":"?jump=https://github.com/Sky-Night-Kamhu-Mitor-Seuna/TwilightMart","icon":"f04c"}]}]', 'navbar', 0),
+	(3, 'banner', '橫幅', '{"style":0,"image":"/assets/images/webdesign.svg","message":["Hello Im MaizuRoad","Freut mich, Sie kennenzulernen","這是一朵美麗的小花"],"button":[{"displayname":"see more>>","link":"?route=home"}]}', 'banner', 0),
+	(4, 'login', '登入', '', 'login', 0),
+	(5, 'register', '註冊', '', 'register', 0),
+	(6, 'logout', '登出', '', 'unknown', 0),
+	(7, 'profile_card', '個人頁面資訊卡', '', 'profile_card', 0),
+	(8, 'recommend_product', '推薦商品', '', 'recommend_product', 0),
+	(9, 'product_list', '商品清單', '', 'product_list', 0),
+	(10, 'admin_backstage', '管理員首頁', '', 'announcement', 0),
+	(11, 'member_profile_edit', '個人化', '{"method":"member-setting"}', 'information_edit', 0),
+	(12, 'website_information_edit', '站台資訊編輯', '{"method":"website-management"}', 'information_edit', _binary 0x34),
+	(13, 'product_edit', '商品編輯', '', 'product_edit', _binary 0x3634),
+	(14, 'product_details_page', '商品詳細頁面', NULL, 'unknown', 0),
+	(15, 'data_chart_page', '數據圖表頁面', '[{"theme":"dark1","lineColor":"#566573","axisY":"單位","type":"column","toolTipContent":"{label}<br>{y}單位"},{"theme":"light2","lineColor":"#F1C40F","axisY":"單位","type":"column","toolTipContent":"{label}<br>{y}單位"}]', 'data_chart_page', 0);
+
 
   -- 插入會員 root 密碼：P@55word
   INSERT INTO `m_members` (`id`, `account`, `nickname`, `password`) VALUES (589605057335390208, 'root', 'Administrator', '3fbfeb0ee307127bbd4ef7da33f7b57a9ff3c7357da182c5bfccc2a4f599c6f9');
