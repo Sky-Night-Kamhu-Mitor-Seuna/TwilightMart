@@ -1,0 +1,75 @@
+{* 請從 $component.param 抓取元件參數 *}
+
+<!-- informationEdit -->
+
+<div class="mainColor informationEdit">
+    <div class="title">
+        <form action="/api/api.uploadfile.php" method="POST">
+            {if $component.param.method eq "member-setting"}
+            {****************************member-setting****************************}
+            <label for="{$mid}">
+                <img src="{if isset($avatar)}{$avatar}{/if}" style="background-color: #656565;" />
+            </label>
+            <input name="IMAGE_UPLOAD" id="{$mid}" type="file" style="display: none;" accept=".png,.jpg,.jpeg"
+                onchange="uploadImage('USER_CHANGE_AVATAR', '{$mid}')">
+            {else}
+            {****************************website-management****************************}
+            <label for="{$wid}">
+                <img src="{if isset($icon)}{$icon}{/if}" style="background-color: #656565;" />
+            </label>
+            <input name="IMAGE_UPLOAD" id="{$wid}" type="file" style="display: none;" accept=".png,.jpg,.jpeg"
+                onchange="uploadImage('WEBSITE_CHANGE_ICON', '{$wid}')">
+            {/if}
+        </form>
+    </div>
+    <div class="content">
+        <form action="" method="POST">
+            {if $component.param.method eq "member-setting"}
+            {****************************member-setting****************************}
+            <span>暱稱</span><br />
+            <input value="{if isset($nickname)}{$nickname}{/if}" type="text" placeholder="Nickname"
+                placeholder="Nickname" name="nickname" id="nickname" maxlength="18" required /><br />
+            <span>帳號</span><br />
+            <input value="{if isset($account)}{$account}{/if}" type="text" placeholder="Account" name="account"
+                id="account" minlength="3" maxlength="18" pattern="[a-zA-Z0-9\._\-#@$]+" required /><br />
+            <span>新密碼</span><br />
+            <input value="" type="password" placeholder="New Password" name="password" id="password"
+                maxlength="513" /><br />
+            <span>目前密碼</span><br />
+            <input value="" type="password" maxlength="513" placeholder="Old password" name="passwordCheck"
+                id="passwordCheck" maxlength="513" required />
+            <br />
+            {if $errorMessage eq "ACCOUNT_ERROR"}
+            <!-- Wrong account -->
+            <span class="delete">* 帳號錯誤，請使用英文及數字組合</span>
+            {elseif $errorMessage eq "PASSWORD_NO_MATCH"}
+            <!-- Passwords do not match -->
+            <span class="delete">* 密碼錯誤</span>
+            {elseif $errorMessage eq "PASSWORD_WRONG"}
+            <!-- Wrong password -->
+            <span class="delete">* 密碼格式不符，請符合複雜性密碼原則</span>
+            {/if}
+            {****************************website-management****************************}
+            {else}
+            <!-- displayname -->
+            <span>網站名稱</span><br />
+            <input value="{if isset($displayname)}{$displayname}{/if}" type="text" placeholder="Displayname"
+                name="displayname" id="displayname" required /><br />
+            <!-- distribution -->
+            <span>網站所在地</span><br />
+            <input value="{if isset($distribution)}{$distribution}{/if}" type="text" placeholder="Distribution"
+                name="distribution" id="distribution" required /><br />
+            <span>密碼</span><br />
+            <input value="" type="password" maxlength="513" placeholder="Password" name="passwordCheck"
+                id="passwordCheck" maxlength="513" required /><br />
+            {if $errorMessage eq "PASSWORD_NO_MATCH"}
+            <!-- Account already exists -->
+            <span class="delete"">* 密碼錯誤</span>{/if}
+            {/if}
+            <br />
+            <button type=" submit">編輯</button>
+        </form>
+    </div>
+</div>
+
+<!-- informationEdit EOF -->

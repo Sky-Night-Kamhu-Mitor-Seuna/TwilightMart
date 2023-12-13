@@ -1,0 +1,40 @@
+{* 請從 $component.param 抓取元件參數 *}
+
+<!-- websiteInformationEdit -->
+<div class="mainColor memberProfileEdit">
+    <div class="title">
+        <form action="/api/api.uploadfile.php" method="POST">
+            <label class="mamberAvatar" for="{$wid}">
+                <img src="{if isset($icon)}{$icon}{/if}" style="background-color: #656565;" />
+                <!-- <span class="mamberText">UPLOAD</span> -->
+            </label>
+            <input name="IMAGE_UPLOAD" id="{$wid}" type="file" style="display: none;" accept=".png,.jpg,.jpeg"
+                onchange="uploadImage('WEBSITE_CHANGE_ICON', '{$wid}')">
+        </form>
+    </div>
+    <div class="content">
+        <form action="" method="POST">
+
+            <!-- displayname -->
+            <span>網站名稱</span><br />
+            <input value="{if isset($displayname)}{$displayname}{/if}" type="text" placeholder="Displayname"
+                name="displayname" id="displayname" required /><br />
+
+            <!-- distribution -->
+            <span>網站所在地</span><br />
+            <input value="{if isset($distribution)}{$distribution}{/if}" type="text" placeholder="Distribution"
+                name="distribution" id="distribution" required /><br />
+
+            <span>密碼</span><br />
+            <input value="" type="password" maxlength="513" placeholder="Password" name="passwordCheck"
+                id="passwordCheck" maxlength="513" required /><br />
+            {if $errorMessage eq "PASSWORD_NO_MATCH"}
+            <!-- Account already exists -->
+            <span class="delete"">* 密碼錯誤</span>{/if}
+            <br />
+            <button type=" submit">編輯</button>
+        </form>
+    </div>
+</div>
+
+<!-- websiteInformationEdit EOF -->

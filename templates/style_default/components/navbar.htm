@@ -4,7 +4,7 @@
 <nav class="mainColor navbarTop">
     <div class="logo">
         <a href="?route=home"><img src="{$icon}"></a>
-        {if isset($siteName)}<h2>{$siteName}</h2>{/if}
+        {if isset($siteName)}<h2 id="siteName">{$siteName}</h2>{/if}
     </div>
     <form class="searchBar" method="POST" action="?route=search">
         <input type="search" name="search" placeholder="新會員享優惠免運" /><input class="material-icons" value="&#xe8b6"

@@ -4,6 +4,7 @@
 <div class="mainColor productList">
     <div class="wrapper">
 		{foreach $products as $product}
+        {if $product.status eq 1}
         <div class="card">
             <a href="" target="_self" class="card-image">
                 <img src="{$product.cover_photo}" alt="Location Unknown">
@@ -15,6 +16,9 @@
 				<button style="width: 100%;" onclick="{if isset($mid)}updateCartItem('{$product.id}',1,'[]','[]');{else}window.location.href='?route=login'{/if}">放入購物車</button>
 			</div>
         </div>
+        {/if}
+        {foreachelse}
+        <h1 style="margin: 100px;">Oh....空蕩蕩一片沒有任何商品</h1>
 		{/foreach}
     </div>
 </div>

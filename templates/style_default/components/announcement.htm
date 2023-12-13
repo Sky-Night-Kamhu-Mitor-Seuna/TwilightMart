@@ -1,0 +1,25 @@
+{* 請從 $component.param 抓取元件參數 *}
+
+<!-- adminBackstage -->
+{if isset($noPermission)}
+<div class="mainColor" style="margin: 50px auto;text-align: center;">
+    <h1 class="delete">您不具有"{$noPermission}"的操作權限</h1>
+</div>
+{/if}
+<div class="mainColor adminBackstage" style="background-color: rgba(0,0,0, .3);">
+    <div class="adminBackstageTabs">
+        {foreach $announcement as $content}<button
+            class="mainButtonColor announcementTab {if $content@first}announcementActive{/if}"
+            onclick="announcementSwitch(event, '{$content@key}')">{$content@key}</button>
+        {/foreach}
+    </div>
+    <hr>
+    <div class="adminBackstageContent">
+        {foreach $announcement as $content}
+        <div class="adminBackstageContentText" id="{$content@key}">
+            {$content}
+        </div>
+        {/foreach}
+    </div>
+</div>
+<!-- adminBackstage EOF -->

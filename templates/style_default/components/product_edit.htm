@@ -1,0 +1,45 @@
+{* 請從 $component.param 抓取元件參數 *}
+
+<!-- productEdit -->
+<div class="mainColor productEdit">
+    <!-- products list -->
+    <div class="wrapper">
+        {foreach $products as $product}
+        {if $product.status neq -1}
+        <div class="productItem">
+            <form action="/api/api.uploadfile.php" method="POST">
+                <label class="productImage" for="{$product.id}" style="margin-bottom: 0">
+                    <img src="{$product.cover_photo}" alt="" />
+                </label>
+                <input name="IMAGE_UPLOAD" id="{$product.id}" type="file" style="display: none;" accept=".png,.jpg,.jpeg"
+                    onchange="uploadImage('PRODUCT_CHANGE_IMAGE','{$product.id}')">
+            </form>
+            <div class="productName" style="width: 50%;">{$product.name}</div>
+            <!-- <div class="productDescription">{$product.description}</div> -->
+            <div class="productPrice" style="width: 10%;text-align: left;">$ {$product.price}</div>
+            <div class="productQuantity" style="width: 10%;text-align: left;">尚餘數量: {if $product.quantity eq -1}無限{else}{$product.quantity}{/if}</div>
+            <button class="delete material-icons rightButton" onclick="deleteProduct('{$product.id}')">&#xe872</button>
+            <label class="switch rightButton" >
+                <input type="checkbox" onchange="setProductStatus('{$product.id}', '{$product.status}')" {if $product.status eq 1}checked{/if}>
+                <span class="slider"></span>
+            </label>
+            
+        </div>
+        {/if}
+        {/foreach}
+    </div>
+    <!-- item create -->
+    <form method="POST" action="">
+        <div class="productItem">
+            <div class="productImage">
+                <!-- <img src=""" alt="產品圖片" /> -->
+            </div>
+            <input type="text" id="{$randomProductTemporaryId}_name" name="product_name" placeholder="商品名稱" style="color: #000;" required/>
+            <input type="text" id="{$randomProductTemporaryId}_price" name="product_price" placeholder="商品售價" pattern="[0-9.]+" style="color: #000;" required/>
+            <input value="1" type="number" id="{$randomProductTemporaryId}_quantity" name="product_quantity" min="-1" max="999" placeholder="商品數量" style="color: #000;" required/>
+            <button class="material-icons leftButton" onclick="addProduct('{$randomProductTemporaryId}')">&#xe147</button>
+        </div>
+    </form>
+</div>
+<!-- productEdit EOF -->
+
