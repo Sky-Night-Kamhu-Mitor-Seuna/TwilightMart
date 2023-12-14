@@ -2,10 +2,15 @@
 require_once '../sys.global.php';
 // 589605057335390208
 echo "<title>測試".($sf->getId())."</title>";
+$w = new websiteManage($db);
+print_r($w->getWebsiteInformation("localhost"));
 // if(isset($_SESSION['id']))
+// print_r($memberManage->getMemberInformation("root"));
 
-
-print_r($pageRouter->getPageComponent(1329205667356995587));
+// $mInformation = ["account"=>[]];
+// $mAccount = isset($mInformation["account"]) ? ["ttt"] :[];
+// print_r($mAccount);
+// print_r($pageRouter->getPageComponent(1329205667356995587));
 // if($permissions->isAdmin(1328444050906279936, WEBSITE_ID)){
 //     echo "done";
 // }
@@ -60,3 +65,13 @@ print_r($pageRouter->getPageComponent(1329205667356995587));
 // }
 // print_r($p->getAllPermissionsArray());
 ?>
+
+<script>
+    aaa=11;
+
+    </script>
+    <body>
+
+
+    <script>console.log(aaa)</script>
+    </body>

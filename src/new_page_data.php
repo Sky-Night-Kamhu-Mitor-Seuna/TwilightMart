@@ -174,7 +174,7 @@ $NEW_PAGE_INFORMATION = [
             ], [
                 "cid" => 10,
                 "displayname" => "管理員首頁",
-                "params" => '',
+                "params" => '[{"title":"公告","content":"如果你看到這行文字代表你具有管理員權限，必須具有對應的權限才能進行操作"},{"title":"說明","content":"網站管理: 一些關於整個網站的操作<br/>商品管理: 跟商品有關的操作<br/>群組管理: 跟權限有關的操作"}]',
                 "position" => 1,
                 "permission" => 0
             ]
@@ -233,7 +233,7 @@ $NEW_PAGE_INFORMATION = [
         "pageComponents" => [
             [
                 "cid" => 2,
-                "displayname" => "商品管理導覽",
+                "displayname" => "商品管理導覽列",
                 "params" => '[{"displayname":"網站管理","link":[{"displayname":"站台管理","link":"?route=site-management"},{"displayname":"頁面管理","link":"?route=page-management"},{"displayname":"金流管理","link":"?route=payment-management"},{"displayname":"報表工具","link":"?route=report-tool"}]},{"displayname":"商品管理","link":[{"displayname":"商品管理","link":"?route=product-management"},{"displayname":"分類管理","link":"?route=category-management"}]},{"displayname":"群組管理","link":[{"displayname":"身分組管理","link":"?route=role-management"},{"displayname":"會員管理","link":"?route=member-management"}]},{"displayname":"訂單管理","link":[{"displayname":"查詢訂單","link":"?route=order-query"},{"displayname":"訂單編輯","link":"?route=order-edit"}]}]',
                 "position" => 0,
                 "permission" => 0
@@ -245,6 +245,27 @@ $NEW_PAGE_INFORMATION = [
                 "permission" => 0
             ]
         ]
+    ],
+    [
+        "pid" => 0,
+        "name" => 'report-tool',
+        "displayname" => '報表工具',
+        "description" => '沒有權限',
+        "status" => '2',
+        "pageComponents" => [
+            [
+                "cid" => 2,
+                "displayname" => "報表工具導覽列",
+                "params" => '[{"displayname":"網站管理","link":[{"displayname":"站台管理","link":"?route=site-management"},{"displayname":"頁面管理","link":"?route=page-management"},{"displayname":"金流管理","link":"?route=payment-management"},{"displayname":"報表工具","link":"?route=report-tool"}]},{"displayname":"商品管理","link":[{"displayname":"商品管理","link":"?route=product-management"},{"displayname":"分類管理","link":"?route=category-management"}]},{"displayname":"群組管理","link":[{"displayname":"身分組管理","link":"?route=role-management"},{"displayname":"會員管理","link":"?route=member-management"}]},{"displayname":"訂單管理","link":[{"displayname":"查詢訂單","link":"?route=order-query"},{"displayname":"訂單編輯","link":"?route=order-edit"}]}]',
+                "position" => 0,
+                "permission" => 0
+            ], [
+                "cid" => 15,
+                "displayname" => "報表工具測試版",
+                "params" => '',
+                "position" => 1,
+                "permission" => 0
+            ]
+        ]
     ]
 ];
-?>

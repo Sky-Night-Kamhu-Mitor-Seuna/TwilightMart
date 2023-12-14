@@ -3,12 +3,11 @@ require_once '../sys.global.php';
 include_once 'new_page_data.php';
 // 589605057335390208
 echo "<title>測試用-快速建站" . ($sf->getId()) . "</title>";
-if (!isset($_GET['test'])) {
-	exit;
-}
-$wid = 1329099350638325762;
-if (isset($_GET['web'])) {
-	$domainName = htmlspecialchars($_GET['web']);
+if (!isset($_GET['test'])) exit;
+/****************************************************************************************/
+$wid = 589605057335390208;
+if (isset($_GET['domain'])) {
+	$domainName = htmlspecialchars($_GET['domain']);
 	$wid = $sf->getId();
 	$sql = "INSERT INTO `s_website` (`id`, `domain`, `name`, `displayname`, `distribution`, `icon`, `background`) VALUES (?, ?, 'Demo', 'DemoWebsite', 'Taiwan', '/assets/images/logo.png', '/assets/images/bg.jpg');";
 	$db->prepare($sql, [$wid, $domainName]);
@@ -34,7 +33,7 @@ foreach ($NEW_PAGE_INFORMATION as $pKey => $info) {
 			$createPageComponentSql[] =	$createPageComponent . "({$cid}, {$pid}, {$pageComponents['cid']}, '{$domainName}的{$pageComponents['displayname']}',  {$pageComponents['position']}, '{$pageComponents['params']}', {$pageComponents['permission']}, 1); ";
 		}
 	}
-	$createPagesSql .=	"({$pid}, {$wid}, '{$info['name']}', '{$domainName}的{$info['displayname']}',  '{$info['description']}', {$info['status']})" . ($pKey < count($NEW_PAGE_INFORMATION) - 1 ? "," : ";") . " ";
+	$createPagesSql .=	"({$pid}, {$wid}, '{$info['name']}', '{$info['displayname']}',  '{$info['description']}', {$info['status']})" . ($pKey < count($NEW_PAGE_INFORMATION) - 1 ? "," : ";") . " ";
 }
 echo '<span style="display:none;">' . $createPagesSql . '</span>';
 $db->single($createPagesSql);
@@ -44,4 +43,3 @@ foreach ($createPageComponentSql as $sql) {
 	$db->single($sql);
 }
 echo '</span>';
-	// $db->single($createPageComponentSql);
