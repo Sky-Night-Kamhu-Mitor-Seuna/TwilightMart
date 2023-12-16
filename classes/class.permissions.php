@@ -28,7 +28,7 @@ class permissions
         $this->member_roles = $member_roles;
         // $this->role_permissions = $role_permissions;
         $this->roles = $roles;
-        $this->permissions = $permissions;
+        // $this->permissions = $permissions;
         return true;
     }
     /************************************************
