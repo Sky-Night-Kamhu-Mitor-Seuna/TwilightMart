@@ -17,7 +17,7 @@
     `icon` VARCHAR(255) DEFAULT NULL COMMENT '圖示',
     `background` VARCHAR(255) DEFAULT NULL COMMENT '背景',
     `stylesheet` VARCHAR(64) DEFAULT 'style_default' NOT NULL COMMENT '主題',
-    `theme` VARCHAR(7) DEFAULT '2475b2' NOT NULL COMMENT '色系',
+    `theme` CHAR(100) NOT NULL DEFAULT '{"body":"#212121","mainColor":"#212121","secondaryColor":"#2879f6","mainfontColor":"#FFFFFF"}' COMMENT '色系',
     `status` INT(3) NOT NULL DEFAULT 1 COMMENT '啟用狀態1啟用 0關閉',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '創建時間',
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新時間',
@@ -78,7 +78,7 @@
     `description` TEXT COMMENT '元件描述',
     `params` JSON COMMENT '元件預設參數',
     `template` LONGTEXT NOT NULL DEFAULT 'unknown' COMMENT '元件樣板',
-    `permissions` VARBINARY(50) NOT NULL DEFAULT '0' COMMENT '瀏覽該元件需求權限0x0代表無須權限，0x2代表需要群組管理權限',
+    `permissions` INT(50) NOT NULL DEFAULT '0' COMMENT '瀏覽該元件需求權限0x0代表無須權限，0x2代表需要群組管理權限',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '創建時間',
     PRIMARY KEY (id),
     INDEX `name` (`name`)
@@ -165,7 +165,7 @@ INSERT INTO `s_components` (`id`, `name`, `description`, `params`, `template`, `
     `displayname` VARCHAR(128) NOT NULL COMMENT '名稱',
     `position` INT(11) NOT NULL COMMENT '位置',
     `params` JSON COMMENT '元件參數',
-    `permissions` VARBINARY(50) NOT NULL DEFAULT 0 COMMENT '瀏覽該頁面需求權限0x0代表無須權限，0x2代表需要群組管理權限',
+    `permissions` INT(50) NOT NULL DEFAULT 0 COMMENT '瀏覽該頁面需求權限0x0代表無須權限，0x2代表需要群組管理權限',
     `status` INT(3) NOT NULL DEFAULT 1 COMMENT '啟用狀態1啟用 0關閉',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '創建時間',
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新時間',
@@ -189,9 +189,10 @@ INSERT INTO `s_components` (`id`, `name`, `description`, `params`, `template`, `
   CREATE TABLE IF NOT EXISTS `m_roles` (
     `id` BIGINT(19) UNSIGNED NOT NULL COMMENT 'ID',
     `wid` BIGINT(19) UNSIGNED NOT NULL COMMENT '網站ID',
+    `parent_id` BIGINT(19) UNSIGNED NULL COMMENT '父身份組',
     `name` VARCHAR(100) NOT NULL COMMENT '身份組名稱',
     `displayname` VARCHAR(100) NOT NULL COMMENT '身份組顯示名稱',
-    `parent_id` BIGINT(19) UNSIGNED NULL COMMENT '父身份組',
+    `permissions` INT(50) NOT NULL DEFAULT 0 COMMENT '權限表每個01對應著是否具有權限0x1代表擁有所有權限',
     `status` INT(3) NOT NULL DEFAULT 1 COMMENT '啟用狀態1啟用 0關閉 2系統用戶(無法刪除)',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '創建時間',
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新時間',
@@ -228,21 +229,6 @@ INSERT INTO `s_components` (`id`, `name`, `description`, `params`, `template`, `
       ON DELETE CASCADE 
       ON UPDATE CASCADE
   ) COMMENT='會員資料表';
-
-  -- 身份組權限
-  -- role_id 對應 身份組
-  -- permission_id 對應 權限組
-  CREATE TABLE IF NOT EXISTS `m_role_permissions` (
-    `rid` BIGINT(19) UNSIGNED NOT NULL COMMENT '身份組ID',
-    `permissions` VARBINARY(50) NOT NULL DEFAULT 0 COMMENT '權限表每個01對應著是否具有權限0x1代表擁有所有權限',
-    INDEX `fk_role_id` (`rid`),
-    CONSTRAINT `fk_role_id` 
-      FOREIGN KEY (`rid`)
-      REFERENCES `m_roles`(`id`)
-      ON DELETE CASCADE 
-      ON UPDATE CASCADE,
-    PRIMARY KEY (`rid`)
-  ) COMMENT='角色權限關聯表';
 
   -- 商品頁面
   CREATE TABLE IF NOT EXISTS `i_products` (
@@ -442,10 +428,6 @@ INSERT INTO `s_components` (`id`, `name`, `description`, `params`, `template`, `
     (589605057335390208, 589605057335390208, 'everyone', '所有人', 589605057335390208),
     (589605057335390209, 589605057335390208, 'root', '超級管理員', 589605057335390208),
     (589605057335390210, 589605057335390208, 'admin', '管理員', 589605057335390208);
-  INSERT INTO `m_role_permissions` (`rid`) VALUES (589605057335390208), (589605057335390209), (589605057335390210);
-  UPDATE `m_role_permissions` SET `permissions` = `permissions` | 0x0001 WHERE rid = 589605057335390208;
-  UPDATE `m_role_permissions` SET `permissions` = `permissions` | 0x1FFC WHERE rid = 589605057335390209;
-  UPDATE `m_role_permissions` SET `permissions` = `permissions` | 0x2000 WHERE rid = 589605057335390210;
 
   -- 插入最高權限用戶帳戶權限
   INSERT INTO `m_member_roles` (`wid`, `mid`, `rid`) VALUES (589605057335390208, 589605057335390208, 589605057335390209);
