@@ -11,7 +11,6 @@ class cartManage
     private $conn;
     private $cart = 'i_cart';
     private $products = "i_products";
-    // private $products = "i_products";
 
     public function __construct($db)
     {
@@ -28,7 +27,9 @@ class cartManage
      ************************************************/
     private function checkProductQuantity($productId, $wid, $mid, $specification, $color): array
     {
-        $sql = "SELECT `id`, `quantity` FROM {$this->cart} WHERE `product_id` = ? AND `wid` = ? AND `mid` = ? AND `specification` = ? AND `color` = ? AND `quantity` <> 0;";
+        $sql = "SELECT `id`, `quantity` FROM {$this->cart} 
+        WHERE `product_id` = ? AND `wid` = ? AND `mid` = ? 
+        AND `specification` = ? AND `color` = ? AND `quantity` <> 0;";
         $result = $this->conn->prepare($sql, [$productId, $wid, $mid, $specification, $color]);
         if (empty($result)) return [];
         return $result[0];

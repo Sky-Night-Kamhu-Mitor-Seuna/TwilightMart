@@ -38,7 +38,7 @@ class websiteManage
      * @param int $wid 網站的編號
      * @param string $domainName 網域名稱
      ************************************************/
-    private function initWebsite($wid, $domainName): bool
+    public function initWebsite($wid, $domainName): bool
     {
         $result = true;
         $domainName = htmlspecialchars($domainName);
@@ -99,20 +99,16 @@ class websiteManage
      * ]]
      * ```
      ************************************************/
-    public function updateWebsiteInformation($wid, $wInformation = ["website" => [], "newebpay" => []], $autoCreateWebsite = false): bool
+    public function updateWebsiteInformation($wid, $wInformation = ["website" => [], "newebpay" => []]): bool
     {
         $result = true;
         $wOriginalInformation = $this->getWebsiteInformation($wid);
-        // 視情況建立網站
-        if (empty($wOriginalInformation)) {
-            if ($autoCreateWebsite) $result &= empty($this->initWebsite($wid, $wInformation['website']['domain']));
-            else return false;
-        }
+        if (!empty($wOriginalInformation)) return false;
         // if (!preg_match('/^[a-zA-Z0-9_\-@$.\s]+$/', $wInformation)) return false;
         $website = isset($wInformation["website"]) ? $wInformation["website"] : [];
         $newebpay = isset($wInformation["newebpay"]) ? $wInformation["newebpay"] : [];
         // 網站簡碼只能使用英文數字及_、-
-        if (!preg_match('/^[a-zA-Z0-9_\-]+$/', $website['name'])) return false;
+        // if (!preg_match('/^[a-zA-Z0-9_\-]+$/', $website['name'])) return false;
         if (!empty($website)) {
             $params = [
                 empty($website['domain']) ? $wOriginalInformation['domain'] : $website['domain'],

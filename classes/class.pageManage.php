@@ -77,6 +77,4 @@ class pageManage{
         $row = $this->conn->prepare($sql, [$name, $displayname, $description, $pid]);
         return empty($row);
     }
-
-
 }

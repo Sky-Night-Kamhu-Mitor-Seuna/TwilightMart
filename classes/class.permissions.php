@@ -53,26 +53,40 @@ class permissions
      * @param int $wid 網站編號
      * @param int $rid 身分組編號
      ************************************************/
-    private function addRoles($wid, $rid): bool
+    public function addRoles($wid, $rid): bool
     {
         $sql = "INSERT INTO `{$this->roles}` (`id`, `wid`, `name`, `displayname`, `parent_id`, `permissions`) VALUES (?, ?, ?, ?, ?, ?);";
         $result = empty($this->conn->prepare($sql, [$rid, $wid, "newRole", "未命名身分祖", $wid, 0]));
-        return empty($result);
+        return $result;
     }
     /************************************************
      * ### 確認使用者身份組 ###
-     * @param int $mid 使用者編號
      * @param int $wid 網站編號
+     * @param int $mid 使用者編號
      ************************************************/
-    public function getMemberRoles($mid, $wid): array
+    public function getMemberRoles($wid, $mid): array
     {
         $sql = "SELECT `role`.`displayname`, `role`.`name`, `role`.`id` 
         FROM `{$this->member_roles}` AS `memberRole` 
         JOIN `{$this->roles}` AS `role` ON `role`.`id` = `memberRole`.`rid`
-        WHERE `memberRole`.`mid` = ? AND `memberRole`.`wid` = ? 
-        AND `role`.`name` <> 'everyone' AND `role`.`status` <> 0 ;";
+        WHERE `memberRole`.`mid` = ? AND `role`.`wid` = ? 
+        AND `role`.`status` <> 0 ;";
         $roles = $this->conn->prepare($sql, [$mid, $wid]);
         return $roles;
+    }
+    /************************************************
+     * ### 確認使用者是否具有管理權限 ###
+     * @param int $mid 使用者編號
+     * @param int $wid 網站編號
+     ************************************************/
+    public function isAdmin($mid, $wid): bool
+    {
+        $result = 0;
+        $roles = $this->getMemberRoles($wid, $mid);
+        foreach ($roles as $role) {
+            $result |= $this->getRolePermissions($role['id'], true);
+        }
+        return $result;
     }
     /************************************************
      * ### 確認使用者是否能存取物件 ###
@@ -80,10 +94,10 @@ class permissions
      * @param int $wid 網站編號
      * @param int $permission 權限編號
      ************************************************/
-    public function checkMemberPermissions($mid, $wid, $permission): bool
+    public function checkMemberPermissions($wid, $mid, $permission): bool
     {
         $result = false;
-        $roles = $this->getMemberRoles($mid, $wid);
+        $roles = $this->getMemberRoles($wid, $mid);
         foreach ($roles as $role) {
             $permissions = $this->getRolePermissions($role['id'], true);
             // 1 為最高權限
@@ -96,21 +110,22 @@ class permissions
     }
     /************************************************
      * ### 修改用戶身份組 ###
-     * @param int $mid 使用者編號
-     * @param int $rid 身份組編號
      * @param int $wid 網站編號
+     * @param int $rid 身份組編號
+     * @param int $mid 使用者編號
+     * @param int $alwaysAdd 總是新增身分組(如果啟用則用戶有身份組則不刪除)
      ************************************************/
-    public function changeMemberRoles($mid, $wid, $rid): bool
+    public function changeMemberRoles($wid, $rid, $mid, $alwaysAdd = false): bool
     {
-        $memberHaveRole = in_array($rid, $this->getMemberRoles($mid, $wid));
-        if ($memberHaveRole){
-            $sql = "DELETE FROM `{$this->member_roles}` WHERE `mid` = ? AND `rid` = ? AND `wid` = ?;";
-        }
-        else{
-            $sql = "INSERT INTO `{$this->member_roles}` (`mid`, `rid`, `wid`) VALUES (?, ?, ?);";
-        }
-        $result = $this->conn->prepare($sql, [$mid, $rid, $wid]);
-        return empty($result);
+        $mRoles = $this->getMemberRoles($wid, $mid);
+        $memberHaveRole = false;
+        foreach($mRoles as $mRole) $memberHaveRole |= in_array($rid, $mRole);
+        if ($memberHaveRole) {
+            if ($alwaysAdd) return true;
+            else $sql = "DELETE FROM `{$this->member_roles}` WHERE `mid` = ? AND `rid` = ?;";
+        } else $sql = "INSERT INTO `{$this->member_roles}` (`mid`, `rid`) VALUES (?, ?, ?);";
+        $result = empty($this->conn->prepare($sql, [$mid, $rid]));
+        return $result;
     }
     /************************************************
      * ### 取得身分組資訊 ###
@@ -135,7 +150,7 @@ class permissions
                 $result[$key]['permission'] |= $this->getRolePermissions($rid, $containsParentPermission);
             }
         }
-        return $result;
+        return is_null($rid) ? $result : $result[0];
     }
     /************************************************
      * ### 更新身分組 ###
@@ -176,7 +191,7 @@ class permissions
             $wid,
             $rid
         ];
-        $sql = "UPDATE `{$this->roles}` SET `name` = ?, `displayname` =?, `permissions` = `permissions` ^ ?,`parent_id` = ?  WHERE `wid` = ? AND `id` = ?";
+        $sql = "UPDATE `{$this->roles}` SET `name` = ?, `displayname` =?, `permissions` = `permissions` ^ ?,`parent_id` = ?, `status` = ? WHERE `wid` = ? AND `id` = ?";
         $result &= empty($this->conn->prepare($sql, $params));
         return $result;
     }

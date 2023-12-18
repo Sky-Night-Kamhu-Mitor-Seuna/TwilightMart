@@ -21,14 +21,15 @@ class memberManage
      * @param string $account 會員帳號 
      * @param string $password 會員密碼
      ************************************************/
-    public function checkMemberAccountPassword($account, $password): array
+    public function memberLogin($account, $password): bool
     {
         $account = htmlspecialchars(strtolower($account));
         $password = hash('sha256', $password);
         $sql = "SELECT `id`, `account`, `status` FROM `{$this->member}` WHERE `account` = ? AND `password` = ? LIMIT 1;";
         $result = $this->conn->prepare($sql, [$account, $password]);
-        if (empty($result)) return [];
-        return $result[0];
+        // if (empty($result)) return 0;
+        // return $result[0]['id'];
+        return !empty($result);
     }
     /************************************************
      * ### 取得會員資訊 ###
@@ -70,6 +71,8 @@ class memberManage
      ************************************************/
     public function addMember($mid, $mAccount = []): bool
     {
+        $checkExist = $this->getMemberInformation($mid);
+        if(!empty($checkExist)) return false;
         $result = true;
         $params = [
             $mid,
@@ -109,18 +112,14 @@ class memberManage
      * ]]  
      * ```
      ************************************************/
-    public function updateMemberInformation($mid, $mInformation = ["account" => [], "profile" => []], $autoCreateAccount = false): bool
+    public function updateMemberInformation($mid, $mInformation = ["account" => [], "profile" => []]): bool
     {
         $result = true;
         $mAccount = isset($mInformation["account"]) ? $mInformation["account"] : [];
         $mProfile = isset($mInformation["profile"]) ? $mInformation["profile"] : [];
         // 檢查會員原始資訊
         $mOriginalInformation = $this->getMemberInformation($mid);
-        // 會員不存在，建立相關頁面
-        if (empty($mOriginalInformation)) {
-            if ($autoCreateAccount) $result &= $this->addMember($mid, $mAccount);
-            else return false;
-        }
+        if (!empty($mOriginalInformation)) return false;
         // 會員存在，更新會員資訊
         else {
             // 更新會員帳戶資訊
@@ -134,7 +133,7 @@ class memberManage
                     empty($mAccount['status']) ? $mOriginalInformation['status'] : $mAccount['status'],
                     $mid
                 ];
-                $sql = "UPDATE `{$this->member}` SET `account` = ?, `password` = ?, `nickname` = ? , `last_ip_address` = ? `status` = ? WHERE `id` = ?";
+                $sql = "UPDATE `{$this->member}` SET `account` = ?, `password` = ?, `nickname` = ? , `last_ip_address` = ?, `status` = ? WHERE `id` = ?";
                 $result &= empty($this->conn->prepare($sql, $params));
             }
             // 更新會員個人化
